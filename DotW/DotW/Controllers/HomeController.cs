@@ -13,16 +13,10 @@ namespace DotW.Controllers
             return View();
         }
 
-        public ActionResult About()
+        [Authorize]
+        public ActionResult Tags()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Listado de tags disponibles";
 
             return View();
         }
