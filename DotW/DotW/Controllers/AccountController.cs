@@ -114,12 +114,12 @@ namespace DotW.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Confirm Email Address.");
+                        ModelState.AddModelError("", "Confirmar dirección de correo.");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", "Usuario o contraseña inválidos.");
                 }
             }
 
@@ -211,7 +211,7 @@ namespace DotW.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email };
+                var user = new ApplicationUser() { UserName = model.Username };
                 user.Email = model.Email;
                 user.EmailConfirmed = false;
 
@@ -220,11 +220,11 @@ namespace DotW.Controllers
                 if (result.Succeeded)
                 {
                     System.Net.Mail.MailMessage m = new System.Net.Mail.MailMessage(
-                        new System.Net.Mail.MailAddress("no-reply@devsoftheweb.com", "Registracion en devs of the web."),
+                        new System.Net.Mail.MailAddress("no-reply@devsoftheweb.com", "Devs of the Web"),
                         new System.Net.Mail.MailAddress(user.Email));
 
-                    m.Subject = "Email confirmation";
-                    m.Body = string.Format("{0}<BR/>Gracias por registrarte, por favor presiona sobre el siguiente enlace para completar tu registración: <a href=\"{1}\" title=\"User Email Confirm\">{1}</a>", user.UserName, Url.Action("ConfirmEmail", "Account", new { Token = user.Id, Email = user.Email }, Request.Url.Scheme));
+                    m.Subject = "Verificar email";
+                    m.Body = string.Format("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"><h3>Hola {0}!</h3><p>Gracias por registrarte. Por favor, verifica tu dirección de correo para que sepamos que realmente eres tú.</p><div><table cellspacing=\"0\" cellpadding=\"0\"><tr><td align=\"center\" width=\"300\" height=\"40\" bgcolor=\"#3572b0\" style=\"-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block;\"><a href=\"{1}\" style=\"font-size:16px; font-weight: bold; font-family:sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block\"><span style=\"color: #ffffff;\">Verificar mi dirección de correo</span></a></td></tr></table></div><p>Saludos.</p><br/><p align=\"right\"><small>Devs of the Web Team. &#169;</small></p>", user.UserName, Url.Action("ConfirmEmail", "Account", new { Token = user.Id, Email = user.Email }, Request.Url.Scheme));
                     m.IsBodyHtml = true;
                     System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com");
                     smtp.Port = 587;
