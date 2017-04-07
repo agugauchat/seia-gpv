@@ -75,7 +75,6 @@ namespace DotW.Controllers
                 {
                     if (user.EmailConfirmed)
                     {
-                        //await SignInAsync(user, model.RememberMe);
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                         return RedirectToLocal(returnUrl);
@@ -148,9 +147,12 @@ namespace DotW.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Username };
-                user.Email = model.Email;
-                user.EmailConfirmed = false;
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    EmailConfirmed = false
+                };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
 

@@ -69,10 +69,10 @@ namespace DotW.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [Display(Name = "Nombre de usuario")]
-        [StringLength(30, MinimumLength = 6, ErrorMessage = "Nombre de usuario inválido")]
-        public string Username { get; set; }
+        //[Required]
+        //[Display(Name = "Nombre de usuario")]
+        //[StringLength(30, MinimumLength = 6, ErrorMessage = "Nombre de usuario inválido")]
+        //public string Username { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "La {0} contraseña debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]

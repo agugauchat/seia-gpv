@@ -20,7 +20,6 @@ namespace DotW.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        //TODO npellegrinet : acá se debe poder poner tu base de datos propia.
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
