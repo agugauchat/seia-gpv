@@ -66,38 +66,42 @@ namespace DotW
             //});
         }
 
-        // In this method we will create default User roles and Admin user for login   
-        private void createRolesandUsers()
+        /// <summary>
+        /// Crea el rol y usuario administrador.
+        /// </summary>
+        private void CreateAdminRoleAndUsers()
         {
-            ApplicationDbContext context = new ApplicationDbContext();
+            ApplicationDbContext loginContext = new ApplicationDbContext();
 
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(loginContext));
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(loginContext));
 
-
-            // In Startup iam creating first Admin Role and creating a default Admin User    
             if (!roleManager.RoleExists("Admin"))
             {
+                // Crea el rol Admin.
+                var adminRole = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole { Name = "Admin" };
+                roleManager.Create(adminRole);
+            }
 
-                // first we create Admin rool   
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole{ Name = "Admin" };
-                roleManager.Create(role);
+            // Se inicializa el usuario.
+            var email = "devsoftheweb@gmail.com";
 
-                //Here we create a Admin super user who will maintain the website                  
-
-                var user = new ApplicationUser();
-                user.UserName = "admin";
-                user.Email = "devsoftheweb@gmail.com";
-
-                string password = "dev12345678";
-
-                var createdUser = UserManager.Create(user, password);
-
-                //Add default User to Role Admin 
-                if (createdUser.Succeeded)
+            if (UserManager.FindByEmail(email) == null)
+            {
+                var adminUser = new ApplicationUser
                 {
-                    var result = UserManager.AddToRole(user.Id, "Admin");
+                    UserName = email,
+                    Email = email,
+                    EmailConfirmed = true
+                };
 
+                // Se crea y almacena el usuario
+                var creationResult = UserManager.Create(adminUser, "dev12345678");
+
+                // Agrega el usuario al rol Admin.
+                if (creationResult.Succeeded)
+                {
+                    var result = UserManager.AddToRole(adminUser.Id, "Admin");
                 }
             }
         }
