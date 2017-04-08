@@ -69,6 +69,10 @@ namespace DotW.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [Required]
+        [Display(Name = "Rol")]
+        public string UserRoles { get; set; }
+
         //[Required]
         //[Display(Name = "Nombre de usuario")]
         //[StringLength(30, MinimumLength = 6, ErrorMessage = "Nombre de usuario inválido")]

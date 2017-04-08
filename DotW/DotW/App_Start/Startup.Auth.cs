@@ -87,9 +87,9 @@ namespace DotW
 
                 var user = new ApplicationUser();
                 user.UserName = "admin";
-                user.Email = "mail@mail.com";
+                user.Email = "devsoftheweb@gmail.com";
 
-                string password = "adminadmin";
+                string password = "dev12345678";
 
                 var createdUser = UserManager.Create(user, password);
 
