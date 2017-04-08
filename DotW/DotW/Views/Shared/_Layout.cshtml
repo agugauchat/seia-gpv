@@ -1,4 +1,8 @@
 ﻿<!DOCTYPE html>
+@{ 
+    DotW.Models.ApplicationUser currentUser = ViewBag.CurrentUser as DotW.Models.ApplicationUser;
+    List<string> currentRoles = ViewBag.RolesOfCurrentUser as List<string>;
+}
 <html>
 <head>
     <meta charset="utf-8" />
@@ -23,6 +27,10 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
                     <li>@Html.ActionLink("Tags", "Tags", "Home")</li>
+                    @if (currentRoles.Contains("Admin"))
+                    {
+                        <li>@Html.ActionLink("Administar", "AdminUsers", "Manage")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
