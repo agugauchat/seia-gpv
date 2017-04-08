@@ -1,0 +1,38 @@
+﻿@model DotW.Models.DeleteViewModel
+
+@{
+    ViewBag.Title = "Eliminar usuario";
+}
+
+<h2>Confirmar eliminación</h2>
+
+<h3>Estas seguro que desea eliminar este usuario?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            Roles en el sitio
+        </dt>
+        @foreach (var role in Model.Roles)
+        {
+            <dd>
+               @role
+            </dd>
+        }
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        <input id="id" name="id" type="hidden" value=@Model.Id />
+        <div class="form-actions no-color">
+            @Html.ActionLink("Volver a la lista", "Index", "User", null, new { @class = "btn btn-default" })
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </div>
+    }
+</div>

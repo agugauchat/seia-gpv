@@ -9,7 +9,7 @@ namespace DotW
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            CreateAdminRoleAndUsers();
+            CreateRolesAndUsers();
         }
     }
 }

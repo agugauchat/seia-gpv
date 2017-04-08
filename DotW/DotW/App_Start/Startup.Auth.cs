@@ -69,18 +69,25 @@ namespace DotW
         /// <summary>
         /// Crea el rol y usuario administrador.
         /// </summary>
-        private void CreateAdminRoleAndUsers()
+        private void CreateRolesAndUsers()
         {
             ApplicationDbContext loginContext = new ApplicationDbContext();
 
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(loginContext));
+            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(loginContext));
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(loginContext));
 
-            if (!roleManager.RoleExists("Admin"))
+            if (!RoleManager.RoleExists("Admin"))
             {
                 // Crea el rol Admin.
                 var adminRole = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole { Name = "Admin" };
-                roleManager.Create(adminRole);
+                RoleManager.Create(adminRole);
+            }
+
+            if (!RoleManager.RoleExists("User"))
+            {
+                // Crea el rol User.
+                var userRole = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole { Name = "User" };
+                RoleManager.Create(userRole);
             }
 
             // Se inicializa el usuario.
@@ -101,7 +108,7 @@ namespace DotW
                 // Agrega el usuario al rol Admin.
                 if (creationResult.Succeeded)
                 {
-                    var result = UserManager.AddToRole(adminUser.Id, "Admin");
+                    var result = UserManager.AddToRole(adminUser.Id, RoleTypes.Admin.ToString());
                 }
             }
         }

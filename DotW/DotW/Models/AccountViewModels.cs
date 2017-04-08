@@ -69,9 +69,8 @@ namespace DotW.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
         [Display(Name = "Rol")]
-        public string UserRoles { get; set; }
+        public string Rol { get; set; }
 
         //[Required]
         //[Display(Name = "Nombre de usuario")]
@@ -109,6 +108,19 @@ namespace DotW.Models
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
+    }
+
+    public class DeleteViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        public string Id { get; set; }
+
+        public List<string> Roles { get; set; }
     }
 
     public class ForgotPasswordViewModel

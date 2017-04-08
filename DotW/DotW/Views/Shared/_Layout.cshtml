@@ -29,7 +29,7 @@
                     <li>@Html.ActionLink("Tags", "Tags", "Home")</li>
                     @if (currentRoles.Contains("Admin"))
                     {
-                        <li>@Html.ActionLink("Administar", "AdminUsers", "Manage")</li>
+                        <li>@Html.ActionLink("Administar Usuarios", "Index", "User")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

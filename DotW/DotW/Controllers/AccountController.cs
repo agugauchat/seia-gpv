@@ -108,6 +108,8 @@ namespace DotW.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            model.Rol = RoleTypes.User.ToString();
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
@@ -121,9 +123,7 @@ namespace DotW.Controllers
 
                 if (result.Succeeded)
                 {
-                    // TODO -> Ver esta parte, crear un nuevo rol para los usuarios comunes. ¿Dejar cargar mas de un admin?
-                    // Si no me equivoco, se podría dejar a los demás usuarios sin Rol. No pasaría nada.
-                    await this.UserManager.AddToRoleAsync(user.Id, "Admin");
+                    UserManager.AddToRole(user.Id, RoleTypes.User.ToString());
 
                     System.Net.Mail.MailMessage m = new System.Net.Mail.MailMessage(
                         new System.Net.Mail.MailAddress("no-reply@devsoftheweb.com", "Devs of the Web"),

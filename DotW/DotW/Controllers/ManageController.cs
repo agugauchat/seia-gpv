@@ -36,12 +36,6 @@ namespace DotW.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Admin")]
-        public ActionResult AdminUsers()
-        {
-            return View();
-        }
-
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]

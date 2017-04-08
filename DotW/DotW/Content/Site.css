@@ -22,3 +22,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.thead-inverse th {
+    color: #fff;
+    background-color: #373a3c;
+}
