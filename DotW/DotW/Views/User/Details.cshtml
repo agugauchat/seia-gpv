@@ -8,20 +8,23 @@
 
 <div>
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            Roles en el sitio
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.UserName)</dt>
+        <dd>@Model.UserName</dd>
+        <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+        <dd>@Html.DisplayFor(model => model.Email)</dd>
+        <dt>Email confirmado</dt>
+        @if (Model.EmailConfirmed)
+        {
+            <dd>Si</dd>
+        }
+        else
+        {
+            <dd>No</dd>
+        }
+        <dt>@Html.DisplayNameFor(model => model.Roles)</dt>
         @foreach (var role in Model.Roles)
         {
-            <dd>
-                @role
-            </dd>
+            <dd>@role</dd>
         }
     </dl>
 </div>

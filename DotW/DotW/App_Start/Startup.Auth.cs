@@ -97,7 +97,7 @@ namespace DotW
             {
                 var adminUser = new ApplicationUser
                 {
-                    UserName = email,
+                    UserName = "admin",
                     Email = email,
                     EmailConfirmed = true
                 };

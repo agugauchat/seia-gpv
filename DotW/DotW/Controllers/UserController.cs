@@ -36,7 +36,7 @@
             {
                 var user = new ApplicationUser
                 {
-                    UserName = model.Email,
+                    UserName = model.UserName,
                     Email = model.Email,
                     EmailConfirmed = true
                 };
@@ -60,7 +60,6 @@
             return View(model);
         }
 
-        [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(string token)
         {
@@ -68,19 +67,17 @@
 
             if (user != null)
             {
-                // TODO: falta terminar.
+                var model = new EditViewModel
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    EmailConfirmed = user.EmailConfirmed,
+                    Roles = TranslateRoles(UserManager.GetRoles(user.Id).ToList())
+                };
 
+                ViewBag.Roles = new SelectList(GetRoleList(), "RoleValue", "RoleName");
 
-                //var model = new DeleteViewModel
-                //{
-                //    Email = user.Email,
-                //    Id = user.Id,
-                //    Roles = TranslateRoles(UserManager.GetRoles(user.Id).ToList())
-                //};
-
-                //return View(model);
-
-                return View();
+                return View(model);
             }
             else
             {
@@ -90,11 +87,21 @@
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit()
+        public ActionResult Edit(EditViewModel model)
         {
-            // TODO: falta terminar.
+            var user = UserManager.FindByName(model.UserName);
 
-            return View();
+            if (user != null)
+            {
+                UserManager.RemoveFromRoles(user.Id, RoleTypes.Admin.ToString(), RoleTypes.User.ToString());
+                UserManager.AddToRole(user.Id, model.Rol);
+
+                return RedirectToAction("Index", "User");
+            }
+
+            ViewBag.Roles = new SelectList(GetRoleList(), "RoleValue", "RoleName");
+
+            return View(model);
         }
 
         public ActionResult Details(string token)
@@ -105,7 +112,9 @@
             {
                 var model = new DetailsViewModel
                 {
+                    UserName = user.UserName,
                     Email = user.Email,
+                    EmailConfirmed = user.EmailConfirmed,
                     Roles = TranslateRoles(UserManager.GetRoles(user.Id).ToList())
                 };
 
@@ -127,6 +136,7 @@
             {
                 var model = new DeleteViewModel
                 {
+                    UserName = user.UserName,
                     Email = user.Email,
                     Id = user.Id,
                     Roles = TranslateRoles(UserManager.GetRoles(user.Id).ToList())

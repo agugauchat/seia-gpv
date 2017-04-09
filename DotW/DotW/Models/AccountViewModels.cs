@@ -49,9 +49,8 @@ namespace DotW.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Nombre de usuario")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -72,10 +71,10 @@ namespace DotW.Models
         [Display(Name = "Rol")]
         public string Rol { get; set; }
 
-        //[Required]
-        //[Display(Name = "Nombre de usuario")]
-        //[StringLength(30, MinimumLength = 6, ErrorMessage = "Nombre de usuario inválido")]
-        //public string Username { get; set; }
+        [Required]
+        [Display(Name = "Nombre de usuario")]
+        [StringLength(30, MinimumLength = 6, ErrorMessage = "Nombre de usuario inválido")]
+        public string UserName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "La {0} contraseña debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]

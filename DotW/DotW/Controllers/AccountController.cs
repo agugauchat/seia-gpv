@@ -16,7 +16,6 @@ namespace DotW.Controllers
     [Authorize]
     public class AccountController : BaseController
     {
-        // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -32,7 +31,7 @@ namespace DotW.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(model.Email, model.Password);
+                var user = await UserManager.FindAsync(model.UserName, model.Password);
 
                 if (user != null)
                 {
@@ -114,7 +113,7 @@ namespace DotW.Controllers
             {
                 var user = new ApplicationUser
                 {
-                    UserName = model.Email,
+                    UserName = model.UserName,
                     Email = model.Email,
                     EmailConfirmed = false
                 };

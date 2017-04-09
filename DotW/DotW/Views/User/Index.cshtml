@@ -13,9 +13,9 @@
 <table class="table">
     <thead class="thead-inverse">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.UserName)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>Email confirmado</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -23,9 +23,16 @@
         @foreach (var user in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => user.Email)
-                </td>
+                <td>@Html.DisplayFor(model => user.UserName)</td>
+                <td>@Html.DisplayFor(model => user.Email)</td>
+                @if (user.EmailConfirmed)
+                {
+                    <td>Si</td>
+                }
+                else
+                {
+                    <td>No</td>
+                }
                 <td>
                     @Html.ActionLink("Editar", "Edit", "User", new { token = user.Id }, new { id = user.Id, @class = "btn btn-primary" })
                     @Html.ActionLink("Detalles", "Details", "User", new { token = user.Id }, new { id = user.Id, @class = "btn btn-info" })
