@@ -1,0 +1,30 @@
+﻿@model DotW.Models.DetailsViewModel
+
+@{
+    ViewBag.Title = "Detalle del Usuario";
+}
+
+<h2>Información del usuario</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            Roles en el sitio
+        </dt>
+        @foreach (var role in Model.Roles)
+        {
+            <dd>
+                @role
+            </dd>
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Volver a la lista", "Index", "User", null, new { @class = "btn btn-default" })
+</p>

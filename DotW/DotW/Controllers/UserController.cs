@@ -60,6 +60,64 @@
             return View(model);
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(string token)
+        {
+            var user = UserManager.FindById(token);
+
+            if (user != null)
+            {
+                // TODO: falta terminar.
+
+
+                //var model = new DeleteViewModel
+                //{
+                //    Email = user.Email,
+                //    Id = user.Id,
+                //    Roles = TranslateRoles(UserManager.GetRoles(user.Id).ToList())
+                //};
+
+                //return View(model);
+
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit()
+        {
+            // TODO: falta terminar.
+
+            return View();
+        }
+
+        public ActionResult Details(string token)
+        {
+            var user = UserManager.FindById(token);
+
+            if (user != null)
+            {
+                var model = new DetailsViewModel
+                {
+                    Email = user.Email,
+                    Roles = TranslateRoles(UserManager.GetRoles(user.Id).ToList())
+                };
+
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
+            }
+        }
+
+
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(string token)
         {
@@ -92,6 +150,8 @@
 
             return RedirectToAction("Index", "User");
         }
+
+        #region Private Methods
 
         private void AddErrors(IdentityResult result)
         {
@@ -139,5 +199,7 @@
 
             return roles;
         }
+
+        #endregion
     }
 }
