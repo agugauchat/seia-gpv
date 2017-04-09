@@ -42,13 +42,12 @@
         [Display(Name = "Nombre de usuario")]
         public string UserName { get; set; }
 
-        [Display(Name = "Roles del usuario")]
-        public List<string> Roles { get; set; }
+        //[Display(Name = "Roles del usuario")]
+        //public List<string> Roles { get; set; }
 
-        [Display(Name = "Rol")]
-        public string Rol { get; set; }
+        //[Display(Name = "Rol")]
+        //public string Rol { get; set; }
 
-        [Display(Name = "Email confirmado")]
-        public bool EmailConfirmed { get; set; }
+        public string Token { get; set; }
     }
 }

@@ -9,26 +9,22 @@
     using System.Web;
     using System.Web.Mvc;
 
+    [Authorize(Roles = "Admin")]
     public class UserController : BaseController
     {
-        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var model = UserManager.Users.ToList();
+            var model = UserManager.Users.ToList().OrderBy(x => x.UserName);
 
             return View(model);
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.Roles = new SelectList(GetRoleList(), "RoleValue", "RoleName" );
-
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(RegisterViewModel model)
         {
@@ -45,7 +41,7 @@
 
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, model.Rol);
+                    UserManager.AddToRole(user.Id, "User");
 
                     return RedirectToAction("Index", "User");
                 }
@@ -55,12 +51,9 @@
                 }
             }
 
-            ViewBag.Roles = new SelectList(GetRoleList(), "RoleValue", "RoleName");
-
             return View(model);
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult Edit(string token)
         {
             var user = UserManager.FindById(token);
@@ -69,13 +62,10 @@
             {
                 var model = new EditViewModel
                 {
+                    Token = token,
                     UserName = user.UserName,
                     Email = user.Email,
-                    EmailConfirmed = user.EmailConfirmed,
-                    Roles = TranslateRoles(UserManager.GetRoles(user.Id).ToList())
                 };
-
-                ViewBag.Roles = new SelectList(GetRoleList(), "RoleValue", "RoleName");
 
                 return View(model);
             }
@@ -86,20 +76,35 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public ActionResult Edit(EditViewModel model)
         {
-            var user = UserManager.FindByName(model.UserName);
+            var user = UserManager.FindById(model.Token);
 
             if (user != null)
             {
-                UserManager.RemoveFromRoles(user.Id, RoleTypes.Admin.ToString(), RoleTypes.User.ToString());
-                UserManager.AddToRole(user.Id, model.Rol);
+                    // Verificar si los atributos Mail y Username se encuentran disponibles
+                    var auxUser = UserManager.FindByEmail(model.Email);
+                    if (auxUser != null && auxUser.Id != model.Token)
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un usuario con ese email.");
+                        return View(model);
+                    }
+                    auxUser = UserManager.FindByName(model.UserName);
+                    if (auxUser != null && auxUser.Id != model.Token)
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un usuario con ese nombre.");
+                        return View(model);
+                    }
 
-                return RedirectToAction("Index", "User");
+                    // Actualizar el usuario con los atributos del modelo
+                    user.Email = model.Email;
+                    user.UserName = model.UserName;
+
+                    // Persistir los cambios en la BD
+                    UserManager.Update(user);
+
+                    return RedirectToAction("Index", "User");
             }
-
-            ViewBag.Roles = new SelectList(GetRoleList(), "RoleValue", "RoleName");
 
             return View(model);
         }
@@ -151,7 +156,6 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public ActionResult Delete(ApplicationUser model)
         {
             var user = UserManager.FindById(model.Id);
