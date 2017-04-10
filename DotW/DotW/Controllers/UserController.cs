@@ -82,28 +82,31 @@
 
             if (user != null)
             {
-                    // Verificar si los atributos Mail y Username se encuentran disponibles
-                    var auxUser = UserManager.FindByEmail(model.Email);
-                    if (auxUser != null && auxUser.Id != model.Token)
-                    {
-                        ModelState.AddModelError(string.Empty, "Ya existe un usuario con ese email.");
-                        return View(model);
-                    }
-                    auxUser = UserManager.FindByName(model.UserName);
-                    if (auxUser != null && auxUser.Id != model.Token)
-                    {
-                        ModelState.AddModelError(string.Empty, "Ya existe un usuario con ese nombre.");
-                        return View(model);
-                    }
+                // Verificar si los atributos Mail y Username se encuentran disponibles
+                var auxUser = UserManager.FindByEmail(model.Email);
+                if (auxUser != null && auxUser.Id != model.Token)
+                {
+                    ModelState.AddModelError(string.Empty, "Ya existe un usuario con ese email.");
+                    return View(model);
+                }
+                auxUser = UserManager.FindByName(model.UserName);
+                if (auxUser != null && auxUser.Id != model.Token)
+                {
+                    ModelState.AddModelError(string.Empty, "Ya existe un usuario con ese nombre.");
+                    return View(model);
+                }
 
-                    // Actualizar el usuario con los atributos del modelo
-                    user.Email = model.Email;
+                // Actualizar el usuario con los atributos del modelo
+                user.Email = model.Email;
+                if (user.UserName != "admin")
+                {
                     user.UserName = model.UserName;
+                }    
 
-                    // Persistir los cambios en la BD
-                    UserManager.Update(user);
+                // Persistir los cambios en la BD
+                UserManager.Update(user);
 
-                    return RedirectToAction("Index", "User");
+                return RedirectToAction("Index", "User");
             }
 
             return View(model);
@@ -160,7 +163,10 @@
         {
             var user = UserManager.FindById(model.Id);
 
-            UserManager.Delete(user);
+            if (user.UserName != "admin")
+            {
+                UserManager.Delete(user);
+            }
 
             return RedirectToAction("Index", "User");
         }

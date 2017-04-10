@@ -36,7 +36,10 @@
                 <td>
                     @Html.ActionLink("Editar", "Edit", "User", new { token = user.Id }, new { id = user.Id, @class = "btn btn-primary" })
                     @Html.ActionLink("Detalles", "Details", "User", new { token = user.Id }, new { id = user.Id, @class = "btn btn-info" })
-                    @Html.ActionLink("Eliminar", "Delete", "User", new { token = user.Id }, new { id = user.Id, @class = "btn btn-danger" })
+                    @if (user.UserName != "admin")
+                    {
+                        @Html.ActionLink("Eliminar", "Delete", "User", new { token = user.Id }, new { id = user.Id, @class = "btn btn-danger" })
+                    }
                 </td>
             </tr>
         }

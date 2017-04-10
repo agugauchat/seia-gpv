@@ -12,12 +12,15 @@
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Token)
-    <div class="form-group">
-        @Html.LabelFor(model => model.UserName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+    if (Model.UserName != "admin")
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
+    }
     <div class="form-group">
         @Html.LabelFor(model => model.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
