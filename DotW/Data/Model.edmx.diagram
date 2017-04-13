@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e298f68589d04015b2168e2bc7529538" Name="Diagram1">
+        <EntityTypeShape EntityType="DotWModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DotWModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="DotWModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DotWModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DotWModel.AspNetUsers" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DotWModel.Categories" Width="1.5" PointX="13.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DotWModel.Comments" Width="1.5" PointX="12.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DotWModel.PostCategories" Width="1.5" PointX="15.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="DotWModel.Posts" Width="1.5" PointX="10.5" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DotWModel.Tags" Width="1.5" PointX="12.75" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DotWModel.Users" Width="1.5" PointX="8.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DotWModel.UserStates" Width="1.5" PointX="6" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DotWModel.Votes" Width="1.5" PointX="15.75" PointY="8.125" IsExpanded="true" />
+        <AssociationConnector Association="DotWModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DotWModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DotWModel.FK_Users_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="DotWModel.FK_Categories_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="DotWModel.FK_PostCategories_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="DotWModel.FK_Comments_Post" ManuallyRouted="false" />
+        <AssociationConnector Association="DotWModel.FK_Comments_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DotWModel.FK_PostCategories_Posts" ManuallyRouted="false" />
+        <AssociationConnector Association="DotWModel.FK_Posts_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="DotWModel.FK_Tags_Posts" ManuallyRouted="false" />
+        <AssociationConnector Association="DotWModel.FK_Votes_Post" ManuallyRouted="false" />
+        <AssociationConnector Association="DotWModel.FK_Users_UserStates" ManuallyRouted="false" />
+        <AssociationConnector Association="DotWModel.FK_Votes_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DotWModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -10,6 +10,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DotW.Models;
 using System.Configuration;
+using Services.UserServices;
+using Contracts.UserContracts.Request;
+using Entities.UserEntities;
 
 namespace DotW.Controllers
 {
@@ -122,6 +125,19 @@ namespace DotW.Controllers
 
                 if (result.Succeeded)
                 {
+                    var userService = new UserService();
+
+                    var request = new CreateUserRequest
+                    {
+                        User = new User
+                        {
+                            Name = user.UserName,
+                            AspNetUserId = user.Id,
+                        }
+                    };
+
+                    var response = userService.CreateUser(request);
+
                     UserManager.AddToRole(user.Id, RoleTypes.User.ToString());
 
                     System.Net.Mail.MailMessage m = new System.Net.Mail.MailMessage(
