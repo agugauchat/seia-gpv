@@ -1,4 +1,5 @@
 ﻿<!DOCTYPE html>
+@using Microsoft.AspNet.Identity
 @{ 
     DotW.Models.ApplicationUser currentUser = ViewBag.CurrentUser as DotW.Models.ApplicationUser;
     List<string> currentRoles = ViewBag.RolesOfCurrentUser as List<string>;
@@ -30,6 +31,11 @@
                     @if (currentRoles.Contains("Admin"))
                     {
                         <li>@Html.ActionLink("Administar Usuarios", "Index", "User")</li>
+                    }
+                    <li>@Html.ActionLink("Publicaciones", "List", "Post")</li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Mis Publicaciones", "Index", "Post")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

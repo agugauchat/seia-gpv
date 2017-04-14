@@ -1,0 +1,15 @@
+﻿@model DotW.Models.ListPostViewModel
+@{
+    ViewBag.Title = "Publicaciones";
+}
+
+<h2>Publicaciones</h2>
+<hr />
+@foreach (var post in Model.Posts)
+{
+    <div class="form-group">
+        <h3>@post.Title</h3>
+        <p>@post.Body</p>
+    </div>
+    <hr />
+}

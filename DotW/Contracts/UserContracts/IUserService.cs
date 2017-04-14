@@ -11,5 +11,7 @@
     public interface IUserService
     {
         CreateUserResponse CreateUser(CreateUserRequest request);
+
+        GetUserByAccountIdResponse GetUserByAccountId(GetUserByAccountIdRequest request);
     }
 }

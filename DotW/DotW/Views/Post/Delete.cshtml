@@ -1,0 +1,23 @@
+﻿@model  DotW.Models.DeletePostViewModel
+@{
+    ViewBag.Title = "Eliminar publicación";
+}
+<h2>Confirmar eliminación</h2>
+<h3>Estas seguro que desea eliminar esta publicación?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.Title)</dt>
+        <dd>@Model.Title</dd>
+    </dl>
+    <br />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <input id="id" name="id" type="hidden" value=@Model.Id />
+        <div class="form-actions no-color">
+            @Html.ActionLink("Volver a la lista", "Index", "Post", null, new { @class = "btn btn-default" })
+            <input type="submit" value="Eliminar" class="btn btn-danger" />
+        </div>
+    }
+</div>

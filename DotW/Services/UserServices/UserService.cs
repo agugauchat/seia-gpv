@@ -9,6 +9,7 @@
     using Contracts.UserContracts.Response;
     using Data;
     using Contracts.UserContracts;
+    using Entities.UserEntities;
 
     public class UserService : IUserService
     {
@@ -30,6 +31,31 @@
                 db.SaveChanges();
 
                 return new CreateUserResponse();
+            }
+        }
+
+        public GetUserByAccountIdResponse GetUserByAccountId(GetUserByAccountIdRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                var result = db.Users.FirstOrDefault(x => x.AspNetUserId == request.AccountId);
+
+                var response = new GetUserByAccountIdResponse();
+
+                if (result != null)
+                {
+                    response.User = new User
+                    {
+                        Id = result.Id,
+                        Name = result.Name,
+                        AspNetUserId = result.AspNetUserId,
+                        EffectDate = result.EffectDate,
+                        IdState = result.IdState,
+                        SuspendedDate = result.SuspendedDate
+                    };
+                }
+
+                return response;
             }
         }
     }
