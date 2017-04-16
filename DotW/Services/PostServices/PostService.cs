@@ -27,6 +27,14 @@
 
                 db.Posts.Add(post);
 
+                var postCategory = new PostCategories
+                {
+                    IdCategory = request.CategoryId,
+                    IdPost = post.Id
+                };
+
+                db.PostCategories.Add(postCategory);
+
                 db.SaveChanges();
 
                 return new CreatePostResponse { PostId = post.Id };
@@ -48,7 +56,9 @@
                             Title = x.Title,
                             Body = x.Body,
                             EffectDate = x.EffectDate,
-                            IdWriter = x.IdWriter
+                            IdWriter = x.IdWriter,
+                            IdCategory = x.PostCategories.Select(y => y.IdCategory).FirstOrDefault(),
+                            CategoryTitle = x.PostCategories.Select(y => y.Categories.Title).FirstOrDefault(),
                         }).ToList();
                 }
                 else if(!string.IsNullOrEmpty(request.AspNetUserId))
@@ -60,7 +70,9 @@
                             Title = x.Title,
                             Body = x.Body,
                             EffectDate = x.EffectDate,
-                            IdWriter = x.IdWriter
+                            IdWriter = x.IdWriter,
+                            IdCategory = x.PostCategories.Select(y => y.IdCategory).FirstOrDefault(),
+                            CategoryTitle = x.PostCategories.Select(y => y.Categories.Title).FirstOrDefault(),
                         }).ToList();
                 }
 
@@ -79,7 +91,9 @@
                             Title = x.Title,
                             Body = x.Body,
                             EffectDate = x.EffectDate,
-                            IdWriter = x.IdWriter
+                            IdWriter = x.IdWriter,
+                            IdCategory = x.PostCategories.Select(y => y.IdCategory).FirstOrDefault(),
+                            CategoryTitle = x.PostCategories.Select(y => y.Categories.Title).FirstOrDefault(),
                         }).ToList();
 
                 return new SearchPostsResponse { Posts = result };
@@ -99,7 +113,9 @@
                         Title = x.Title,
                         Body = x.Body,
                         EffectDate = x.EffectDate,
-                        IdWriter = x.IdWriter
+                        IdWriter = x.IdWriter,
+                        IdCategory = x.PostCategories.Select(y => y.IdCategory).FirstOrDefault(),
+                        CategoryTitle = x.PostCategories.Select(y => y.Categories.Title).FirstOrDefault(),
                     }).FirstOrDefault(x => x.Id == request.Id);
 
                 return response;
@@ -116,6 +132,10 @@
                 {
                     post.Title = request.Title;
                     post.Body = request.Body;
+
+                    var postCategory = db.PostCategories.FirstOrDefault(x => x.IdPost == post.Id);
+
+                    postCategory.IdCategory = request.IdCategory;
 
                     db.SaveChanges();
                 }

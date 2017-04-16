@@ -1,9 +1,11 @@
 ﻿namespace DotW.Controllers
 {
+    using Contracts.CategoryContracts.Request;
     using Contracts.PostContracts.Request;
     using Contracts.UserContracts.Request;
     using Microsoft.AspNet.Identity;
     using Models;
+    using Services.CategoryServices;
     using Services.PostServices;
     using Services.UserServices;
     using System;
@@ -40,7 +42,14 @@
         [Authorize]
         public ActionResult Create()
         {
-            //TODO > Agregar lista de categorias.
+            var categoryService = new CategoryService();
+
+            var categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
+            ViewBag.Categories = categories.Select(x => new SelectListItem()
+            {
+                Text = x.Title,
+                Value = x.Id.ToString()
+            });
 
             return View();
         }
@@ -52,6 +61,7 @@
         {
             var userService = new UserService();
             var postService = new PostService();
+            var categoryService = new CategoryService();
 
             //TODO > Más adelante hay que validar el estado del usuario antes de permitir publicar.
 
@@ -68,13 +78,21 @@
                 {
                     IdWriter = model.IdWriter,
                     Title = model.Title,
-                    Body = model.Body
+                    Body = model.Body,
+                    CategoryId = model.IdCategory
                 };
 
                 var result = postService.CreatePost(request);
 
                 return RedirectToAction("Index", "Post");
             }
+
+            var categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
+            ViewBag.Categories = categories.Select(x => new SelectListItem()
+            {
+                Text = x.Title,
+                Value = x.Id.ToString()
+            });
 
             return View(model);
         }
@@ -83,6 +101,7 @@
         public ActionResult Edit(int id)
         {
             var postService = new PostService();
+            var categoryService = new CategoryService();
 
             var result = postService.GetPostById(new GetPostByIdRequest { Id = id }).Post;
 
@@ -91,7 +110,15 @@
                 Id = result.Id,
                 Title = result.Title,
                 Body = result.Body,
+                IdCategory = result.IdCategory
             };
+
+            var categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
+            ViewBag.Categories = categories.Select(x => new SelectListItem()
+            {
+                Text = x.Title,
+                Value = x.Id.ToString()
+            });
 
             return View(model);
         }
@@ -101,15 +128,29 @@
         public ActionResult Edit(EditPostViewModel model)
         {
             var postService = new PostService();
+            var categoryService = new CategoryService();
 
-            var result = postService.UpdatePost(new UpdatePostRequest
+            if (ModelState.IsValid)
             {
-                Id = model.Id,
-                Title = model.Title,
-                Body = model.Body
+                var result = postService.UpdatePost(new UpdatePostRequest
+                {
+                    Id = model.Id,
+                    Title = model.Title,
+                    Body = model.Body,
+                    IdCategory = model.IdCategory
+                });
+
+                return RedirectToAction("Index", "Post");
+            }
+
+            var categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
+            ViewBag.Categories = categories.Select(x => new SelectListItem()
+            {
+                Text = x.Title,
+                Value = x.Id.ToString()
             });
 
-            return RedirectToAction("Index", "Post");
+            return View(model);
         }
 
         [Authorize]
@@ -123,6 +164,7 @@
             {
                 Id = result.Id,
                 Title = result.Title,
+                CategoryTitle = result.CategoryTitle
             };
 
             return View(model);

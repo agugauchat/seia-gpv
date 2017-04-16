@@ -20,6 +20,10 @@ namespace DotW.Models
         [Required]
         [Display(Name = "Cuerpo")]
         public string Body { get; set; }
+
+        [Required]
+        [Display(Name = "Categoría")]
+        public int IdCategory { get; set; }
     }
 
     public class EditPostViewModel
@@ -33,15 +37,21 @@ namespace DotW.Models
         [Required]
         [Display(Name = "Cuerpo")]
         public string Body { get; set; }
+
+        [Required]
+        [Display(Name = "Categoría")]
+        public int IdCategory { get; set; }
     }
 
     public class DeletePostViewModel
     {
         public int Id { get; set; }
 
-        [Required]
         [Display(Name = "Título")]
         public string Title { get; set; }
+
+        [Display(Name = "Categoría")]
+        public string CategoryTitle { get; set; }
     }
 
     public class IndexPostViewModel

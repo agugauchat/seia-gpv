@@ -22,5 +22,11 @@
 
         [Display(Name = "Fecha de alta")]
         public DateTime EffectDate { get; set; }
+
+        [Display(Name = "Categoría")]
+        public int IdCategory { get; set; }
+
+        [Display(Name = "Categoría")]
+        public string CategoryTitle { get; set; }
     }
 }
