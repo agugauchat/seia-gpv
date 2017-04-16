@@ -1,9 +1,11 @@
 ﻿namespace DotW.Controllers
 {
     using Contracts.CategoryContracts.Request;
+    using Contracts.PostContracts.Request;
     using Microsoft.AspNet.Identity;
     using Models;
     using Services.CategoryServices;
+    using Services.PostServices;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -141,10 +143,26 @@
         public ActionResult Delete(DeleteCategoryViewModel model)
         {
             var categoryService = new CategoryService();
+            var postService = new PostService();
 
-            var result = categoryService.DeleteCategory(new DeleteCategoryRequest { Id = model.Id });
-
-            // TODO -> Revisar restricciones a la hora de eliminar categorías.
+            var post = postService.SearchPostsByCategoryId(new SearchPostsByCategoryIdRequest { IdCategory = model.Id }).Posts;
+            var childCategories = categoryService.SearchCategoriesByIdUpperCategory(new SearchCategoriesByIdUpperCategoryRequest { IdUpperCategory = model.Id }).Categories;
+            if ((!childCategories.Any()) && (!post.Any()))
+            {
+                var result = categoryService.DeleteCategory(new DeleteCategoryRequest { Id = model.Id });
+            }
+            else
+            {
+                if (post.Any())
+                {
+                    ModelState.AddModelError(string.Empty, "No se puede eliminar la categoría. Posee publicaciones asignadas.");
+                }
+                if (childCategories.Any())
+                {
+                    ModelState.AddModelError(string.Empty, "No se puede eliminar la categoría. Posee categorías hijas.");
+                }
+                return View(model);
+            }
 
             return RedirectToAction("Index", "Category");
         }

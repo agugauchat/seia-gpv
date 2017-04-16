@@ -10,11 +10,13 @@
         <dt>@Html.DisplayNameFor(model => model.Title)</dt>
         <dd>@Model.Title</dd>
     </dl>
+    <span class="text-danger">@Html.ValidationSummary()</span>
     <br />
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
         <input id="id" name="id" type="hidden" value=@Model.Id />
+        <input id="title" name="title" type="hidden" value=@Model.Title />
         <div class="form-actions no-color">
             @Html.ActionLink("Volver a la lista", "Index", "Category", null, new { @class = "btn btn-default" })
             <input type="submit" value="Eliminar" class="btn btn-danger" />
