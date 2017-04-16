@@ -1,0 +1,24 @@
+﻿@model DotW.Models.DetailsCategoryViewModel
+
+@{
+    ViewBag.Title = "Detalle de la Categoría";
+}
+
+<h2>Información de la Categoría</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.Title)</dt>
+        <dd>@Model.Title</dd>
+        <dt>@Html.DisplayNameFor(model => model.Description)</dt>
+        <dd>TODO -> Mostrar la descripción con texto enriquecido.</dd>
+        @if (Model.IdUpperCategory.HasValue)
+        {
+            <dt>@Html.DisplayNameFor(model => model.TitleUpperCategory)</dt>
+            <dd><a href="@Url.Action("Details", "Category", new { id = Model.IdUpperCategory })">@Model.TitleUpperCategory</a></dd>
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Volver", "Index", "Category", null, new { @class = "btn btn-default" })
+</p>

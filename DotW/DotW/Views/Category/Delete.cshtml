@@ -1,9 +1,9 @@
-﻿@model  DotW.Models.DeletePostViewModel
+﻿@model  DotW.Models.DeleteCategoryViewModel
 @{
-    ViewBag.Title = "Eliminar publicación";
+    ViewBag.Title = "Eliminar categoría";
 }
 <h2>Confirmar eliminación</h2>
-<h3>¿Está seguro que desea eliminar esta publicación?</h3>
+<h3>¿Está seguro que desea eliminar esta categoría?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -16,7 +16,7 @@
         @Html.AntiForgeryToken()
         <input id="id" name="id" type="hidden" value=@Model.Id />
         <div class="form-actions no-color">
-            @Html.ActionLink("Volver a la lista", "Index", "Post", null, new { @class = "btn btn-default" })
+            @Html.ActionLink("Volver a la lista", "Index", "Category", null, new { @class = "btn btn-default" })
             <input type="submit" value="Eliminar" class="btn btn-danger" />
         </div>
     }

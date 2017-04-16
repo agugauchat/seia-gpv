@@ -1,0 +1,44 @@
+﻿@model DotW.Models.IndexCategoryViewModel
+@{
+    ViewBag.Title = "Administración de Categorías";
+    int CategoryBoydLength = 0;
+}
+
+<h2>Administración de Categorías</h2>
+<br />
+<p>
+    @Html.ActionLink("Nueva Categoría", "Create", "Category", null, new { @class = "btn btn-success" })
+</p>
+<br />
+<table class="table">
+    <thead class="thead-inverse">
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Category in Model.Categories)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => Category.Title)</td>
+                @if (Category.Description.Length >= 70)
+                {
+                    CategoryBoydLength = 70;
+                }
+                else
+                {
+                    CategoryBoydLength = Category.Description.Length;
+                }
+                <td>@Category.Description.Substring(0, CategoryBoydLength)</td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", "Category", new { id = Category.Id }, new { id = Category.Id, @class = "btn btn-primary" })
+                    @Html.ActionLink("Detalles", "Details", "Category", new { id = Category.Id }, new { id = Category.Id, @class = "btn btn-info" })
+                    @Html.ActionLink("Eliminar", "Delete", "Category", new { id = Category.Id }, new { id = Category.Id, @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -40,6 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoryContracts\ICategoryService.cs" />
+    <Compile Include="CategoryContracts\Request\CreateCategoryRequest.cs" />
+    <Compile Include="CategoryContracts\Request\DeleteCategoryRequest.cs" />
+    <Compile Include="CategoryContracts\Request\GetCategoryByIdRequest.cs" />
+    <Compile Include="CategoryContracts\Request\SearchCategoriesByIdUpperCategoryRequest.cs" />
+    <Compile Include="CategoryContracts\Request\SearchCategoriesRequest.cs" />
+    <Compile Include="CategoryContracts\Request\UpdateCategoryRequest.cs" />
+    <Compile Include="CategoryContracts\Response\CreateCategoryResponse.cs" />
+    <Compile Include="CategoryContracts\Response\DeleteCategoryResponse.cs" />
+    <Compile Include="CategoryContracts\Response\GetCategoryByIdResponse.cs" />
+    <Compile Include="CategoryContracts\Response\SearchCategoriesByIdUpperCategoryResponse.cs" />
+    <Compile Include="CategoryContracts\Response\SearchCategoriesResponse.cs" />
+    <Compile Include="CategoryContracts\Response\UpdateCategoryResponse.cs" />
     <Compile Include="PostContracts\IPostService.cs" />
     <Compile Include="PostContracts\Request\CreatePostRequest.cs" />
     <Compile Include="PostContracts\Request\DeletePostRequest.cs" />
