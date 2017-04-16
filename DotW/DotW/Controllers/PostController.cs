@@ -28,13 +28,23 @@
             return View(model);
         }
 
-        public ActionResult List()
+        public ActionResult List(int? idCategory)
         {
             var postService = new PostService();
+            var categoryService = new CategoryService();
 
             var model = new ListPostViewModel();
 
-            model.Posts = postService.SearchPosts(new SearchPostsRequest()).Posts.ToList();
+            if (idCategory.HasValue)
+            {
+                model.Posts = postService.SearchPostsByCategoryId(new SearchPostsByCategoryIdRequest { IdCategory = idCategory.Value }).Posts.ToList();
+            }
+            else
+            {
+                model.Posts = postService.SearchPosts(new SearchPostsRequest()).Posts.ToList();
+            }
+
+            ViewBag.Categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
 
             return View(model);
         }

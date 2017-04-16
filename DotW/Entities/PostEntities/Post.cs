@@ -17,6 +17,9 @@
         [Display(Name = "Escritor")]
         public int IdWriter { get; set; }
 
+        [Display(Name = "Escritor")]
+        public string WriterUserName { get; set; }
+
         [Display(Name = "Cuerpo")]
         public string Body { get; set; }
 

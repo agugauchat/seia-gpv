@@ -71,12 +71,36 @@
                             Body = x.Body,
                             EffectDate = x.EffectDate,
                             IdWriter = x.IdWriter,
+                            WriterUserName = x.Users.Name,
                             IdCategory = x.PostCategories.Select(y => y.IdCategory).FirstOrDefault(),
                             CategoryTitle = x.PostCategories.Select(y => y.Categories.Title).FirstOrDefault(),
                         }).ToList();
                 }
 
                 return new SearchPostsByUserIdResponse { Posts = result };
+            }
+        }
+
+        public SearchPostsByCategoryIdResponse SearchPostsByCategoryId(SearchPostsByCategoryIdRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                var result = new List<Post>();
+                result = db.Posts.Where(x => x.PostCategories.FirstOrDefault().IdCategory == request.IdCategory
+                                             && !x.NullDate.HasValue)
+                    .Select(x => new Post
+                    {
+                        Id = x.Id,
+                        Title = x.Title,
+                        Body = x.Body,
+                        EffectDate = x.EffectDate,
+                        IdWriter = x.IdWriter,
+                        WriterUserName = x.Users.Name,
+                        IdCategory = x.PostCategories.Select(y => y.IdCategory).FirstOrDefault(),
+                        CategoryTitle = x.PostCategories.Select(y => y.Categories.Title).FirstOrDefault(),
+                    }).ToList();
+
+                return new SearchPostsByCategoryIdResponse { Posts = result };
             }
         }
 
@@ -92,6 +116,7 @@
                             Body = x.Body,
                             EffectDate = x.EffectDate,
                             IdWriter = x.IdWriter,
+                            WriterUserName = x.Users.Name,
                             IdCategory = x.PostCategories.Select(y => y.IdCategory).FirstOrDefault(),
                             CategoryTitle = x.PostCategories.Select(y => y.Categories.Title).FirstOrDefault(),
                         }).ToList();

@@ -14,6 +14,8 @@
 
         SearchPostsByUserIdResponse SearchPostsByUserId(SearchPostsByUserIdRequest request);
 
+        SearchPostsByCategoryIdResponse SearchPostsByCategoryId(SearchPostsByCategoryIdRequest request);
+
         SearchPostsResponse SearchPosts(SearchPostsRequest request);
 
         GetPostByIdResponse GetPostById(GetPostByIdRequest request);

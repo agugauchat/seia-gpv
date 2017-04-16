@@ -97,15 +97,27 @@
         {
             var categoryService = new CategoryService();
 
-            var result = categoryService.UpdateCategory(new UpdateCategoryRequest
+            if (ModelState.IsValid)
             {
-                Id = model.Id,
-                Title = model.Title,
-                Description = model.Description,
-                IdUpperCategory = model.IdUpperCategory
+                var result = categoryService.UpdateCategory(new UpdateCategoryRequest
+                {
+                    Id = model.Id,
+                    Title = model.Title,
+                    Description = model.Description,
+                    IdUpperCategory = model.IdUpperCategory
+                });
+
+                return RedirectToAction("Index", "Category");
+            }
+
+            var categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
+            ViewBag.Categories = categories.Select(x => new SelectListItem()
+            {
+                Text = x.Title,
+                Value = x.Id.ToString()
             });
 
-            return RedirectToAction("Index", "Category");
+            return View(model);
         }
 
         [Authorize(Roles = "Admin")]
