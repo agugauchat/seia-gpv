@@ -75,6 +75,7 @@
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="NullDate" Type="datetime" />
           <Property Name="IdUpperCategory" Type="int" />
+          <Property Name="Summary" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -553,6 +554,7 @@
           <NavigationProperty Name="Categories1" Relationship="Self.FK_Categories_Categories" FromRole="Categories" ToRole="Categories1" />
           <NavigationProperty Name="Categories2" Relationship="Self.FK_Categories_Categories" FromRole="Categories1" ToRole="Categories" />
           <NavigationProperty Name="PostCategories" Relationship="Self.FK_PostCategories_Categories" FromRole="Categories" ToRole="PostCategories" />
+          <Property Name="Summary" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -1014,6 +1016,7 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="DotWModel.Categories">
               <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

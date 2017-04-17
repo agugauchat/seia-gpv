@@ -26,6 +26,7 @@ namespace Data
         public string Description { get; set; }
         public Nullable<System.DateTime> NullDate { get; set; }
         public Nullable<int> IdUpperCategory { get; set; }
+        public string Summary { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Categories> Categories1 { get; set; }

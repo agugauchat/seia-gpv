@@ -21,6 +21,7 @@
                 {
                     Title = request.Title,
                     Description = request.Description,
+                    Summary = request.Summary,
                     IdUpperCategory = request.IdUpperCategory
                 };
 
@@ -42,6 +43,7 @@
                             Id = x.Id,
                             Title = x.Title,
                             Description = x.Description,
+                            Summary = x.Summary,
                             IdUpperCategory = x.IdUpperCategory
                         }).ToList();
 
@@ -59,6 +61,7 @@
                             Id = x.Id,
                             Title = x.Title,
                             Description = x.Description,
+                            Summary = x.Summary,
                             IdUpperCategory = x.IdUpperCategory
                         }).ToList();
 
@@ -78,6 +81,7 @@
                         Id = x.Id,
                         Title = x.Title,
                         Description = x.Description,
+                        Summary = x.Summary,
                         IdUpperCategory = x.IdUpperCategory,
                         NullDate = x.NullDate
                 }).FirstOrDefault(x => x.Id == request.Id && (!x.NullDate.HasValue));
@@ -96,6 +100,7 @@
                 {
                     Category.Title = request.Title;
                     Category.Description = request.Description;
+                    Category.Summary = request.Summary;
                     Category.IdUpperCategory = request.IdUpperCategory;
 
                     db.SaveChanges();

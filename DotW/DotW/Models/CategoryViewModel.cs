@@ -17,6 +17,11 @@
         [Display(Name = "Descripción")]
         public string Description { get; set; }
 
+        [Required]
+        [MaxLength(500)]
+        [Display(Name = "Resumen")]
+        public string Summary { get; set; }
+
         [Display(Name = "Categoría Superior")]
         public int? IdUpperCategory { get; set; }
     }
@@ -32,6 +37,11 @@
         [Required]
         [Display(Name = "Descripción")]
         public string Description { get; set; }
+
+        [Required]
+        [MaxLength(500)]
+        [Display(Name = "Resumen")]
+        public string Summary { get; set; }
 
         [Display(Name = "Categoría Superior")]
         public int? IdUpperCategory { get; set; }
@@ -65,6 +75,11 @@
         [Required]
         [Display(Name = "Descripción")]
         public string Description { get; set; }
+
+        [Required]
+        [MaxLength(500)]
+        [Display(Name = "Resumen")]
+        public string Summary { get; set; }
 
         [Display(Name = "Categoría Superior")]
         public int? IdUpperCategory { get; set; }

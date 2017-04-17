@@ -12,6 +12,8 @@
 
         public string Description { get; set; }
 
+        public string Summary { get; set; }
+
         public int? IdUpperCategory { get; set; }
     }
 }

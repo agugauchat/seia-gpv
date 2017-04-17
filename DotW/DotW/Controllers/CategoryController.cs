@@ -50,6 +50,7 @@
                 var request = new CreateCategoryRequest
                 {
                     Title = model.Title,
+                    Summary = model.Summary,
                     Description = model.Description,
                     IdUpperCategory = model.IdUpperCategory
                 };
@@ -79,6 +80,7 @@
             {
                 Id = result.Id,
                 Title = result.Title,
+                Summary = result.Summary,
                 Description = result.Description,
                 IdUpperCategory = result.IdUpperCategory
             };
@@ -105,6 +107,7 @@
                 {
                     Id = model.Id,
                     Title = model.Title,
+                    Summary = model.Summary,
                     Description = model.Description,
                     IdUpperCategory = model.IdUpperCategory
                 });
@@ -178,6 +181,7 @@
                 {
                     Title = category.Title,
                     Description = category.Description,
+                    Summary = category.Summary,
                     IdUpperCategory = category.IdUpperCategory,
                     TitleUpperCategory = category.IdUpperCategory.HasValue ? categoryService.GetCategoryById(new GetCategoryByIdRequest() { Id = category.IdUpperCategory.Value }).Category.Title : string.Empty
                 };
