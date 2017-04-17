@@ -19,6 +19,7 @@ namespace Data
         {
             this.Posts = new HashSet<Posts>();
             this.Votes = new HashSet<Votes>();
+            this.Complaints = new HashSet<Complaints>();
         }
     
         public int Id { get; set; }
@@ -36,5 +37,7 @@ namespace Data
         public virtual UserStates UserStates { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Votes> Votes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Complaints> Complaints { get; set; }
     }
 }
