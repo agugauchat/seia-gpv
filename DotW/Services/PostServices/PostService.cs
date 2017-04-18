@@ -22,18 +22,11 @@
                     IdWriter = request.IdWriter,
                     Title = request.Title,
                     Body = request.Body,
-                    EffectDate = DateTime.Now
+                    EffectDate = DateTime.Now,
+                    IdCategory = request.CategoryId
                 };
 
                 db.Posts.Add(post);
-
-                var postCategory = new PostCategories
-                {
-                    IdCategory = request.CategoryId,
-                    IdPost = post.Id
-                };
-
-                db.PostCategories.Add(postCategory);
 
                 db.SaveChanges();
 
@@ -57,8 +50,8 @@
                             Body = x.Body,
                             EffectDate = x.EffectDate,
                             IdWriter = x.IdWriter,
-                            IdCategory = x.PostCategories.Select(y => y.IdCategory).FirstOrDefault(),
-                            CategoryTitle = x.PostCategories.Select(y => y.Categories.Title).FirstOrDefault(),
+                            IdCategory = x.IdCategory,
+                            CategoryTitle = x.Categories.Title,
                         }).ToList();
                 }
                 else if(!string.IsNullOrEmpty(request.AspNetUserId))
@@ -72,8 +65,8 @@
                             EffectDate = x.EffectDate,
                             IdWriter = x.IdWriter,
                             WriterUserName = x.Users.Name,
-                            IdCategory = x.PostCategories.Select(y => y.IdCategory).FirstOrDefault(),
-                            CategoryTitle = x.PostCategories.Select(y => y.Categories.Title).FirstOrDefault(),
+                            IdCategory = x.IdCategory,
+                            CategoryTitle = x.Categories.Title,
                         }).ToList();
                 }
 
@@ -86,7 +79,7 @@
             using (var db = new DotWEntities())
             {
                 var result = new List<Post>();
-                result = db.Posts.Where(x => x.PostCategories.FirstOrDefault().IdCategory == request.IdCategory
+                result = db.Posts.Where(x => x.IdCategory == request.IdCategory
                                              && !x.NullDate.HasValue)
                     .Select(x => new Post
                     {
@@ -96,8 +89,8 @@
                         EffectDate = x.EffectDate,
                         IdWriter = x.IdWriter,
                         WriterUserName = x.Users.Name,
-                        IdCategory = x.PostCategories.Select(y => y.IdCategory).FirstOrDefault(),
-                        CategoryTitle = x.PostCategories.Select(y => y.Categories.Title).FirstOrDefault(),
+                        IdCategory = x.IdCategory,
+                        CategoryTitle = x.Categories.Title
                     }).ToList();
 
                 return new SearchPostsByCategoryIdResponse { Posts = result };
@@ -117,8 +110,8 @@
                             EffectDate = x.EffectDate,
                             IdWriter = x.IdWriter,
                             WriterUserName = x.Users.Name,
-                            IdCategory = x.PostCategories.Select(y => y.IdCategory).FirstOrDefault(),
-                            CategoryTitle = x.PostCategories.Select(y => y.Categories.Title).FirstOrDefault(),
+                            IdCategory = x.IdCategory,
+                            CategoryTitle = x.Categories.Title,
                         }).ToList();
 
                 return new SearchPostsResponse { Posts = result };
@@ -139,8 +132,8 @@
                         Body = x.Body,
                         EffectDate = x.EffectDate,
                         IdWriter = x.IdWriter,
-                        IdCategory = x.PostCategories.Select(y => y.IdCategory).FirstOrDefault(),
-                        CategoryTitle = x.PostCategories.Select(y => y.Categories.Title).FirstOrDefault(),
+                        IdCategory = x.IdCategory,
+                        CategoryTitle = x.Categories.Title,
                     }).FirstOrDefault(x => x.Id == request.Id);
 
                 return response;
@@ -157,10 +150,7 @@
                 {
                     post.Title = request.Title;
                     post.Body = request.Body;
-
-                    var postCategory = db.PostCategories.FirstOrDefault(x => x.IdPost == post.Id);
-
-                    postCategory.IdCategory = request.IdCategory;
+                    post.IdCategory = request.IdCategory;
 
                     db.SaveChanges();
                 }

@@ -18,7 +18,7 @@ namespace Data
         public Categories()
         {
             this.Categories1 = new HashSet<Categories>();
-            this.PostCategories = new HashSet<PostCategories>();
+            this.Posts = new HashSet<Posts>();
         }
     
         public int Id { get; set; }
@@ -32,6 +32,6 @@ namespace Data
         public virtual ICollection<Categories> Categories1 { get; set; }
         public virtual Categories Categories2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostCategories> PostCategories { get; set; }
+        public virtual ICollection<Posts> Posts { get; set; }
     }
 }

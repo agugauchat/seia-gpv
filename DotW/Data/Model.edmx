@@ -98,14 +98,6 @@
           <Property Name="IdUser" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="500" />
         </EntityType>
-        <EntityType Name="PostCategories">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdPost" Type="int" Nullable="false" />
-          <Property Name="IdCategory" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Posts">
           <Key>
             <PropertyRef Name="Id" />
@@ -116,16 +108,7 @@
           <Property Name="Body" Type="varchar(max)" Nullable="false" />
           <Property Name="EffectDate" Type="datetime" Nullable="false" />
           <Property Name="NullDate" Type="datetime" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="IdCategory" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -292,27 +275,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PostCategories_Categories">
+        <Association Name="FK_Posts_Category">
           <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
-          <End Role="PostCategories" Type="Self.PostCategories" Multiplicity="*" />
+          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PostCategories">
+            <Dependent Role="Posts">
               <PropertyRef Name="IdCategory" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PostCategories_Posts">
-          <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
-          <End Role="PostCategories" Type="Self.PostCategories" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Posts">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PostCategories">
-              <PropertyRef Name="IdPost" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -398,9 +369,7 @@
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Complaints" EntityType="Self.Complaints" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PostCategories" EntityType="Self.PostCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserStates" EntityType="Self.UserStates" Schema="dbo" store:Type="Tables" />
@@ -445,13 +414,9 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_PostCategories_Categories" Association="Self.FK_PostCategories_Categories">
+          <AssociationSet Name="FK_Posts_Category" Association="Self.FK_Posts_Category">
             <End Role="Categories" EntitySet="Categories" />
-            <End Role="PostCategories" EntitySet="PostCategories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PostCategories_Posts" Association="Self.FK_PostCategories_Posts">
             <End Role="Posts" EntitySet="Posts" />
-            <End Role="PostCategories" EntitySet="PostCategories" />
           </AssociationSet>
           <AssociationSet Name="FK_Posts_Users" Association="Self.FK_Posts_Users">
             <End Role="Users" EntitySet="Users" />
@@ -553,8 +518,8 @@
           <Property Name="IdUpperCategory" Type="Int32" />
           <NavigationProperty Name="Categories1" Relationship="Self.FK_Categories_Categories" FromRole="Categories" ToRole="Categories1" />
           <NavigationProperty Name="Categories2" Relationship="Self.FK_Categories_Categories" FromRole="Categories1" ToRole="Categories" />
-          <NavigationProperty Name="PostCategories" Relationship="Self.FK_PostCategories_Categories" FromRole="Categories" ToRole="PostCategories" />
           <Property Name="Summary" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Posts" Relationship="DotWModel.FK_Posts_Category" FromRole="Categories" ToRole="Posts" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -570,16 +535,6 @@
           <NavigationProperty Name="Users" Relationship="Self.FK_Comments_User" FromRole="Comments" ToRole="Users" />
           <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_Comment" FromRole="Comments" ToRole="Complaints" />
         </EntityType>
-        <EntityType Name="PostCategories">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdPost" Type="Int32" Nullable="false" />
-          <Property Name="IdCategory" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Categories" Relationship="Self.FK_PostCategories_Categories" FromRole="PostCategories" ToRole="Categories" />
-          <NavigationProperty Name="Posts" Relationship="Self.FK_PostCategories_Posts" FromRole="PostCategories" ToRole="Posts" />
-        </EntityType>
         <EntityType Name="Posts">
           <Key>
             <PropertyRef Name="Id" />
@@ -591,11 +546,12 @@
           <Property Name="EffectDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="NullDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Post" FromRole="Posts" ToRole="Comments" />
-          <NavigationProperty Name="PostCategories" Relationship="Self.FK_PostCategories_Posts" FromRole="Posts" ToRole="PostCategories" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Posts_Users" FromRole="Posts" ToRole="Users" />
           <NavigationProperty Name="Tags" Relationship="Self.FK_Tags_Posts" FromRole="Posts" ToRole="Tags" />
           <NavigationProperty Name="Votes" Relationship="Self.FK_Votes_Post" FromRole="Posts" ToRole="Votes" />
           <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_Post" FromRole="Posts" ToRole="Complaints" />
+          <Property Name="IdCategory" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Categories" Relationship="DotWModel.FK_Posts_Category" FromRole="Posts" ToRole="Categories" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -696,18 +652,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PostCategories_Categories">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
-          <End Role="PostCategories" Type="Self.PostCategories" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PostCategories">
-              <PropertyRef Name="IdCategory" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Comments_Post">
           <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
           <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
@@ -729,18 +673,6 @@
             </Principal>
             <Dependent Role="Comments">
               <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PostCategories_Posts">
-          <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
-          <End Role="PostCategories" Type="Self.PostCategories" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Posts">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PostCategories">
-              <PropertyRef Name="IdPost" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -816,7 +748,6 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
           <EntitySet Name="Categories" EntityType="Self.Categories" />
           <EntitySet Name="Comments" EntityType="Self.Comments" />
-          <EntitySet Name="PostCategories" EntityType="Self.PostCategories" />
           <EntitySet Name="Posts" EntityType="Self.Posts" />
           <EntitySet Name="Tags" EntityType="Self.Tags" />
           <EntitySet Name="Users" EntityType="Self.Users" />
@@ -838,10 +769,6 @@
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
           </AssociationSet>
-          <AssociationSet Name="FK_PostCategories_Categories" Association="Self.FK_PostCategories_Categories">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="PostCategories" EntitySet="PostCategories" />
-          </AssociationSet>
           <AssociationSet Name="FK_Comments_Post" Association="Self.FK_Comments_Post">
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Comments" EntitySet="Comments" />
@@ -849,10 +776,6 @@
           <AssociationSet Name="FK_Comments_User" Association="Self.FK_Comments_User">
             <End Role="Users" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PostCategories_Posts" Association="Self.FK_PostCategories_Posts">
-            <End Role="Posts" EntitySet="Posts" />
-            <End Role="PostCategories" EntitySet="PostCategories" />
           </AssociationSet>
           <AssociationSet Name="FK_Posts_Users" Association="Self.FK_Posts_Users">
             <End Role="Users" EntitySet="Users" />
@@ -878,7 +801,6 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="sysdiagrams" EntityType="DotWModel.sysdiagrams" />
           <EntitySet Name="Complaints" EntityType="DotWModel.Complaints" />
           <AssociationSet Name="FK_Complaints_Comment" Association="DotWModel.FK_Complaints_Comment">
             <End Role="Comments" EntitySet="Comments" />
@@ -892,17 +814,11 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Complaints" EntitySet="Complaints" />
           </AssociationSet>
+          <AssociationSet Name="FK_Posts_Category" Association="DotWModel.FK_Posts_Category">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="Complaints">
           <Key>
             <PropertyRef Name="Id" />
@@ -949,6 +865,18 @@
             </Principal>
             <Dependent Role="Complaints">
               <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posts_Category">
+          <End Type="DotWModel.Categories" Role="Categories" Multiplicity="1" />
+          <End Type="DotWModel.Posts" Role="Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="IdCategory" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1037,18 +965,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PostCategories">
-            <EntityTypeMapping TypeName="DotWModel.PostCategories">
-              <MappingFragment StoreEntitySet="PostCategories">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IdPost" ColumnName="IdPost" />
-                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="DotWModel.Posts">
               <MappingFragment StoreEntitySet="Posts">
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="IdWriter" ColumnName="IdWriter" />
@@ -1107,17 +1027,6 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="DotWModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Complaints">
             <EntityTypeMapping TypeName="DotWModel.Complaints">
               <MappingFragment StoreEntitySet="Complaints">

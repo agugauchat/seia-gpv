@@ -18,7 +18,6 @@ namespace Data
         public Posts()
         {
             this.Comments = new HashSet<Comments>();
-            this.PostCategories = new HashSet<PostCategories>();
             this.Tags = new HashSet<Tags>();
             this.Votes = new HashSet<Votes>();
             this.Complaints = new HashSet<Complaints>();
@@ -30,11 +29,10 @@ namespace Data
         public string Body { get; set; }
         public System.DateTime EffectDate { get; set; }
         public Nullable<System.DateTime> NullDate { get; set; }
+        public int IdCategory { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comments> Comments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostCategories> PostCategories { get; set; }
         public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tags> Tags { get; set; }
@@ -42,5 +40,6 @@ namespace Data
         public virtual ICollection<Votes> Votes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Complaints> Complaints { get; set; }
+        public virtual Categories Categories { get; set; }
     }
 }
