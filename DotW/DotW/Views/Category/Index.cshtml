@@ -27,13 +27,12 @@
                 {
                     if (Category.Summary.Length >= 70)
                     {
-                        CategoryBoydLength = 70;
+                        <td>@Category.Summary.Substring(0, 70)...</td>
                     }
                     else
                     {
-                        CategoryBoydLength = Category.Summary.Length;
+                        <td>@Category.Summary</td>
                     }
-                    <td>@Category.Summary.Substring(0, CategoryBoydLength)</td>
                 }
                 else
                 {
