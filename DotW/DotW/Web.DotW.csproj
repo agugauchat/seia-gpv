@@ -191,6 +191,11 @@
     <Content Include="Content\blog-post.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\codemirror.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Froala-editor\froala_editor.pkgd.min.css" />
+    <Content Include="Content\Froala-editor\froala_style.min.css" />
+    <Content Include="Content\Icons\font-awesome.min.css" />
     <Content Include="Content\Images\css.jpg" />
     <Content Include="Content\Images\django.jpg" />
     <Content Include="Content\Images\html.jpg" />
@@ -204,7 +209,15 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\codemirror.min.js" />
+    <Content Include="Scripts\Froala-editor\es.js" />
+    <Content Include="Scripts\Froala-editor\froala_editor.pkgd.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

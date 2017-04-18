@@ -14,7 +14,6 @@
     <thead class="thead-inverse">
         <tr>
             <th>Título</th>
-            <th>Cuerpo</th>
             <th>Categoría</th>
             <th>Fecha de Alta</th>
             <th>Acciones</th>
@@ -33,7 +32,6 @@
                 {
                     postBoydLength = post.Body.Length;
                 }
-                <td>@post.Body.Substring(0, postBoydLength)</td>
                 <td>@post.CategoryTitle</td>
                 <td>@post.EffectDate.ToString("dd/MM/yyyy")</td>
                 <td>

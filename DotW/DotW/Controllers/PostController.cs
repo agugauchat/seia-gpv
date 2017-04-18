@@ -66,6 +66,7 @@
 
         [Authorize]
         [HttpPost]
+        [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreatePostViewModel model)
         {
@@ -135,6 +136,8 @@
 
         [Authorize]
         [HttpPost]
+        [ValidateInput(false)]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(EditPostViewModel model)
         {
             var postService = new PostService();

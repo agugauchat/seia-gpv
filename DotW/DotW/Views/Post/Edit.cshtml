@@ -2,38 +2,63 @@
 @{
     ViewBag.Title = "Editar Publicación";
 }
-
-<h2>Editar la publicación</h2>
-@using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
-    <div class="form-group">
-        @Html.LabelFor(model => model.Title, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- Include external CSS. -->
+    <link href="~/Content/Icons/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/Content/codemirror.min.css">
+    <!-- Include Editor style. -->
+    <link href="~/Content/Froala-editor/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Froala-editor/froala_style.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <h2>Editar la publicación</h2>
+    @using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Body, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.Body, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Body, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Body, new { @class = "form-control froala-editor" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IdCategory, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.IdCategory, (IEnumerable<SelectListItem>)ViewBag.Categories, "Seleccione una categoría", new { @class = "form-control" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdCategory, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.IdCategory, (IEnumerable<SelectListItem>)ViewBag.Categories, "Seleccione una categoría", new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <p>
-        @Html.ActionLink("Volver a la lista", "Index", "Post", null, new { @class = "btn btn-default" })
-        <input type="submit" class="btn btn-success" value="Guardar" />
-    </p>
-}
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
+        <p>
+            @Html.ActionLink("Volver a la lista", "Index", "Post", null, new { @class = "btn btn-default" })
+            <input type="submit" class="btn btn-success" value="Guardar" />
+        </p>
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <!-- Include external JS libs. -->
+        <script type="text/javascript" src="~/Scripts/codemirror.min.js"></script>
+        <!-- Include Editor JS files. -->
+        <script type="text/javascript" src="~/Scripts/Froala-editor/froala_editor.pkgd.min.js"></script>
+        <!-- Initialize the editor. -->
+        <script>
+            $(function () {
+                $('.froala-editor').froalaEditor({
+                    language: 'es',
+                    // Quité 'emoticons' por un problema en el renderizado posterior. Se podría revisar.
+                    toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'specialCharacters', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', 'insertHR', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 'undo', 'redo', 'clearFormatting', 'selectAll', 'html']
+                })
+            }); </script>
+    }
+</body>
+</html>
