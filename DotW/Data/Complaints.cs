@@ -12,24 +12,16 @@ namespace Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Comments
+    public partial class Complaints
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Comments()
-        {
-            this.Complaints = new HashSet<Complaints>();
-        }
-    
         public int Id { get; set; }
-        public int IdPost { get; set; }
+        public Nullable<int> IdPost { get; set; }
+        public Nullable<int> IdComment { get; set; }
         public int IdUser { get; set; }
-        public string Commentary { get; set; }
-        public System.DateTime EffectDate { get; set; }
-        public Nullable<System.DateTime> NullDate { get; set; }
+        public string Description { get; set; }
     
+        public virtual Comments Comments { get; set; }
         public virtual Posts Posts { get; set; }
         public virtual Users Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Complaints> Complaints { get; set; }
     }
 }

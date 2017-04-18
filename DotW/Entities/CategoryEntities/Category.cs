@@ -17,6 +17,10 @@
         [Display(Name = "Descripción")]
         public string Description { get; set; }
 
+        [Display(Name = "Resumen")]
+        [MaxLength(500)]
+        public string Summary { get; set; }
+
         [Display(Name = "Fecha de baja")]
         public DateTime? NullDate { get; set; }
 

@@ -14,7 +14,7 @@
     <thead class="thead-inverse">
         <tr>
             <th>Título</th>
-            <th>Descripción</th>
+            <th>Resumen</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -23,15 +23,21 @@
         {
             <tr>
                 <td>@Html.DisplayFor(model => Category.Title)</td>
-                @if (Category.Description.Length >= 70)
+                @if (Category.Summary != null)
                 {
-                    CategoryBoydLength = 70;
+                    if (Category.Summary.Length >= 70)
+                    {
+                        <td>@Category.Summary.Substring(0, 70)...</td>
+                    }
+                    else
+                    {
+                        <td>@Category.Summary</td>
+                    }
                 }
                 else
                 {
-                    CategoryBoydLength = Category.Description.Length;
+                    <td></td>
                 }
-                <td>@Category.Description.Substring(0, CategoryBoydLength)</td>
                 <td>
                     @Html.ActionLink("Editar", "Edit", "Category", new { id = Category.Id }, new { id = Category.Id, @class = "btn btn-primary" })
                     @Html.ActionLink("Detalles", "Details", "Category", new { id = Category.Id }, new { id = Category.Id, @class = "btn btn-info" })

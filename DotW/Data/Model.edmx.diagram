@@ -33,6 +33,10 @@
         <AssociationConnector Association="DotWModel.FK_Votes_User" ManuallyRouted="false" />
         <AssociationConnector Association="DotWModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DotWModel.sysdiagrams" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DotWModel.Complaints" Width="1.5" PointX="18" PointY="10.25" />
+        <AssociationConnector Association="DotWModel.FK_Complaints_Comment" />
+        <AssociationConnector Association="DotWModel.FK_Complaints_Post" />
+        <AssociationConnector Association="DotWModel.FK_Complaints_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

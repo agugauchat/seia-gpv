@@ -38,5 +38,7 @@ namespace Data
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UserStates> UserStates { get; set; }
         public virtual DbSet<Votes> Votes { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Complaints> Complaints { get; set; }
     }
 }
