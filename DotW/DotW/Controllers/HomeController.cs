@@ -12,13 +12,5 @@ namespace DotW.Controllers
         {
             return View();
         }
-
-        [Authorize]
-        public ActionResult Tags()
-        {
-            ViewBag.Message = "Listado de tags disponibles";
-
-            return View();
-        }
     }
 }

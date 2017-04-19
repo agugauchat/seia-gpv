@@ -193,5 +193,20 @@
                 return RedirectToAction("Index", "Category");
             }
         }
+
+
+        public ActionResult List()
+        {
+            var categoryService = new CategoryService();
+
+            var model = new ListCategoriesViewModel();
+
+            model.Categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories.ToList();
+
+            ViewBag.Message = "Listado de categorías disponibles";
+
+
+            return View(model);
+        }
     }
 }
