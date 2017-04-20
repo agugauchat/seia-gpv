@@ -30,8 +30,7 @@
 });
 
 function UpdateValue(value) {
-    // this gets called from the popup window and updates the field with a new value 
+    // Esta función es llamada desde el popup y actualiza la URL de la imagen.
     var urlObject = $(".cke_dialog_ui_input_text")[1];
     urlObject.value = value;
-
 }
