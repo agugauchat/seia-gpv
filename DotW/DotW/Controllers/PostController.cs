@@ -244,9 +244,7 @@
 
                 var result = new
                 {
-                    uploaded = 1,
-                    fileName = ImageName,
-                    url = path
+                    Resultado = "imagen enviada correctamente."
                 };
 
                 return Json(result, JsonRequestBehavior.AllowGet);

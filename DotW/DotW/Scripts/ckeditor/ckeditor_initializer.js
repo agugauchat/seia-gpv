@@ -24,18 +24,14 @@
             dialogDefinition.removeContents('Link');
             dialogDefinition.removeContents('advanced');
             var infoTab = dialogDefinition.getContents('info');
-            infoTab.remove('txtBorder');
-            infoTab.remove('txtHSpace');
-            infoTab.remove('txtVSpace');
-            infoTab.remove('cmbAlign');
-            infoTab.remove('htmlPreview');
+            infoTab.remove('basic');
         }
     });
 });
 
-function updateValue(value) {
+function UpdateValue(value) {
     // this gets called from the popup window and updates the field with a new value 
     var urlObject = $(".cke_dialog_ui_input_text")[1];
-
     urlObject.value = value;
+
 }

@@ -1,3 +1,4 @@
 ﻿body { padding: 30px; }
 .container {max-width: 1200px; }
 input, textarea { max-width:100%; }
+.cke_dialog_contents_body{ height:0px !important; }
