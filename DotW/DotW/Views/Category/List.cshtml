@@ -1,0 +1,28 @@
+﻿@model DotW.Models.ListCategoriesViewModel
+@{
+    ViewBag.Title = "Categorías";
+}
+<h3>@ViewBag.Message</h3>
+
+
+<div class="container">
+    <div class="span8">
+        @foreach (var category in Model.Categories)
+        {
+            <h1>@category.Title</h1>
+            <p>@category.Summary</p>
+            <div>
+                <div class="more label"><a href="@Url.Action("Details", "Category", new { id = category.Id })">Ver más</a></div>
+                <div class="tags">
+                    <span class="btn-info"><a href="@Url.Action("List", "Post", new { idCategory = category.Id })">Publicaciones</a></span>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <hr>
+        }
+    </div>
+</div>
+
+@section Styles {
+    <link href="@Url.Content("~/Content/Categories.css")" rel="stylesheet" type="text/css" />
+}

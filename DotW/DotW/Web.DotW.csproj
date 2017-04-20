@@ -179,6 +179,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\PostViewModel.cs" />
@@ -194,6 +195,7 @@
     <Content Include="Content\ckeditor\adapters\jquery.js" />
     <Content Include="Content\ckeditor\build-config.js" />
     <Content Include="Content\ckeditor\ckeditor.js" />
+    <Content Include="Content\ckeditor\ckeditor_style.css" />
     <Content Include="Content\ckeditor\config.js" />
     <Content Include="Content\ckeditor\contents.css" />
     <Content Include="Content\ckeditor\lang\en.js" />
@@ -552,7 +554,9 @@
     <Content Include="Content\ckeditor\skins\bootstrapck\scss\config\_config.scss" />
     <Content Include="Content\ckeditor\skins\bootstrapck\scss\config\_defaults.scss" />
     <Content Include="Content\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
+    <None Include="Properties\PublishProfiles\Nico.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\ckeditor\ckeditor_initializer.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -615,6 +619,7 @@
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Category\Details.cshtml" />
     <Content Include="Views\Category\List.cshtml" />
+    <Content Include="Views\Post\UploadImagePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
