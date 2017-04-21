@@ -565,6 +565,7 @@
     <Content Include="Content\ckeditor\plugins\oembed\README.md" />
     <None Include="Properties\PublishProfiles\Nico.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Category\ckeditor.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
