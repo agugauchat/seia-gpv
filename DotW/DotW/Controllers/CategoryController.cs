@@ -39,6 +39,7 @@
         }
 
         [Authorize(Roles = "Admin")]
+        [ValidateInput(false)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateCategoryViewModel model)
@@ -96,6 +97,7 @@
         }
 
         [Authorize(Roles = "Admin")]
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult Edit(EditCategoryViewModel model)
         {

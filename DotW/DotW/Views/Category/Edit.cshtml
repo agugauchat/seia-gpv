@@ -2,53 +2,49 @@
 @{
     ViewBag.Title = "Editar Categoría";
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
+
+@section Styles {
     <script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
     <link href="~/Content/ckeditor/ckeditor_style.css" rel="stylesheet" />
-</head>
-<body>
-    <h2>Editar la Categoría</h2>
-    @using (Html.BeginForm("Edit", "Category", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
-            </div>
+}
+
+<h2>Editar la Categoría</h2>
+@using (Html.BeginForm("Edit", "Category", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Summary, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Summary, new { @class = "form-control" })
-            </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Summary, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Summary, new { @class = "form-control" })
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Description, new { @id = "categoryEditor", @class = "form-control" })
-            </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Description, new { @id = "categoryEditor", @class = "form-control" })
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdUpperCategory, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.IdUpperCategory, (IEnumerable<SelectListItem>)ViewBag.Categories, "Seleccione una categoría", new { @class = "form-control" })
-            </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.IdUpperCategory, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.IdUpperCategory, (IEnumerable<SelectListItem>)ViewBag.Categories, "Seleccione una categoría", new { @class = "form-control" })
         </div>
-        <p>
-            @Html.ActionLink("Cancelar", "Index", "Category", null, new { @class = "btn btn-default" })
-            <input type="submit" class="btn btn-success" value="Guardar" />
-        </p>
-    }
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <script src="~/Scripts/Category/ckeditor.js"></script>
-    }
-</body>
-</html>
+    </div>
+    <p>
+        @Html.ActionLink("Cancelar", "Index", "Category", null, new { @class = "btn btn-default" })
+        <input type="submit" class="btn btn-success" value="Guardar" />
+    </p>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/Category/ckeditor.js"></script>
+}
