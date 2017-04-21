@@ -1,18 +1,37 @@
 ﻿@model IEnumerable<DotW.Models.ImageViewModel>
-
-@foreach (var image in Model)
-{
-    <a href="#" class="returnImage" data-url="@Request.Url.GetLeftPart(UriPartial.Authority)@image.Url">
-        <img src="@image.Url" alt="Hejsan" id="#image" data-source="@image.Url" width="200" height="200" />
-    </a>
+@{ 
+    Layout = null;
 }
-@Scripts.Render("~/bundles/jquery")
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".returnImage").click("click", function (e) {
-            var urlImage = $(this).attr("data-url");
-            window.opener.UpdateValue(urlImage);
-            window.close();
-        });
-    });
-</script>
+<html>
+<head>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/ViewsStyles/Post/UploadImagePartial.css" rel="stylesheet" />
+</head>
+<body>
+    @if (Model.Any())
+    {
+        <div class="container">
+            <div class="row">
+                @foreach (var image in Model)
+                {
+
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                    <a href="#" class="returnImage" data-url="@Request.Url.GetLeftPart(UriPartial.Authority)@image.Url">
+                        <img class="img-responsive" src="@image.Url" id="#image" data-source="@image.Url" />
+                    </a>
+                </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="container body-content">
+            <h3>No hay imágenes alojadas en el servidor para su cuenta.</h3>
+            <h4>Puede agregar nuevas imágenes en la pestaña "Cargar" de la ventana anterior.</h4>
+        </div>
+    }
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/Post/UploadImagePartial.js"></script>
+</body>
+</html>
