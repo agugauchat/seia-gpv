@@ -330,6 +330,12 @@
     <Content Include="Content\ckeditor\plugins\magicline\images\hidpi\icon.png" />
     <Content Include="Content\ckeditor\plugins\magicline\images\icon-rtl.png" />
     <Content Include="Content\ckeditor\plugins\magicline\images\icon.png" />
+    <Content Include="Content\ckeditor\plugins\oembed\icons\hidpi\oembed.png" />
+    <Content Include="Content\ckeditor\plugins\oembed\icons\oembed.png" />
+    <Content Include="Content\ckeditor\plugins\oembed\lang\en.js" />
+    <Content Include="Content\ckeditor\plugins\oembed\lang\es.js" />
+    <Content Include="Content\ckeditor\plugins\oembed\libs\jquery.oembed.min.js" />
+    <Content Include="Content\ckeditor\plugins\oembed\plugin.js" />
     <Content Include="Content\ckeditor\plugins\pastefromword\filter\default.js" />
     <Content Include="Content\ckeditor\plugins\scayt\dialogs\options.js" />
     <Content Include="Content\ckeditor\plugins\scayt\dialogs\toolbar.css" />
@@ -555,6 +561,8 @@
     <Content Include="Content\ckeditor\skins\bootstrapck\scss\config\_config.scss" />
     <Content Include="Content\ckeditor\skins\bootstrapck\scss\config\_defaults.scss" />
     <Content Include="Content\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
+    <Content Include="Content\ckeditor\plugins\oembed\LICENSE.md" />
+    <Content Include="Content\ckeditor\plugins\oembed\README.md" />
     <None Include="Properties\PublishProfiles\Nico.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
