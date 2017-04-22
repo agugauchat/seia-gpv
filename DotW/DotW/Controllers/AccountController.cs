@@ -125,20 +125,8 @@ namespace DotW.Controllers
 
                 if (result.Succeeded)
                 {
-                    var userService = new UserService();
-
-                    var request = new CreateUserRequest
-                    {
-                        User = new User
-                        {
-                            Name = user.UserName,
-                            AspNetUserId = user.Id,
-                        }
-                    };
-
-                    var response = userService.CreateUser(request);
-
-                    UserManager.AddToRole(user.Id, RoleTypes.User.ToString());
+                    // Solamente se creará el registro en la tabla Users de la aplicación
+                    // cuando el usuario confirme su dirección de correo.
 
                     System.Net.Mail.MailMessage m = new System.Net.Mail.MailMessage(
                         new System.Net.Mail.MailAddress("no-reply@devsoftheweb.com", "Devs of the Web"),
@@ -176,11 +164,22 @@ namespace DotW.Controllers
 
                     await UserManager.UpdateAsync(user);
 
-                    // Inicia sesión.
-                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    // Solo se crea el registro en la tabla de usuarios de la aplicación
+                    // cuando el email fue confirmado.
+                    var userService = new UserService();
 
-                    //return RedirectToAction("Index", "Home", new { EmailConfirmed = user.Email });
-                    //ViewBag.Email = user.Email;
+                    var request = new CreateUserRequest
+                    {
+                        User = new User
+                        {
+                            Name = user.UserName,
+                            AspNetUserId = user.Id,
+                        }
+                    };
+
+                    var response = userService.CreateUser(request);
+
+                    UserManager.AddToRole(user.Id, RoleTypes.User.ToString());
 
                     return View();
                 }

@@ -71,9 +71,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserContracts\IUserService.cs" />
     <Compile Include="UserContracts\Request\CreateUserRequest.cs" />
+    <Compile Include="UserContracts\Request\DeleteUserRequest.cs" />
     <Compile Include="UserContracts\Request\GetUserByAccountIdRequest.cs" />
+    <Compile Include="UserContracts\Request\UpdateUserRequest.cs" />
     <Compile Include="UserContracts\Response\CreateUserResponse.cs" />
+    <Compile Include="UserContracts\Response\DeleteUserResponse.cs" />
     <Compile Include="UserContracts\Response\GetUserByAccountIdResponse.cs" />
+    <Compile Include="UserContracts\Response\UpdateUserResponse.cs" />
+    <Compile Include="UserContracts\UserAccountStates.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj">

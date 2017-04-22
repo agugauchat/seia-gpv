@@ -17,9 +17,9 @@ namespace Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Users()
         {
+            this.Complaints = new HashSet<Complaints>();
             this.Posts = new HashSet<Posts>();
             this.Votes = new HashSet<Votes>();
-            this.Complaints = new HashSet<Complaints>();
         }
     
         public int Id { get; set; }
@@ -33,11 +33,11 @@ namespace Data
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual Comments Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Complaints> Complaints { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Posts> Posts { get; set; }
         public virtual UserStates UserStates { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Votes> Votes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Complaints> Complaints { get; set; }
     }
 }

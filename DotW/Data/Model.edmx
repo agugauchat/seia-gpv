@@ -124,7 +124,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="AspNetUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="AspNetUserId" Type="nvarchar" MaxLength="128" />
           <Property Name="EffectDate" Type="datetime" Nullable="false" />
           <Property Name="NullDate" Type="datetime" />
           <Property Name="IdState" Type="int" Nullable="false" />
@@ -312,7 +312,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
@@ -463,7 +463,7 @@
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers" Relationship="DotWModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserClaims">
           <Key>
@@ -473,7 +473,7 @@
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers" Relationship="DotWModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserLogins">
           <Key>
@@ -484,28 +484,7 @@
           <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="AspNetUsers">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
-          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Users_AspNetUsers" FromRole="AspNetUsers" ToRole="Users" />
-          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="AspNetUsers" Relationship="DotWModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -532,8 +511,8 @@
           <Property Name="EffectDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="NullDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Posts" Relationship="Self.FK_Comments_Post" FromRole="Comments" ToRole="Posts" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Comments_User" FromRole="Comments" ToRole="Users" />
           <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_Comment" FromRole="Comments" ToRole="Complaints" />
+          <NavigationProperty Name="Users" Relationship="DotWModel.FK_Comments_User" FromRole="Comments" ToRole="Users" />
         </EntityType>
         <EntityType Name="Posts">
           <Key>
@@ -546,12 +525,12 @@
           <Property Name="EffectDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="NullDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Post" FromRole="Posts" ToRole="Comments" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Posts_Users" FromRole="Posts" ToRole="Users" />
           <NavigationProperty Name="Tags" Relationship="Self.FK_Tags_Posts" FromRole="Posts" ToRole="Tags" />
           <NavigationProperty Name="Votes" Relationship="Self.FK_Votes_Post" FromRole="Posts" ToRole="Votes" />
           <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_Post" FromRole="Posts" ToRole="Complaints" />
           <Property Name="IdCategory" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Categories" Relationship="DotWModel.FK_Posts_Category" FromRole="Posts" ToRole="Categories" />
+          <NavigationProperty Name="Users" Relationship="DotWModel.FK_Posts_Users" FromRole="Posts" ToRole="Users" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -562,31 +541,13 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Posts" Relationship="Self.FK_Tags_Posts" FromRole="Tags" ToRole="Posts" />
         </EntityType>
-        <EntityType Name="Users">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AspNetUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="EffectDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="NullDate" Type="DateTime" Precision="3" />
-          <Property Name="IdState" Type="Int32" Nullable="false" />
-          <Property Name="SuspendedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Users_AspNetUsers" FromRole="Users" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_User" FromRole="Users" ToRole="Comments" />
-          <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Users" FromRole="Users" ToRole="Posts" />
-          <NavigationProperty Name="UserStates" Relationship="Self.FK_Users_UserStates" FromRole="Users" ToRole="UserStates" />
-          <NavigationProperty Name="Votes" Relationship="Self.FK_Votes_User" FromRole="Users" ToRole="Votes" />
-          <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_User" FromRole="Users" ToRole="Complaints" />
-        </EntityType>
         <EntityType Name="UserStates">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Users_UserStates" FromRole="UserStates" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="DotWModel.FK_Users_UserStates" FromRole="UserStates" ToRole="Users" />
         </EntityType>
         <EntityType Name="Votes">
           <Key>
@@ -598,48 +559,8 @@
           <Property Name="Bad" Type="Boolean" />
           <Property Name="IdPost" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Posts" Relationship="Self.FK_Votes_Post" FromRole="Votes" ToRole="Posts" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Votes_User" FromRole="Votes" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="DotWModel.FK_Votes_User" FromRole="Votes" ToRole="Users" />
         </EntityType>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Users_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Users">
-              <PropertyRef Name="AspNetUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Categories_Categories">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
           <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
@@ -661,30 +582,6 @@
             </Principal>
             <Dependent Role="Comments">
               <PropertyRef Name="IdPost" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comments_User">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comments" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Posts_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Posts">
-              <PropertyRef Name="IdWriter" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -712,59 +609,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Users_UserStates">
-          <End Role="UserStates" Type="Self.UserStates" Multiplicity="1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserStates">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Users">
-              <PropertyRef Name="IdState" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Votes_User">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Votes" Type="Self.Votes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Votes">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="DotWEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
           <EntitySet Name="Categories" EntityType="Self.Categories" />
           <EntitySet Name="Comments" EntityType="Self.Comments" />
           <EntitySet Name="Posts" EntityType="Self.Posts" />
           <EntitySet Name="Tags" EntityType="Self.Tags" />
-          <EntitySet Name="Users" EntityType="Self.Users" />
           <EntitySet Name="UserStates" EntityType="Self.UserStates" />
           <EntitySet Name="Votes" EntityType="Self.Votes" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_AspNetUsers" Association="Self.FK_Users_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
           <AssociationSet Name="FK_Categories_Categories" Association="Self.FK_Categories_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
@@ -773,14 +628,6 @@
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
-          <AssociationSet Name="FK_Comments_User" Association="Self.FK_Comments_User">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Posts_Users" Association="Self.FK_Posts_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Posts" EntitySet="Posts" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tags_Posts" Association="Self.FK_Tags_Posts">
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Tags" EntitySet="Tags" />
@@ -788,18 +635,6 @@
           <AssociationSet Name="FK_Votes_Post" Association="Self.FK_Votes_Post">
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Votes" EntitySet="Votes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_UserStates" Association="Self.FK_Users_UserStates">
-            <End Role="UserStates" EntitySet="UserStates" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Votes_User" Association="Self.FK_Votes_User">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Votes" EntitySet="Votes" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           <EntitySet Name="Complaints" EntityType="DotWModel.Complaints" />
           <AssociationSet Name="FK_Complaints_Comment" Association="DotWModel.FK_Complaints_Comment">
@@ -810,13 +645,47 @@
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Complaints" EntitySet="Complaints" />
           </AssociationSet>
+          <AssociationSet Name="FK_Posts_Category" Association="DotWModel.FK_Posts_Category">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <EntitySet Name="AspNetUsers" EntityType="DotWModel.AspNetUsers" />
+          <EntitySet Name="Users" EntityType="DotWModel.Users" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="DotWModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="DotWModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_AspNetUsers" Association="DotWModel.FK_Users_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_User" Association="DotWModel.FK_Comments_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Complaints_User" Association="DotWModel.FK_Complaints_User">
             <End Role="Users" EntitySet="Users" />
             <End Role="Complaints" EntitySet="Complaints" />
           </AssociationSet>
-          <AssociationSet Name="FK_Posts_Category" Association="DotWModel.FK_Posts_Category">
-            <End Role="Categories" EntitySet="Categories" />
+          <AssociationSet Name="FK_Posts_Users" Association="DotWModel.FK_Posts_Users">
+            <End Role="Users" EntitySet="Users" />
             <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_UserStates" Association="DotWModel.FK_Users_UserStates">
+            <End Role="UserStates" EntitySet="UserStates" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Votes_User" Association="DotWModel.FK_Votes_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Votes" EntitySet="Votes" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="DotWModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Complaints">
@@ -856,6 +725,109 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Posts_Category">
+          <End Type="DotWModel.Categories" Role="Categories" Multiplicity="1" />
+          <End Type="DotWModel.Posts" Role="Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="IdCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="DotWModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="DotWModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Users" Relationship="DotWModel.FK_Users_AspNetUsers" FromRole="AspNetUsers" ToRole="Users" />
+          <NavigationProperty Name="AspNetRoles" Relationship="DotWModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AspNetUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EffectDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NullDate" Type="DateTime" Precision="3" />
+          <Property Name="IdState" Type="Int32" Nullable="false" />
+          <Property Name="SuspendedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AspNetUsers" Relationship="DotWModel.FK_Users_AspNetUsers" FromRole="Users" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Comments" Relationship="DotWModel.FK_Comments_User" FromRole="Users" ToRole="Comments" />
+          <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_User" FromRole="Users" ToRole="Complaints" />
+          <NavigationProperty Name="Posts" Relationship="DotWModel.FK_Posts_Users" FromRole="Users" ToRole="Posts" />
+          <NavigationProperty Name="UserStates" Relationship="DotWModel.FK_Users_UserStates" FromRole="Users" ToRole="UserStates" />
+          <NavigationProperty Name="Votes" Relationship="DotWModel.FK_Votes_User" FromRole="Users" ToRole="Votes" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="DotWModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DotWModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="DotWModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DotWModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_AspNetUsers">
+          <End Type="DotWModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="DotWModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="AspNetUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_User">
+          <End Type="DotWModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="DotWModel.Comments" Role="Comments" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Complaints_User">
           <End Type="DotWModel.Users" Role="Users" Multiplicity="1" />
           <End Type="DotWModel.Complaints" Role="Complaints" Multiplicity="*" />
@@ -868,17 +840,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Posts_Category">
-          <End Type="DotWModel.Categories" Role="Categories" Multiplicity="1" />
+        <Association Name="FK_Posts_Users">
+          <End Type="DotWModel.Users" Role="Users" Multiplicity="1" />
           <End Type="DotWModel.Posts" Role="Posts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Categories">
+            <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Posts">
-              <PropertyRef Name="IdCategory" />
+              <PropertyRef Name="IdWriter" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_UserStates">
+          <End Type="DotWModel.UserStates" Role="UserStates" Multiplicity="1" />
+          <End Type="DotWModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="IdState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Votes_User">
+          <End Type="DotWModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="DotWModel.Votes" Role="Votes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Votes">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="DotWModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="DotWModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -920,24 +920,6 @@
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="DotWModel.AspNetUsers">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -987,19 +969,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="DotWModel.Users">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="AspNetUserId" ColumnName="AspNetUserId" />
-                <ScalarProperty Name="EffectDate" ColumnName="EffectDate" />
-                <ScalarProperty Name="NullDate" ColumnName="NullDate" />
-                <ScalarProperty Name="IdState" ColumnName="IdState" />
-                <ScalarProperty Name="SuspendedDate" ColumnName="SuspendedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserStates">
             <EntityTypeMapping TypeName="DotWModel.UserStates">
               <MappingFragment StoreEntitySet="UserStates">
@@ -1019,14 +988,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="DotWModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="Complaints">
             <EntityTypeMapping TypeName="DotWModel.Complaints">
               <MappingFragment StoreEntitySet="Complaints">
@@ -1038,6 +999,45 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="DotWModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DotWModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="SuspendedDate" ColumnName="SuspendedDate" />
+                <ScalarProperty Name="IdState" ColumnName="IdState" />
+                <ScalarProperty Name="NullDate" ColumnName="NullDate" />
+                <ScalarProperty Name="EffectDate" ColumnName="EffectDate" />
+                <ScalarProperty Name="AspNetUserId" ColumnName="AspNetUserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="DotWModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

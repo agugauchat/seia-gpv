@@ -1,7 +1,10 @@
 ﻿namespace DotW.Controllers
 {
+    using Contracts.UserContracts.Request;
+    using Entities.UserEntities;
     using Microsoft.AspNet.Identity;
     using Models;
+    using Services.UserServices;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -41,7 +44,20 @@
 
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, "User");
+                    var userService = new UserService();
+
+                    var request = new CreateUserRequest
+                    {
+                        User = new User
+                        {
+                            Name = user.UserName,
+                            AspNetUserId = user.Id,
+                        }
+                    };
+
+                    var response = userService.CreateUser(request);
+
+                    UserManager.AddToRole(user.Id, RoleTypes.User.ToString());
 
                     return RedirectToAction("Index", "User");
                 }
@@ -106,6 +122,16 @@
                 // Persistir los cambios en la BD
                 UserManager.Update(user);
 
+                var userService = new UserService();
+
+                var request = new UpdateUserRequest
+                {
+                    AspNetUserId = user.Id,
+                    Name = user.UserName
+                };
+
+                var response = userService.UpdateUser(request);
+
                 return RedirectToAction("Index", "User");
             }
 
@@ -165,6 +191,15 @@
 
             if (user.UserName != "admin")
             {
+                var userService = new UserService();
+
+                var request = new DeleteUserRequest
+                {
+                    AspNetUserId = user.Id
+                };
+
+                var response = userService.DeleteUser(request);
+
                 UserManager.Delete(user);
             }
 

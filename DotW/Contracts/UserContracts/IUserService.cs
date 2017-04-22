@@ -13,5 +13,9 @@
         CreateUserResponse CreateUser(CreateUserRequest request);
 
         GetUserByAccountIdResponse GetUserByAccountId(GetUserByAccountIdRequest request);
+
+        UpdateUserResponse UpdateUser(UpdateUserRequest request);
+
+        DeleteUserResponse DeleteUser(DeleteUserRequest request);
     }
 }

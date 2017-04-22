@@ -22,7 +22,7 @@
                     Name = request.User.Name,
                     AspNetUserId = request.User.AspNetUserId,
                     EffectDate = DateTime.Now,
-                    IdState = 1,
+                    IdState = (int)UserAccountStates.Active,
                     SuspendedDate = (DateTime?)null
                 };
 
@@ -56,6 +56,55 @@
                 }
 
                 return response;
+            }
+        }
+
+        public UpdateUserResponse UpdateUser(UpdateUserRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                if (!string.IsNullOrEmpty(request.AspNetUserId))
+                {
+                    var user = db.Users.FirstOrDefault(x => x.AspNetUserId == request.AspNetUserId);
+
+                    if (user != null)
+                    {
+                        user.Name = request.Name;
+
+                        db.SaveChanges();
+                    }
+                }
+                else if (request.Id.HasValue)
+                {
+                    var user = db.Users.FirstOrDefault(x => x.Id == request.Id);
+
+                    if (user != null)
+                    {
+                        user.Name = request.Name;
+
+                        db.SaveChanges();
+                    }
+                }
+
+                return new UpdateUserResponse();
+            }
+        }
+
+        public DeleteUserResponse DeleteUser(DeleteUserRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                var user = db.Users.FirstOrDefault(x => x.AspNetUserId == request.AspNetUserId);
+
+                if (user != null)
+                {
+                    user.AspNetUserId = null;
+                    user.NullDate = DateTime.Now;
+
+                    db.SaveChanges();
+                }
+
+                return new DeleteUserResponse();
             }
         }
     }
