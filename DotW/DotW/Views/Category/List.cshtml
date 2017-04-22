@@ -9,7 +9,7 @@
     <div class="span8">
         @foreach (var category in Model.Categories)
         {
-            <h1>@category.Title</h1>
+            <h3>@category.Title</h3>
             <p>@category.Summary</p>
             <div>
                 <div class="more label"><a href="@Url.Action("Details", "Category", new { id = category.Id })">Ver más</a></div>
@@ -24,5 +24,5 @@
 </div>
 
 @section Styles {
-    <link href="@Url.Content("~/Content/Categories.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/ViewsStyles/Category/List.css")" rel="stylesheet" type="text/css" />
 }

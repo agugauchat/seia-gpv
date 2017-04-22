@@ -1,4 +1,10 @@
 ﻿@using Microsoft.AspNet.Identity
+
+@{ 
+    DotW.Models.ApplicationUser currentUser = ViewBag.CurrentUser as DotW.Models.ApplicationUser;
+    List<string> currentRoles = ViewBag.RolesOfCurrentUser as List<string>;
+}
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -15,7 +21,10 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Nueva Publicación", "Create", "Post", routeValues: null, htmlAttributes: new { id = "createPostLink" })</li>
+        @if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
+        {
+            <li>@Html.ActionLink("Nueva Publicación", "Create", "Post", routeValues: null, htmlAttributes: new { id = "createPostLink" })</li>
+        }
         @if (!User.Identity.IsAuthenticated)
         {
             <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>

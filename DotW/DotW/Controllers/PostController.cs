@@ -18,7 +18,7 @@
 
     public class PostController : BaseController
     {
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult Index()
         {
             var postService = new PostService();
@@ -51,7 +51,7 @@
             return View(model);
         }
 
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult Create()
         {
             var categoryService = new CategoryService();
@@ -66,7 +66,7 @@
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "User")]
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
@@ -110,7 +110,7 @@
             return View(model);
         }
 
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult Edit(int id)
         {
             var postService = new PostService();
@@ -136,7 +136,7 @@
             return View(model);
         }
 
-        [Authorize]
+        [Authorize(Roles = "User")]
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
@@ -168,7 +168,7 @@
             return View(model);
         }
 
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult Delete(int id)
         {
             var postService = new PostService();
@@ -185,7 +185,7 @@
             return View(model);
         }
 
-        [Authorize]
+        [Authorize(Roles = "User")]
         [HttpPost]
         public ActionResult Delete(DeletePostViewModel model)
         {
@@ -196,6 +196,7 @@
             return RedirectToAction("Index", "Post");
         }
 
+        [Authorize(Roles = "User")]
         public ActionResult UploadImagePartial()
         {
             // Se obtiene el path de imagenes de Posts.
@@ -218,6 +219,7 @@
             return View(images);
         }
 
+        [Authorize(Roles = "User")]
         [HttpPost]
         public JsonResult UploadImage(HttpPostedFileWrapper upload)
         {

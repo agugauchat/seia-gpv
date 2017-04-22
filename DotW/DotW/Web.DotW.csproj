@@ -508,7 +508,7 @@
     <Content Include="Content\Images\javascript.jpg" />
     <Content Include="Content\Images\net.jpg" />
     <Content Include="Content\Images\sql.jpg" />
-    <Content Include="Content\Categories.css" />
+    <Content Include="Content\ViewsStyles\Category\List.css" />
     <Content Include="Content\ViewsStyles\Post\UploadImagePartial.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

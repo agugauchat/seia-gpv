@@ -2,6 +2,7 @@
     clear:both;    
 }
 .btn-info {
+    font-size: 12px;
     margin-right:15px;
     text-transform:uppercase;
     padding:10px;

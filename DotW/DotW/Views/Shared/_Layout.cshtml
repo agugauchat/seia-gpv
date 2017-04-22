@@ -38,7 +38,7 @@
                     }
                     <li>@Html.ActionLink("Categorías", "List", "Category")</li>
                     <li>@Html.ActionLink("Publicaciones", "List", "Post")</li>
-                    @if (Request.IsAuthenticated)
+                    @if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
                     {
                         <li>@Html.ActionLink("Mis Publicaciones", "Index", "Post")</li>
                     }
@@ -47,16 +47,16 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <div class="row">
-                <div class="col-md-12">
-                    Esta página está disponible bajo la <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/" target="_blank">licencia de Creative Commons Reconocimiento-SinObraDerivada 4.0 Internacional</a>.
-                </div>
-            </div>
-        </footer>
+    <div id="wrap">
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+        <div id="push"></div>
+    </div>
+    <div id="footer">
+        <div class="container">
+            <p class="muted credit">El contenido de esta página está disponible bajo la <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/" target="_blank">licencia de Creative Commons Reconocimiento-SinObraDerivada 4.0 Internacional</a>.</p>
+        </div>
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

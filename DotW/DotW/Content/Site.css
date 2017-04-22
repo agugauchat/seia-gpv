@@ -28,10 +28,29 @@ textarea {
     background-color: #373a3c;
 }
 
-footer {
-    /*position: fixed;*/
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 12px;
-}
+html,
+      body {
+        height: 100%;
+      }
+
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        margin: 0 auto -20px;
+      }
+
+      #push,
+      #footer {
+        height: 20px;
+        font-size: 12px;
+        text-align: center;
+      }
+
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
