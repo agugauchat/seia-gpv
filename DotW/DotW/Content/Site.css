@@ -27,9 +27,11 @@ textarea {
     color: #fff;
     background-color: #373a3c;
 }
+
 footer {
-    position: fixed;
+    /*position: fixed;*/
     bottom: 0;
     width: 100%;
     text-align: center;
+    font-size: 12px;
 }

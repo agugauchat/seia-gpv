@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 @using Microsoft.AspNet.Identity
-@{ 
+@{
     DotW.Models.ApplicationUser currentUser = ViewBag.CurrentUser as DotW.Models.ApplicationUser;
     List<string> currentRoles = ViewBag.RolesOfCurrentUser as List<string>;
 }
@@ -51,12 +51,13 @@
         @RenderBody()
         <hr />
         <footer>
-            <small>
-                Esta página está disponible bajo la <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/" target="_blank">licencia de Creative Commons Reconocimiento-SinObraDerivada 4.0 Internacional</a>.
-            </small>
+            <div class="row">
+                <div class="col-md-12">
+                    Esta página está disponible bajo la <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/" target="_blank">licencia de Creative Commons Reconocimiento-SinObraDerivada 4.0 Internacional</a>.
+                </div>
+            </div>
         </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
