@@ -12,7 +12,10 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Nueva Publicación", "Create", "Post", routeValues: null, htmlAttributes: new { id = "createPostLink" })</li>
+        @if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
+        {
+            <li>@Html.ActionLink("Nueva Publicación", "Create", "Post", routeValues: null, htmlAttributes: new { id = "createPostLink" })</li>
+        }
         <li>@Html.ActionLink("Hola " + User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Salir</a></li>
     </ul>
@@ -21,10 +24,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        @if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
-        {
-            <li>@Html.ActionLink("Nueva Publicación", "Create", "Post", routeValues: null, htmlAttributes: new { id = "createPostLink" })</li>
-        }
+        <li>@Html.ActionLink("Nueva Publicación", "Create", "Post", routeValues: null, htmlAttributes: new { id = "createPostLink" })</li>
         @if (!User.Identity.IsAuthenticated)
         {
             <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
