@@ -25,7 +25,7 @@
 
             var model = new IndexPostViewModel();
 
-            model.Posts = postService.SearchPostsByUserId(new SearchPostsByUserIdRequest { AspNetUserId = User.Identity.GetUserId() }).Posts.ToList();
+            model.Posts = postService.SearchPostsByUserId(new SearchPostsByUserIdRequest { AspNetUserId = User.Identity.GetUserId() }).Posts.OrderByDescending(x => x.EffectDate).ToList();
 
             return View(model);
         }
@@ -39,11 +39,11 @@
 
             if (idCategory.HasValue)
             {
-                model.Posts = postService.SearchPostsByCategoryId(new SearchPostsByCategoryIdRequest { IdCategory = idCategory.Value }).Posts.OrderByDescending(x => x.EffectDate.Date).ToList();
+                model.Posts = postService.SearchPostsByCategoryId(new SearchPostsByCategoryIdRequest { IdCategory = idCategory.Value }).Posts.OrderByDescending(x => x.EffectDate).ToList();
             }
             else
             {
-                model.Posts = postService.SearchPosts(new SearchPostsRequest()).Posts.OrderByDescending(x => x.EffectDate.Date).ToList();
+                model.Posts = postService.SearchPosts(new SearchPostsRequest()).Posts.OrderByDescending(x => x.EffectDate).ToList();
             }
 
             ViewBag.Categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
