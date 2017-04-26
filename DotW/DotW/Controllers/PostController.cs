@@ -254,5 +254,14 @@
 
             return Json(null, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Details(int id)
+        {
+            var postService = new PostService();
+
+            var post = postService.GetPostById(new GetPostByIdRequest() { Id = id}).Post;
+
+            return View(post);
+        }
     }
 }
