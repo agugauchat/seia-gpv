@@ -75,5 +75,5 @@
     </div>*@
 
 <p>
-    @Html.ActionLink("Volver", "List", "Post", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
 </p>
