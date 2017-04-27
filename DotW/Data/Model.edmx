@@ -109,6 +109,8 @@
           <Property Name="EffectDate" Type="datetime" Nullable="false" />
           <Property Name="NullDate" Type="datetime" />
           <Property Name="IdCategory" Type="int" Nullable="false" />
+          <Property Name="IsDraft" Type="bit" />
+          <Property Name="Summary" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -531,6 +533,8 @@
           <Property Name="IdCategory" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Categories" Relationship="DotWModel.FK_Posts_Category" FromRole="Posts" ToRole="Categories" />
           <NavigationProperty Name="Users" Relationship="DotWModel.FK_Posts_Users" FromRole="Posts" ToRole="Users" />
+          <Property Name="IsDraft" Type="Boolean" />
+          <Property Name="Summary" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -950,6 +954,8 @@
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="DotWModel.Posts">
               <MappingFragment StoreEntitySet="Posts">
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="IsDraft" ColumnName="IsDraft" />
                 <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />

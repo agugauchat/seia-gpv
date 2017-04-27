@@ -30,6 +30,8 @@ namespace Data
         public System.DateTime EffectDate { get; set; }
         public Nullable<System.DateTime> NullDate { get; set; }
         public int IdCategory { get; set; }
+        public Nullable<bool> IsDraft { get; set; }
+        public string Summary { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comments> Comments { get; set; }
