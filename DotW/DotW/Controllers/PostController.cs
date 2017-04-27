@@ -39,11 +39,11 @@
 
             if (idCategory.HasValue)
             {
-                model.Posts = postService.SearchPostsByCategoryId(new SearchPostsByCategoryIdRequest { IdCategory = idCategory.Value }).Posts.OrderByDescending(x => x.EffectDate).ToList();
+                model.Posts = postService.SearchPostsByCategoryId(new SearchPostsByCategoryIdRequest { IdCategory = idCategory.Value }).Posts.Where(x => !x.IsDraft).OrderByDescending(x => x.EffectDate).ToList();
             }
             else
             {
-                model.Posts = postService.SearchPosts(new SearchPostsRequest()).Posts.OrderByDescending(x => x.EffectDate).ToList();
+                model.Posts = postService.SearchPosts(new SearchPostsRequest()).Posts.Where(x => !x.IsDraft).OrderByDescending(x => x.EffectDate).ToList();
             }
 
             ViewBag.Categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
@@ -185,7 +185,9 @@
             {
                 Id = result.Id,
                 Title = result.Title,
-                CategoryTitle = result.CategoryTitle
+                Summary = result.Summary,
+                CategoryTitle = result.CategoryTitle,
+                IsDraft = result.IsDraft
             };
 
             return View(model);

@@ -21,20 +21,13 @@
             {
                 foreach (var post in Model.Posts)
                 {
-                    <h1><a href="@Url.Action("Details", "Post", new { id = post.Id })">@post.Title</a></h1>
-                    <p class="lead">
-                        por <a href="#">@post.WriterUserName</a>
-                    </p>
-                        <hr>
-                        <p><span class="glyphicon glyphicon-time"></span> Fecha de publicación: @post.EffectDate.ToString("dd/MM/yyyy")</p>
-                        <hr>
-                        <!-- Preview Image -->
-                        @*<img class="img-responsive" src="http://placehold.it/900x300" alt="">
-                            <hr>*@
-                    //Reemplazar por campo Summary.
-                    <p class="lead">@Html.Raw(post.Body)</p>
+                    <h4><a href="@Url.Action("Details", "Post", new { id = post.Id })">@post.Title</a></h4>
+                    <p><span class="glyphicon glyphicon-time"></span> Publicado el @post.EffectDate.ToString("dd/MM/yyyy") por <a href="#">@post.WriterUserName</a></p>
+                    <!-- Preview Image -->
+                    @*<img class="img-responsive" src="http://placehold.it/900x300" alt="">
+                    <hr>*@
+                    <p>@post.Summary</p>
                     <hr>
-                    <br />
                 }
             }
             else
@@ -62,7 +55,6 @@
                             @foreach (var category in categories.OrderBy(x => x.Title))
                             {
                                 <li>@Html.ActionLink(category.Title, "List", "Post", new { idCategory = category.Id }, null)</li>
-                                @*<li><a href="#">@category.Title</a></li>*@
                             }
                         </ul>
                     </div>
