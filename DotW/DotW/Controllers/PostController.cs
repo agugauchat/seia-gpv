@@ -91,8 +91,10 @@
                 {
                     IdWriter = model.IdWriter,
                     Title = model.Title,
+                    Summary = model.Summary,
                     Body = model.Body,
-                    CategoryId = model.IdCategory
+                    CategoryId = model.IdCategory,
+                    IsDraft = model.IsDraft
                 };
 
                 var result = postService.CreatePost(request);
@@ -122,8 +124,10 @@
             {
                 Id = result.Id,
                 Title = result.Title,
+                Summary = result.Summary,
                 Body = result.Body,
-                IdCategory = result.IdCategory
+                IdCategory = result.IdCategory,
+                IsDraft = result.IsDraft
             };
 
             var categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
@@ -151,8 +155,10 @@
                 {
                     Id = model.Id,
                     Title = model.Title,
+                    Summary = model.Summary,
                     Body = model.Body,
-                    IdCategory = model.IdCategory
+                    IdCategory = model.IdCategory,
+                    IsDraft = model.IsDraft
                 });
 
                 return RedirectToAction("Index", "Post");

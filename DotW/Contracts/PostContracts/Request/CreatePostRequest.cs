@@ -12,8 +12,12 @@
 
         public int IdWriter { get; set; }
 
+        public string Summary { get; set; }
+
         public string Body { get; set; }
 
         public int CategoryId { get; set; }
+
+        public bool IsDraft { get; set; }
     }
 }

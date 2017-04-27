@@ -18,12 +18,19 @@ namespace DotW.Models
         public int IdWriter { get; set; }
 
         [Required]
+        [Display(Name = "Resumen")]
+        public string Summary { get; set; }
+
+        [Required]
         [Display(Name = "Cuerpo")]
         public string Body { get; set; }
 
         [Required]
         [Display(Name = "Categoría")]
         public int IdCategory { get; set; }
+
+        [Display(Name = "Es borrador")]
+        public bool IsDraft { get; set; }
     }
 
     public class EditPostViewModel
@@ -35,12 +42,19 @@ namespace DotW.Models
         public string Title { get; set; }
 
         [Required]
+        [Display(Name = "Resumen")]
+        public string Summary { get; set; }
+
+        [Required]
         [Display(Name = "Cuerpo")]
         public string Body { get; set; }
 
         [Required]
         [Display(Name = "Categoría")]
         public int IdCategory { get; set; }
+
+        [Display(Name = "Es borrador")]
+        public bool IsDraft { get; set; }
     }
 
     public class DeletePostViewModel

@@ -21,9 +21,11 @@
                 {
                     IdWriter = request.IdWriter,
                     Title = request.Title,
+                    Summary = request.Summary,
                     Body = request.Body,
                     EffectDate = DateTime.Now,
-                    IdCategory = request.CategoryId
+                    IdCategory = request.CategoryId,
+                    IsDraft = request.IsDraft
                 };
 
                 db.Posts.Add(post);
@@ -47,11 +49,13 @@
                         {
                             Id = x.Id,
                             Title = x.Title,
+                            Summary = x.Summary,
                             Body = x.Body,
                             EffectDate = x.EffectDate,
                             IdWriter = x.IdWriter,
                             IdCategory = x.IdCategory,
                             CategoryTitle = x.Categories.Title,
+                            IsDraft = x.IsDraft
                         }).ToList();
                 }
                 else if(!string.IsNullOrEmpty(request.AspNetUserId))
@@ -61,12 +65,14 @@
                         {
                             Id = x.Id,
                             Title = x.Title,
+                            Summary = x.Summary,
                             Body = x.Body,
                             EffectDate = x.EffectDate,
                             IdWriter = x.IdWriter,
                             WriterUserName = x.Users.Name,
                             IdCategory = x.IdCategory,
                             CategoryTitle = x.Categories.Title,
+                            IsDraft = x.IsDraft
                         }).ToList();
                 }
 
@@ -85,12 +91,14 @@
                     {
                         Id = x.Id,
                         Title = x.Title,
+                        Summary = x.Summary,
                         Body = x.Body,
                         EffectDate = x.EffectDate,
                         IdWriter = x.IdWriter,
                         WriterUserName = x.Users.Name,
                         IdCategory = x.IdCategory,
-                        CategoryTitle = x.Categories.Title
+                        CategoryTitle = x.Categories.Title,
+                        IsDraft = x.IsDraft
                     }).ToList();
 
                 return new SearchPostsByCategoryIdResponse { Posts = result };
@@ -106,12 +114,14 @@
                         {
                             Id = x.Id,
                             Title = x.Title,
+                            Summary = x.Summary,
                             Body = x.Body,
                             EffectDate = x.EffectDate,
                             IdWriter = x.IdWriter,
                             WriterUserName = x.Users.Name,
                             IdCategory = x.IdCategory,
                             CategoryTitle = x.Categories.Title,
+                            IsDraft = x.IsDraft
                         }).ToList();
 
                 return new SearchPostsResponse { Posts = result };
@@ -129,11 +139,13 @@
                     {
                         Id = x.Id,
                         Title = x.Title,
+                        Summary = x.Summary,
                         Body = x.Body,
                         EffectDate = x.EffectDate,
                         IdWriter = x.IdWriter,
                         IdCategory = x.IdCategory,
                         CategoryTitle = x.Categories.Title,
+                        IsDraft = x.IsDraft
                     }).FirstOrDefault(x => x.Id == request.Id);
 
                 return response;
@@ -149,8 +161,10 @@
                 if (post != null)
                 {
                     post.Title = request.Title;
+                    post.Summary = request.Summary;
                     post.Body = request.Body;
                     post.IdCategory = request.IdCategory;
+                    post.IsDraft = request.IsDraft;
 
                     db.SaveChanges();
                 }

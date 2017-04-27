@@ -109,7 +109,7 @@
           <Property Name="EffectDate" Type="datetime" Nullable="false" />
           <Property Name="NullDate" Type="datetime" />
           <Property Name="IdCategory" Type="int" Nullable="false" />
-          <Property Name="IsDraft" Type="bit" />
+          <Property Name="IsDraft" Type="bit" Nullable="false" />
           <Property Name="Summary" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Tags">
@@ -533,7 +533,7 @@
           <Property Name="IdCategory" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Categories" Relationship="DotWModel.FK_Posts_Category" FromRole="Posts" ToRole="Categories" />
           <NavigationProperty Name="Users" Relationship="DotWModel.FK_Posts_Users" FromRole="Posts" ToRole="Users" />
-          <Property Name="IsDraft" Type="Boolean" />
+          <Property Name="IsDraft" Type="Boolean" Nullable="false" />
           <Property Name="Summary" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Tags">

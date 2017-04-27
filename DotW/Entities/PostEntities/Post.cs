@@ -14,6 +14,9 @@
         [Display(Name = "Título")]
         public string Title { get; set; }
 
+        [Display(Name = "Resumen")]
+        public string Summary { get; set; }
+
         [Display(Name = "Escritor")]
         public int IdWriter { get; set; }
 
@@ -31,5 +34,8 @@
 
         [Display(Name = "Categoría")]
         public string CategoryTitle { get; set; }
+
+        [Display(Name = "Es borrador")]
+        public bool IsDraft { get; set; }
     }
 }

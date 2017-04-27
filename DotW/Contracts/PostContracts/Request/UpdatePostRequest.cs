@@ -12,8 +12,12 @@
 
         public string Title { get; set; }
 
+        public string Summary { get; set; }
+
         public string Body { get; set; }
 
         public int IdCategory { get; set; }
+
+        public bool IsDraft { get; set; }
     }
 }
