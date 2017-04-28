@@ -40,6 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommentaryContracts\ICommentaryService.cs" />
+    <Compile Include="CommentaryContracts\Request\CreateCommentaryRequest.cs" />
+    <Compile Include="CommentaryContracts\Request\DeleteCommentaryRequest.cs" />
+    <Compile Include="CommentaryContracts\Request\GetCommentaryByIdRequest.cs" />
+    <Compile Include="CommentaryContracts\Request\SearchCommentsByIdPostRequest.cs" />
+    <Compile Include="CommentaryContracts\Request\UpdateCommentaryRequest.cs" />
+    <Compile Include="CommentaryContracts\Response\CreateCommentaryResponse.cs" />
+    <Compile Include="CommentaryContracts\Response\DeleteCommentaryResponse.cs" />
+    <Compile Include="CommentaryContracts\Response\GetCommentaryByIdResponse.cs" />
+    <Compile Include="CommentaryContracts\Response\SearchCommentsByIdPostResponse.cs" />
+    <Compile Include="CommentaryContracts\Response\UpdateCommentaryResponse.cs" />
     <Compile Include="CategoryContracts\ICategoryService.cs" />
     <Compile Include="CategoryContracts\Request\CreateCategoryRequest.cs" />
     <Compile Include="CategoryContracts\Request\DeleteCategoryRequest.cs" />

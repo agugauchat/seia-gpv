@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommentaryEntities\Commentary.cs" />
     <Compile Include="CategoryEntities\Category.cs" />
     <Compile Include="PostEntities\Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
