@@ -467,6 +467,21 @@ namespace DotW.Controllers
                 errors.Add("El email especificado ya ha sido utilizado.");
             }
 
+            if (result.Errors.Any(x => x.Contains("lowercase")))
+            {
+                errors.Add("La contraseña debe tener al menos una letra minúscula.");
+            }
+
+            if (result.Errors.Any(x => x.Contains("uppercase")))
+            {
+                errors.Add("La contraseña debe tener al menos una letra mayúscula.");
+            }
+
+            if (result.Errors.Any(x => x.Contains("digit")))
+            {
+                errors.Add("La contraseña debe tener al menos un número.");
+            }
+
             return errors;
         }
 
