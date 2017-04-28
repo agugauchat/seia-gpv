@@ -11,8 +11,15 @@
     <dl class="dl-horizontal">
         <dt>@Html.DisplayNameFor(model => model.Title)</dt>
         <dd>@Model.Title</dd>
+        <dd>&nbsp;</dd>
+        <dt>@Html.DisplayNameFor(model => model.Summary)</dt>
+        <dd>@Model.Summary</dd>
+        <dd>&nbsp;</dd>
         <dt>@Html.DisplayNameFor(model => model.CategoryTitle)</dt>
         <dd>@Model.CategoryTitle</dd>
+        <dd>&nbsp;</dd>
+        <dt>@Html.DisplayNameFor(model => model.IsDraft)</dt>
+        <dd>@(Model.IsDraft ? "Borrador" : "Publicado")</dd>
     </dl>
     <br />
     @using (Html.BeginForm())

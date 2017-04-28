@@ -5,7 +5,7 @@ namespace DotW.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "El campo email es requerido.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
@@ -25,15 +25,16 @@ namespace DotW.Models
 
     public class VerifyCodeViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "El proveedor es requerido.")]
         public string Provider { get; set; }
 
-        [Required]
-        [Display(Name = "Code")]
+        [Required(ErrorMessage = "El campo Código es requerido.")]
+        [Display(Name = "Código")]
         public string Code { get; set; }
+
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "Remember this browser?")]
+        [Display(Name = "Recordar en este navegador?")]
         public bool RememberBrowser { get; set; }
 
         public bool RememberMe { get; set; }
@@ -41,42 +42,42 @@ namespace DotW.Models
 
     public class ForgotViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "El campo Email es requerido.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "El campo Nombre de Usuario es requerido.")]
         [Display(Name = "Nombre de usuario")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Contraseña es requerido.")]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
 
-        [Display(Name = "Recordar mis datos")]
+        [Display(Name = "Recordar mis datos.")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "El campo Email es requerido.")]
+        [EmailAddress(ErrorMessage = "Ingrese una dirección de correo válida.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Display(Name = "Rol")]
         public string Rol { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Nombre de Usuario es requerido.")]
         [Display(Name = "Nombre de usuario")]
-        [StringLength(30, MinimumLength = 6, ErrorMessage = "Nombre de usuario inválido")]
+        [StringLength(30, MinimumLength = 6, ErrorMessage = "Nombre de usuario inválido.")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Contraseña es requerido.")]
         [StringLength(100, ErrorMessage = "La {0} contraseña debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
@@ -90,12 +91,12 @@ namespace DotW.Models
 
     public class ResetPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "El campo Email es requerido.")]
+        [EmailAddress(ErrorMessage = "Ingrese una dirección de correo válida.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Contraseña es requerido.")]
         [StringLength(100, ErrorMessage = "La {0} contraseña debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
@@ -111,8 +112,8 @@ namespace DotW.Models
 
     public class ForgotPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "El campo Email es requerido.")]
+        [EmailAddress(ErrorMessage = "Ingrese una dirección de correo válida.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
