@@ -13,6 +13,7 @@ using System.Configuration;
 using Services.UserServices;
 using Contracts.UserContracts.Request;
 using Entities.UserEntities;
+using System.Collections.Generic;
 
 namespace DotW.Controllers
 {
@@ -94,7 +95,7 @@ namespace DotW.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid code.");
+                    ModelState.AddModelError("", "Código inválido.");
                     return View(model);
             }
         }
@@ -145,7 +146,11 @@ namespace DotW.Controllers
                 }
                 else
                 {
-                    AddErrors(result);
+                    var errors = TranslateErrors(result);
+                    foreach (var error in errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
                 }
             }
 
@@ -446,6 +451,23 @@ namespace DotW.Controllers
             {
                 ModelState.AddModelError("", error);
             }
+        }
+
+        private List<string> TranslateErrors(IdentityResult result)
+        {
+            var errors = new List<string>();
+
+            if (result.Errors.Any(x => x.Contains("Name") && x.Contains("taken")))
+            {
+                errors.Add("El nombre de usuario especificado ya ha sido utilizado.");
+            }
+
+            if (result.Errors.Any(x => x.Contains("Email") && x.Contains("taken")))
+            {
+                errors.Add("El email especificado ya ha sido utilizado.");
+            }
+
+            return errors;
         }
 
         private ActionResult RedirectToLocal(string returnUrl)
