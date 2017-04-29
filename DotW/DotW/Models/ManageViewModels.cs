@@ -27,26 +27,26 @@ namespace DotW.Models
 
     public class SetPasswordViewModel
     {
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "El campo Nueva Contraseña es requerido.")]
+        [StringLength(100, ErrorMessage = "La {0} contraseña debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Nueva Contraseña")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Confirmación nueva contraseña")]
+        [Compare("NewPassword", ErrorMessage = "La contraseña y su confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
     }
 
     public class ChangePasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "El campo Contraseña Actual es requerido.")]
         [DataType(DataType.Password)]
-        [Display(Name = "Contraseña actual")]
+        [Display(Name = "Contraseña Actual")]
         public string OldPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Nueva Contraseña es requerido.")]
         [StringLength(100, ErrorMessage = "La {0} contraseña debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Nueva Contraseña")]
@@ -60,21 +60,21 @@ namespace DotW.Models
 
     public class AddPhoneNumberViewModel
     {
-        [Required]
-        [Phone]
-        [Display(Name = "Phone Number")]
+        [Required(ErrorMessage = "El campo Número de Teléfono es requerido.")]
+        [Phone(ErrorMessage = "Número de Teléfono inválido.")]
+        [Display(Name = "Número de Teléfono")]
         public string Number { get; set; }
     }
 
     public class VerifyPhoneNumberViewModel
     {
-        [Required]
-        [Display(Name = "Code")]
+        [Required(ErrorMessage = "El campo Código es requerido.")]
+        [Display(Name = "Código")]
         public string Code { get; set; }
 
-        [Required]
-        [Phone]
-        [Display(Name = "Phone Number")]
+        [Required(ErrorMessage = "El campo Número de Teléfono es requerido.")]
+        [Phone(ErrorMessage = "Número de Teléfono inválido.")]
+        [Display(Name = "Número de Teléfono")]
         public string PhoneNumber { get; set; }
     }
 

@@ -53,6 +53,7 @@
                             Body = x.Body,
                             EffectDate = x.EffectDate,
                             IdWriter = x.IdWriter,
+                            WriterUserName = x.Users.Name,
                             IdCategory = x.IdCategory,
                             CategoryTitle = x.Categories.Title,
                             IsDraft = x.IsDraft
@@ -143,6 +144,7 @@
                         Body = x.Body,
                         EffectDate = x.EffectDate,
                         IdWriter = x.IdWriter,
+                        WriterUserName = x.Users.Name,
                         IdCategory = x.IdCategory,
                         CategoryTitle = x.Categories.Title,
                         IsDraft = x.IsDraft

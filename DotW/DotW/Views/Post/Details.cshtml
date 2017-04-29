@@ -4,16 +4,20 @@
     ViewBag.Title = Model.Title;
 }
 
+@section Styles {
+    <script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
+    <link href="~/Content/ckeditor/ckeditor_style.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="~/Content/blog-post.css" rel="stylesheet">
+    <!-- Code Highlight -->
+    <link href="~/Content/ckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css" rel="stylesheet" />
+}
+
 <!-- Title -->
 <h1>@Model.Title</h1>
 <!-- Author -->
-<p class="lead">
-    por <a href="#">@Model.WriterUserName</a>
-</p>
-<hr>
-<!-- Date/Time -->
-<p><span class="glyphicon glyphicon-time"></span> Fecha de publicación: @Model.EffectDate.ToString("dd/MM/yyyy")</p>
-<hr>
+<p><span class="glyphicon glyphicon-time"></span> Publicado el @Model.EffectDate.ToString("dd/MM/yyyy") por <a href="#">@Model.WriterUserName</a></p>
+<hr />
 <!-- Preview Image -->
 @*<img class="img-responsive" src="http://placehold.it/900x300" alt="">
     <hr>*@
@@ -77,3 +81,10 @@
 <p>
     @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
 </p>
+
+@section Scripts {
+    <!-- View JavaScript -->
+    <script src="~/Scripts/Post/Details.js"></script>
+    <!-- Code Highlight -->
+    <script src="~/Content/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+}

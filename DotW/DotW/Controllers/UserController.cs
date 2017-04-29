@@ -63,7 +63,12 @@
                 }
                 else
                 {
-                    AddErrors(result);
+                    var errors = TranslateErrors(result);
+                    foreach (var error in errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
+
                 }
             }
 
@@ -253,6 +258,38 @@
             }
 
             return roles;
+        }
+
+        private List<string> TranslateErrors(IdentityResult result)
+        {
+            var errors = new List<string>();
+
+            if (result.Errors.Any(x => x.Contains("Name") && x.Contains("taken")))
+            {
+                errors.Add("El nombre de usuario especificado ya ha sido utilizado.");
+            }
+
+            if (result.Errors.Any(x => x.Contains("Email") && x.Contains("taken")))
+            {
+                errors.Add("El email especificado ya ha sido utilizado.");
+            }
+
+            if (result.Errors.Any(x => x.Contains("lowercase")))
+            {
+                errors.Add("La contraseña debe tener al menos una letra minúscula.");
+            }
+
+            if (result.Errors.Any(x => x.Contains("uppercase")))
+            {
+                errors.Add("La contraseña debe tener al menos una letra mayúscula.");
+            }
+
+            if (result.Errors.Any(x => x.Contains("digit")))
+            {
+                errors.Add("La contraseña debe tener al menos un número.");
+            }
+
+            return errors;
         }
 
         #endregion

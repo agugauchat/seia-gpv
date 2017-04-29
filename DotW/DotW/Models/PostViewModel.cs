@@ -9,23 +9,24 @@ namespace DotW.Models
 {
     public class CreatePostViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "El campo Título es requerido.")]
         [Display(Name = "Título")]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Escritor es requerido.")]
         [Display(Name = "Escritor")]
         public int IdWriter { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Resumen es requerido.")]
+        [MaxLength(500, ErrorMessage = "El Resumen debe tener como máximo una longitud de 500 caracteres.")]
         [Display(Name = "Resumen")]
         public string Summary { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Cuerpo es requerido.")]
         [Display(Name = "Cuerpo")]
         public string Body { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "La Categoría es requerida.")]
         [Display(Name = "Categoría")]
         public int IdCategory { get; set; }
 
@@ -37,19 +38,20 @@ namespace DotW.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Título es requerido.")]
         [Display(Name = "Título")]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Resumen es requerido.")]
+        [MaxLength(500, ErrorMessage = "El Resumen debe tener como máximo una longitud de 500 caracteres.")]
         [Display(Name = "Resumen")]
         public string Summary { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Cuerpo es requerido.")]
         [Display(Name = "Cuerpo")]
         public string Body { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "La Categoría es requerida.")]
         [Display(Name = "Categoría")]
         public int IdCategory { get; set; }
 

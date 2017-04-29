@@ -16,12 +16,12 @@ namespace DotW.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Su contraseña ha si modificada."
+                : message == ManageMessageId.SetPasswordSuccess ? "Se ha establecido su contraseña."
+                : message == ManageMessageId.SetTwoFactorSuccess ? "Su proveedor de autenticación en dos pasos ha sido establecido."
+                : message == ManageMessageId.Error ? "Ha ocurrido un error."
+                : message == ManageMessageId.AddPhoneSuccess ? "Se ha establecido su número de teléfono"
+                : message == ManageMessageId.RemovePhoneSuccess ? "Su número de teléfono ha sido removido."
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -83,7 +83,7 @@ namespace DotW.Controllers
                 var message = new IdentityMessage
                 {
                     Destination = model.Number,
-                    Body = "Your security code is: " + code
+                    Body = "Su código de seguridad es: " + code
                 };
                 await UserManager.SmsService.SendAsync(message);
             }
@@ -150,7 +150,7 @@ namespace DotW.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
             }
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "Failed to verify phone");
+            ModelState.AddModelError("", "Fallo en la verificación de su teléfono.");
             return View(model);
         }
 
@@ -241,8 +241,8 @@ namespace DotW.Controllers
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                message == ManageMessageId.RemoveLoginSuccess ? "La identificación externa ha sido removida."
+                : message == ManageMessageId.Error ? "Ha ocurrido un error."
                 : "";
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user == null)
