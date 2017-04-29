@@ -78,7 +78,7 @@ namespace DotW.Models
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "El campo Contraseña es requerido.")]
-        [StringLength(100, ErrorMessage = "La {0} contraseña debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]
+        [StringLength(100, ErrorMessage = "La {0} debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
@@ -97,7 +97,7 @@ namespace DotW.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "El campo Contraseña es requerido.")]
-        [StringLength(100, ErrorMessage = "La {0} contraseña debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]
+        [StringLength(100, ErrorMessage = "La {0} debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
         public string Password { get; set; }

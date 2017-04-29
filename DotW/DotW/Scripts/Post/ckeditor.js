@@ -2,7 +2,7 @@
     CKEDITOR.replace('postEditor', {
         codeSnippet_theme: 'monokai_sublime',
         // No poner espacios entre las comas.
-        extraPlugins: 'uploadimage,oembed,widget',
+        extraPlugins: 'uploadimage,oembed,widget,justify',
         uploadUrl: '/Post/UploadImage',
         filebrowserImageBrowseUrl: '/Post/UploadImagePartial',
         filebrowserImageUploadUrl: '/Post/UploadImage',

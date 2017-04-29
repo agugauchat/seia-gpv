@@ -323,6 +323,17 @@
     <Content Include="Content\ckeditor\plugins\icons_hidpi.png" />
     <Content Include="Content\ckeditor\plugins\image\dialogs\image.js" />
     <Content Include="Content\ckeditor\plugins\image\images\noimage.png" />
+    <Content Include="Content\ckeditor\plugins\justify\icons\hidpi\justifyblock.png" />
+    <Content Include="Content\ckeditor\plugins\justify\icons\hidpi\justifycenter.png" />
+    <Content Include="Content\ckeditor\plugins\justify\icons\hidpi\justifyleft.png" />
+    <Content Include="Content\ckeditor\plugins\justify\icons\hidpi\justifyright.png" />
+    <Content Include="Content\ckeditor\plugins\justify\icons\justifyblock.png" />
+    <Content Include="Content\ckeditor\plugins\justify\icons\justifycenter.png" />
+    <Content Include="Content\ckeditor\plugins\justify\icons\justifyleft.png" />
+    <Content Include="Content\ckeditor\plugins\justify\icons\justifyright.png" />
+    <Content Include="Content\ckeditor\plugins\justify\lang\en.js" />
+    <Content Include="Content\ckeditor\plugins\justify\lang\es.js" />
+    <Content Include="Content\ckeditor\plugins\justify\plugin.js" />
     <Content Include="Content\ckeditor\plugins\link\dialogs\anchor.js" />
     <Content Include="Content\ckeditor\plugins\link\dialogs\link.js" />
     <Content Include="Content\ckeditor\plugins\link\images\anchor.png" />

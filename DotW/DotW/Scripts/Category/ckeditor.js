@@ -1,5 +1,6 @@
 ﻿$(function () {
     CKEDITOR.replace('categoryEditor', {
+        extraPlugins: 'justify',
         removeDialogTabs: 'image:advanced;image:Link;info:preview;info:advanced;',
         removePlugins: 'uploadimage',
         toolbarGroups: [

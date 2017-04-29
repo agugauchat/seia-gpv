@@ -28,7 +28,7 @@ namespace DotW.Models
     public class SetPasswordViewModel
     {
         [Required(ErrorMessage = "El campo Nueva Contraseña es requerido.")]
-        [StringLength(100, ErrorMessage = "La {0} contraseña debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]
+        [StringLength(100, ErrorMessage = "La {0} debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Nueva Contraseña")]
         public string NewPassword { get; set; }
@@ -47,7 +47,7 @@ namespace DotW.Models
         public string OldPassword { get; set; }
 
         [Required(ErrorMessage = "El campo Nueva Contraseña es requerido.")]
-        [StringLength(100, ErrorMessage = "La {0} contraseña debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]
+        [StringLength(100, ErrorMessage = "La {0} debe tener como mínimo una longitud de {2} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Nueva Contraseña")]
         public string NewPassword { get; set; }
