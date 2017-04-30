@@ -96,7 +96,8 @@
                     Summary = model.Summary,
                     Body = model.Body,
                     CategoryId = model.IdCategory,
-                    IsDraft = model.IsDraft
+                    IsDraft = model.IsDraft,
+                    Tags = model.Tags
                 };
 
                 var createResult = postService.CreatePost(request);
@@ -123,7 +124,8 @@
                     Body = model.Body,
                     IdCategory = model.IdCategory,
                     IsDraft = model.IsDraft,
-                    PrincipalImageName = finalFileName
+                    PrincipalImageName = finalFileName,
+                    Tags = model.Tags
                 });
 
                 return RedirectToAction("Index", "Post");
@@ -155,7 +157,8 @@
                 Body = result.Body,
                 IdCategory = result.IdCategory,
                 IsDraft = result.IsDraft,
-                PrincipalImageName = result.PrincipalImageName
+                PrincipalImageName = result.PrincipalImageName,
+                Tags = result.Tags
             };
 
             var categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
@@ -164,6 +167,8 @@
                 Text = x.Title,
                 Value = x.Id.ToString()
             });
+
+            ViewBag.StringTags = string.Join(",", model.Tags);
 
             return View(model);
         }
@@ -202,7 +207,8 @@
                     Body = model.Body,
                     IdCategory = model.IdCategory,
                     IsDraft = model.IsDraft,
-                    PrincipalImageName = string.IsNullOrEmpty(finalFileName) ? model.PrincipalImageName : finalFileName
+                    PrincipalImageName = string.IsNullOrEmpty(finalFileName) ? model.PrincipalImageName : finalFileName,
+                    Tags = model.Tags
                 });
 
                 return RedirectToAction("Index", "Post");
@@ -231,7 +237,8 @@
                 Title = result.Title,
                 Summary = result.Summary,
                 CategoryTitle = result.CategoryTitle,
-                IsDraft = result.IsDraft
+                IsDraft = result.IsDraft,
+                Tags = result.Tags
             };
 
             return View(model);

@@ -21,5 +21,7 @@
         public bool IsDraft { get; set; }
 
         public string PrincipalImageName { get; set; }
+
+        public List<string> Tags { get; set; }
     }
 }

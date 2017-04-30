@@ -3,11 +3,12 @@
 @model DotW.Models.EditPostViewModel
 @{
     ViewBag.Title = "Editar Publicación";
+    var stringTags = ViewBag.StringTags;
 }
 
 @section Styles {
-    <script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
     <link href="~/Content/ckeditor/ckeditor_style.css" rel="stylesheet" />
+    <link href="~/Content/tagsinput/src/bootstrap-tagsinput.css" rel="stylesheet" />
 }
 
 <h2>Editar la publicación</h2>
@@ -58,6 +59,16 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="col-md-2 control-label">Tags</label>
+        <div class="col-md-10">
+            <input type="text" id="postTags" value="@stringTags" data-role="tagsinput" />
+            @foreach (var tag in Model.Tags)
+            {
+                <input id="@tag" name="Tags" type="hidden" value="@tag" />;
+            }
+        </div>
+    </div>
+    <div class="form-group">
         @Html.LabelFor(model => model.IdCategory, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.IdCategory, (IEnumerable<SelectListItem>)ViewBag.Categories, "Seleccione una categoría", new { @class = "form-control" })
@@ -77,6 +88,8 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/Post/ckeditor.js"></script>
-    <script src="~/Scripts/Post/Edit.js"></script>
+    <script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="~/Scripts/Post/ckeditor.js"></script>
+    <script type="text/javascript" src="~/Scripts/Post/Edit.js"></script>
+    <script type="text/javascript" src="~/Content/tagsinput/src/bootstrap-tagsinput.js"></script>
 }

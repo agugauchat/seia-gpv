@@ -37,6 +37,14 @@ namespace DotW.Models
 
         [Display(Name = "Es borrador")]
         public bool IsDraft { get; set; }
+
+        [Display(Name = "Tags")]
+        public List<string> Tags { get; set; }
+
+        public CreatePostViewModel()
+        {
+            Tags = new List<string>();
+        }
     }
 
     public class EditPostViewModel
@@ -70,6 +78,14 @@ namespace DotW.Models
 
         [Display(Name = "Es borrador")]
         public bool IsDraft { get; set; }
+
+        [Display(Name = "Tags")]
+        public List<string> Tags { get; set; }
+
+        public EditPostViewModel()
+        {
+            Tags = new List<string>();
+        }
     }
 
     public class DeletePostViewModel
@@ -87,6 +103,9 @@ namespace DotW.Models
 
         [Display(Name = "Estado")]
         public bool IsDraft { get; set; }
+
+        [Display(Name = "Tags")]
+        public List<string> Tags { get; set; }
     }
 
     public class IndexPostViewModel

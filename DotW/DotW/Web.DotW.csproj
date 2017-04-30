@@ -520,13 +520,6 @@
     <Content Include="Content\Images\javascript.jpg" />
     <Content Include="Content\Images\net.jpg" />
     <Content Include="Content\Images\sql.jpg" />
-    <Content Include="Content\tagsinput\dist\bootstrap-tagsinput-angular.js" />
-    <Content Include="Content\tagsinput\dist\bootstrap-tagsinput-angular.min.js" />
-    <Content Include="Content\tagsinput\dist\bootstrap-tagsinput.css" />
-    <Content Include="Content\tagsinput\dist\bootstrap-tagsinput.js" />
-    <Content Include="Content\tagsinput\dist\bootstrap-tagsinput.min.js" />
-    <Content Include="Content\tagsinput\Gruntfile.js" />
-    <Content Include="Content\tagsinput\karma.conf.js" />
     <Content Include="Content\tagsinput\src\bootstrap-tagsinput-angular.js" />
     <Content Include="Content\tagsinput\src\bootstrap-tagsinput.css" />
     <Content Include="Content\tagsinput\src\bootstrap-tagsinput.js" />
@@ -585,13 +578,7 @@
     <Content Include="Content\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
     <Content Include="Content\ckeditor\plugins\oembed\LICENSE.md" />
     <Content Include="Content\ckeditor\plugins\oembed\README.md" />
-    <Content Include="Content\tagsinput\bootstrap-tagsinput.jquery.json" />
-    <Content Include="Content\tagsinput\bower.json" />
-    <Content Include="Content\tagsinput\dist\bootstrap-tagsinput-angular.min.js.map" />
-    <Content Include="Content\tagsinput\dist\bootstrap-tagsinput.less" />
-    <Content Include="Content\tagsinput\dist\bootstrap-tagsinput.min.js.map" />
     <Content Include="Content\tagsinput\LICENSE" />
-    <Content Include="Content\tagsinput\package.json" />
     <Content Include="Content\tagsinput\README.md" />
     <None Include="Properties\PublishProfiles\Nico.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

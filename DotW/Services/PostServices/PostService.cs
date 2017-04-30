@@ -30,8 +30,19 @@
                 };
 
                 db.Posts.Add(post);
-
                 db.SaveChanges();
+
+                request.Tags = request.Tags.Select(x => x.ToLower()).Distinct().ToList();
+
+                var postTags = db.Tags.Where(x => x.PostId == post.Id).Select(x => x.Tag).ToList();
+                var tags = request.Tags.Where(t => !postTags.Contains(t.ToLower())).Select(t => new Tags() { PostId = post.Id, Tag = t.ToLower() }).ToList();
+                tags = tags.Distinct().ToList();
+
+                if (tags.Any())
+                {
+                    db.Tags.AddRange(tags);
+                    db.SaveChanges();
+                }
 
                 return new CreatePostResponse { PostId = post.Id };
             }
@@ -58,10 +69,11 @@
                             IdCategory = x.IdCategory,
                             CategoryTitle = x.Categories.Title,
                             IsDraft = x.IsDraft,
-                            PrincipalImageName = x.PrincipalImageName
+                            PrincipalImageName = x.PrincipalImageName,
+                            Tags = db.Tags.Where(t => t.PostId == x.Id).Select(t => t.Tag).ToList()
                         }).ToList();
                 }
-                else if(!string.IsNullOrEmpty(request.AspNetUserId))
+                else if (!string.IsNullOrEmpty(request.AspNetUserId))
                 {
                     result = db.Posts.Where(x => x.Users.AspNetUserId == request.AspNetUserId && !x.NullDate.HasValue)
                         .Select(x => new Post
@@ -76,7 +88,8 @@
                             IdCategory = x.IdCategory,
                             CategoryTitle = x.Categories.Title,
                             IsDraft = x.IsDraft,
-                            PrincipalImageName = x.PrincipalImageName
+                            PrincipalImageName = x.PrincipalImageName,
+                            Tags = db.Tags.Where(t => t.PostId == x.Id).Select(t => t.Tag).ToList()
                         }).ToList();
                 }
 
@@ -103,7 +116,8 @@
                         IdCategory = x.IdCategory,
                         CategoryTitle = x.Categories.Title,
                         IsDraft = x.IsDraft,
-                        PrincipalImageName = x.PrincipalImageName
+                        PrincipalImageName = x.PrincipalImageName,
+                        Tags = db.Tags.Where(t => t.PostId == x.Id).Select(t => t.Tag).ToList()
                     }).ToList();
 
                 return new SearchPostsByCategoryIdResponse { Posts = result };
@@ -127,7 +141,8 @@
                             IdCategory = x.IdCategory,
                             CategoryTitle = x.Categories.Title,
                             IsDraft = x.IsDraft,
-                            PrincipalImageName = x.PrincipalImageName
+                            PrincipalImageName = x.PrincipalImageName,
+                            Tags = db.Tags.Where(t => t.PostId == x.Id).Select(t => t.Tag).ToList()
                         }).ToList();
 
                 return new SearchPostsResponse { Posts = result };
@@ -153,7 +168,8 @@
                         IdCategory = x.IdCategory,
                         CategoryTitle = x.Categories.Title,
                         IsDraft = x.IsDraft,
-                        PrincipalImageName = x.PrincipalImageName
+                        PrincipalImageName = x.PrincipalImageName,
+                        Tags = db.Tags.Where(t => t.PostId == x.Id).Select(t => t.Tag).ToList()
                     }).FirstOrDefault(x => x.Id == request.Id);
 
                 return response;
@@ -176,6 +192,31 @@
                     post.PrincipalImageName = request.PrincipalImageName;
 
                     db.SaveChanges();
+
+                    request.Tags = request.Tags.Select(x => x.ToLower()).Distinct().ToList();
+
+                    var postTags = db.Tags.Where(x => x.PostId == post.Id).Select(x => x.Tag).ToList();
+
+                    foreach (var t in postTags)
+                    {
+                        // Todos aquellos posts que estan en la base pero no llegan en el request es porque han sido borrados por el usuario,
+                        // por ende, se borran en la base de datos.
+                        if (!request.Tags.Contains(t))
+                        {
+                            var rtag = db.Tags.Where(x => x.Tag == t.ToLower() && x.PostId == request.Id).SingleOrDefault();
+
+                            db.Tags.Remove(rtag);
+                            db.SaveChanges();
+                        }
+                    }
+
+                    var tags = request.Tags.Where(t => !postTags.Contains(t.ToLower())).Select(t => new Tags() { PostId = post.Id, Tag = t.ToLower() }).ToList();
+
+                    if (tags.Any())
+                    {
+                        db.Tags.AddRange(tags);
+                        db.SaveChanges();
+                    }
                 }
 
                 return new UpdatePostResponse();
