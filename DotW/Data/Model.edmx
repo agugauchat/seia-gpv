@@ -111,6 +111,7 @@
           <Property Name="IdCategory" Type="int" Nullable="false" />
           <Property Name="IsDraft" Type="bit" Nullable="false" />
           <Property Name="Summary" Type="varchar" MaxLength="500" />
+          <Property Name="PrincipalImageName" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -535,6 +536,7 @@
           <NavigationProperty Name="Users" Relationship="DotWModel.FK_Posts_Users" FromRole="Posts" ToRole="Users" />
           <Property Name="IsDraft" Type="Boolean" Nullable="false" />
           <Property Name="Summary" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PrincipalImageName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -954,6 +956,7 @@
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="DotWModel.Posts">
               <MappingFragment StoreEntitySet="Posts">
+                <ScalarProperty Name="PrincipalImageName" ColumnName="PrincipalImageName" />
                 <ScalarProperty Name="Summary" ColumnName="Summary" />
                 <ScalarProperty Name="IsDraft" ColumnName="IsDraft" />
                 <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />

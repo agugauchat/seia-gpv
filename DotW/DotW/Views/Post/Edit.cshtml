@@ -1,4 +1,6 @@
-﻿@model DotW.Models.EditPostViewModel
+﻿@using System.Configuration
+
+@model DotW.Models.EditPostViewModel
 @{
     ViewBag.Title = "Editar Publicación";
 }
@@ -10,7 +12,7 @@
 
 <h2>Editar la publicación</h2>
 
-@using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <hr />
@@ -22,6 +24,27 @@
             @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImageName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10 input-group">
+            <label class="input-group-btn">
+                <span class="btn btn-primary">
+                    Examinar… <input id="imageInput" type="file" name="File" />
+                </span>
+            </label>
+            <input id="imageNameField" type="text" class="form-control" readonly="">
+        </div>
+    </div>
+    if (!string.IsNullOrEmpty(Model.PrincipalImageName))
+    {
+        @Html.HiddenFor(model => model.PrincipalImageName);
+        <div class="form-group" id="imagePreview">
+            @Html.LabelFor(model => model.PrincipalImageName, new { @class = "col-md-2 control-label"})
+            <div class="col-md-10">
+                <a class="btn btn-info" href="@Url.Content((ConfigurationManager.AppSettings["PathPostPrincipalImages"]) + Model.PrincipalImageName)" target="_blank">Ver Imagen</a>
+            </div>
+        </div>
+    }
     <div class="form-group">
         @Html.LabelFor(model => model.Summary, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -55,4 +78,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/Post/ckeditor.js"></script>
+    <script src="~/Scripts/Post/Edit.js"></script>
 }

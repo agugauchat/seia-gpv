@@ -1,4 +1,6 @@
-﻿@model DotW.Models.ListPostViewModel
+﻿@using System.Configuration;
+
+@model DotW.Models.ListPostViewModel
 @{
     ViewBag.Title = "Publicaciones";
     List<Entities.CategoryEntities.Category> categories = ViewBag.Categories as List<Entities.CategoryEntities.Category>;
@@ -24,9 +26,12 @@
                     <h4><a href="@Url.Action("Details", "Post", new { id = post.Id })">@post.Title</a></h4>
                     <p><span class="glyphicon glyphicon-time"></span> Publicado el @post.EffectDate.ToString("dd/MM/yyyy") por <a href="#">@post.WriterUserName</a></p>
                     <!-- Preview Image -->
-                    @*<img class="img-responsive" src="http://placehold.it/900x300" alt="">
-                    <hr>*@
-                    <p>@post.Summary</p>
+                    if (!string.IsNullOrEmpty(post.PrincipalImageName))
+                    {
+                        <a href="@Url.Action("Details", "Post", new { id = post.Id })"><img class="img-responsive" src="@Url.Content((ConfigurationManager.AppSettings["PathPostPrincipalImages"]) + post.PrincipalImageName)" alt=""></a>
+                    }
+                    <br />
+                    <p class="post-summary">@post.Summary</p>
                     <hr>
                 }
             }

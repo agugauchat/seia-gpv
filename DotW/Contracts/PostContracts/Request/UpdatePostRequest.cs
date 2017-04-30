@@ -19,5 +19,7 @@
         public int IdCategory { get; set; }
 
         public bool IsDraft { get; set; }
+
+        public string PrincipalImageName { get; set; }
     }
 }

@@ -25,7 +25,8 @@
                     Body = request.Body,
                     EffectDate = DateTime.Now,
                     IdCategory = request.CategoryId,
-                    IsDraft = request.IsDraft
+                    IsDraft = request.IsDraft,
+                    PrincipalImageName = request.PrincipalImageName
                 };
 
                 db.Posts.Add(post);
@@ -56,7 +57,8 @@
                             WriterUserName = x.Users.Name,
                             IdCategory = x.IdCategory,
                             CategoryTitle = x.Categories.Title,
-                            IsDraft = x.IsDraft
+                            IsDraft = x.IsDraft,
+                            PrincipalImageName = x.PrincipalImageName
                         }).ToList();
                 }
                 else if(!string.IsNullOrEmpty(request.AspNetUserId))
@@ -73,7 +75,8 @@
                             WriterUserName = x.Users.Name,
                             IdCategory = x.IdCategory,
                             CategoryTitle = x.Categories.Title,
-                            IsDraft = x.IsDraft
+                            IsDraft = x.IsDraft,
+                            PrincipalImageName = x.PrincipalImageName
                         }).ToList();
                 }
 
@@ -99,7 +102,8 @@
                         WriterUserName = x.Users.Name,
                         IdCategory = x.IdCategory,
                         CategoryTitle = x.Categories.Title,
-                        IsDraft = x.IsDraft
+                        IsDraft = x.IsDraft,
+                        PrincipalImageName = x.PrincipalImageName
                     }).ToList();
 
                 return new SearchPostsByCategoryIdResponse { Posts = result };
@@ -122,7 +126,8 @@
                             WriterUserName = x.Users.Name,
                             IdCategory = x.IdCategory,
                             CategoryTitle = x.Categories.Title,
-                            IsDraft = x.IsDraft
+                            IsDraft = x.IsDraft,
+                            PrincipalImageName = x.PrincipalImageName
                         }).ToList();
 
                 return new SearchPostsResponse { Posts = result };
@@ -147,7 +152,8 @@
                         WriterUserName = x.Users.Name,
                         IdCategory = x.IdCategory,
                         CategoryTitle = x.Categories.Title,
-                        IsDraft = x.IsDraft
+                        IsDraft = x.IsDraft,
+                        PrincipalImageName = x.PrincipalImageName
                     }).FirstOrDefault(x => x.Id == request.Id);
 
                 return response;
@@ -167,6 +173,7 @@
                     post.Body = request.Body;
                     post.IdCategory = request.IdCategory;
                     post.IsDraft = request.IsDraft;
+                    post.PrincipalImageName = request.PrincipalImageName;
 
                     db.SaveChanges();
                 }

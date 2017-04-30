@@ -32,6 +32,7 @@ namespace Data
         public int IdCategory { get; set; }
         public bool IsDraft { get; set; }
         public string Summary { get; set; }
+        public string PrincipalImageName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comments> Comments { get; set; }

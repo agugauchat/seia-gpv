@@ -37,5 +37,8 @@
 
         [Display(Name = "Es borrador")]
         public bool IsDraft { get; set; }
+
+        [Display(Name = "Imagen Principal")]
+        public string PrincipalImageName { get; set; }
     }
 }
