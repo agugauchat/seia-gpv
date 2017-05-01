@@ -32,7 +32,11 @@
                     }
                     <br />
                     <p class="post-summary">@post.Summary</p>
-                    <hr>
+                    foreach (var tag in post.Tags)
+                    {
+                        <a href="@Url.Action("List", "Post", new { tag = tag })" class="tag-link"><span class="tag label label-info">@tag</span></a>
+                    }
+                    <hr />
                 }
             }
             else

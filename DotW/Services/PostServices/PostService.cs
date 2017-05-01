@@ -48,6 +48,33 @@
             }
         }
 
+        public SearchPostsByTagResponse SearchPostsByTag(SearchPostsByTagRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                var result = new List<Post>();
+                result = db.Posts.Where(x => x.Tags.Any(t => t.Tag == request.Tag)
+                                             && !x.NullDate.HasValue)
+                    .Select(x => new Post
+                    {
+                        Id = x.Id,
+                        Title = x.Title,
+                        Summary = x.Summary,
+                        Body = x.Body,
+                        EffectDate = x.EffectDate,
+                        IdWriter = x.IdWriter,
+                        WriterUserName = x.Users.Name,
+                        IdCategory = x.IdCategory,
+                        CategoryTitle = x.Categories.Title,
+                        IsDraft = x.IsDraft,
+                        PrincipalImageName = x.PrincipalImageName,
+                        Tags = db.Tags.Where(t => t.PostId == x.Id).Select(t => t.Tag).ToList()
+                    }).ToList();
+
+                return new SearchPostsByTagResponse { Posts = result };
+            }
+        }
+
         public SearchPostsByUserIdResponse SearchPostsByUserId(SearchPostsByUserIdRequest request)
         {
             using (var db = new DotWEntities())

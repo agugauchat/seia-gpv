@@ -59,6 +59,14 @@ body {
     display: none;
 }
 
-.post-summary{
-    text-align:justify;
+.post-summary {
+    text-align: justify;
 }
+
+a.tag-link:hover {
+    text-decoration: none;
+}
+
+    a.tag-link:hover span {
+        background-color: #0663b3;
+    }

@@ -31,7 +31,7 @@
             return View(model);
         }
 
-        public ActionResult List(int? idCategory)
+        public ActionResult List(int? idCategory, string tag)
         {
             var postService = new PostService();
             var categoryService = new CategoryService();
@@ -41,6 +41,10 @@
             if (idCategory.HasValue)
             {
                 model.Posts = postService.SearchPostsByCategoryId(new SearchPostsByCategoryIdRequest { IdCategory = idCategory.Value }).Posts.Where(x => !x.IsDraft).OrderByDescending(x => x.EffectDate).ToList();
+            }
+            else if (!string.IsNullOrEmpty(tag))
+            {
+                model.Posts = postService.SearchPostsByTag(new SearchPostsByTagRequest { Tag = tag}).Posts.Where(x => !x.IsDraft).OrderByDescending(x => x.EffectDate).ToList();
             }
             else
             {
