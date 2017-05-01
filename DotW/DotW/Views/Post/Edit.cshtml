@@ -3,7 +3,6 @@
 @model DotW.Models.EditPostViewModel
 @{
     ViewBag.Title = "Editar Publicación";
-    var stringTags = ViewBag.StringTags;
 }
 
 @section Styles {
@@ -30,7 +29,7 @@
         <div class="col-md-10 input-group">
             <label class="input-group-btn">
                 <span class="btn btn-primary">
-                    Examinar… <input id="imageInput" type="file" name="File" />
+                    Examinar… <input id="imageInput" type="file" name="File" accept="image/*" />
                 </span>
             </label>
             <input id="imageNameField" type="text" class="form-control" readonly="">
@@ -61,7 +60,7 @@
     <div class="form-group">
         <label class="col-md-2 control-label">Tags</label>
         <div class="col-md-10">
-            <input type="text" id="postTags" value="@stringTags" data-role="tagsinput" />
+            <input type="text" id="postTags" value="@string.Join(",", Model.Tags)" data-role="tagsinput" />
             @foreach (var tag in Model.Tags)
             {
                 <input id="@tag" name="Tags" type="hidden" value="@tag" />;
