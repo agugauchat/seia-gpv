@@ -13,13 +13,21 @@
         <dd>@Model.Title</dd>
         <dd>&nbsp;</dd>
         <dt>@Html.DisplayNameFor(model => model.Summary)</dt>
-        <dd>@Model.Summary</dd>
+        <dd class="post-summary">@Model.Summary</dd>
         <dd>&nbsp;</dd>
         <dt>@Html.DisplayNameFor(model => model.CategoryTitle)</dt>
         <dd>@Model.CategoryTitle</dd>
         <dd>&nbsp;</dd>
         <dt>@Html.DisplayNameFor(model => model.IsDraft)</dt>
         <dd>@(Model.IsDraft ? "Borrador" : "Publicado")</dd>
+        <dd>&nbsp;</dd>
+        <dt>@Html.DisplayNameFor(model => model.Tags)</dt>
+        <dd>
+            @foreach (var tag in Model.Tags)
+            {
+                <span class="tag label label-info">@tag</span>
+            }
+        </dd>
     </dl>
     <br />
     @using (Html.BeginForm())

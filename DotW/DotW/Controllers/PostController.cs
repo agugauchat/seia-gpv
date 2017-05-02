@@ -4,6 +4,7 @@
     using Contracts.CommentaryContracts.Request;
     using Contracts.PostContracts.Request;
     using Contracts.UserContracts.Request;
+    using Entities.General;
     using Microsoft.AspNet.Identity;
     using Models;
     using Services.CategoryServices;
@@ -16,6 +17,7 @@
     using System.IO;
     using System.Linq;
     using System.Web;
+    using System.Web.Helpers;
     using System.Web.Mvc;
 
     public class PostController : BaseController
@@ -32,7 +34,7 @@
             return View(model);
         }
 
-        public ActionResult List(int? idCategory)
+        public ActionResult List(int? idCategory, string tag)
         {
             var postService = new PostService();
             var categoryService = new CategoryService();
@@ -42,6 +44,10 @@
             if (idCategory.HasValue)
             {
                 model.Posts = postService.SearchPostsByCategoryId(new SearchPostsByCategoryIdRequest { IdCategory = idCategory.Value }).Posts.Where(x => !x.IsDraft).OrderByDescending(x => x.EffectDate).ToList();
+            }
+            else if (!string.IsNullOrEmpty(tag))
+            {
+                model.Posts = postService.SearchPostsByTag(new SearchPostsByTagRequest { Tag = tag }).Posts.Where(x => !x.IsDraft).OrderByDescending(x => x.EffectDate).ToList();
             }
             else
             {
@@ -77,6 +83,7 @@
             var userService = new UserService();
             var postService = new PostService();
             var categoryService = new CategoryService();
+            string finalFileName = string.Empty;
 
             //TODO > Más adelante hay que validar el estado del usuario antes de permitir publicar.
 
@@ -86,9 +93,15 @@
             {
                 model.IdWriter = user.Id;
             }
-
+            
             if (ModelState.IsValid)
             {
+                // Verifica si el modelo no tiene imagen, o tiene imagen y la misma tiene una extensión permitida.
+                if ( model.File == null ||
+                    (model.File != null &&
+                    (new AllowedExtensions()).ImageExtensions.Contains(Path.GetExtension(model.File.FileName).Remove(0, 1).ToLower()))
+                   )
+                {
                 var request = new CreatePostRequest
                 {
                     IdWriter = model.IdWriter,
@@ -96,12 +109,44 @@
                     Summary = model.Summary,
                     Body = model.Body,
                     CategoryId = model.IdCategory,
-                    IsDraft = model.IsDraft
+                        IsDraft = model.IsDraft,
+                        Tags = model.Tags
                 };
 
-                var result = postService.CreatePost(request);
+                    var createResult = postService.CreatePost(request);
+
+                    if (model.File != null)
+                    {
+                        var pathPostPrincipalImages = ConfigurationManager.AppSettings["PathPostPrincipalImages"];
+                        var newImage = new WebImage(model.File.InputStream);
+                        finalFileName = createResult.PostId.ToString() + Path.GetExtension(model.File.FileName);
+                        var directory = Server.MapPath(pathPostPrincipalImages);
+
+                        // Se crea el directorio; si ya existe el directorio, la función no hace nada.
+                        Directory.CreateDirectory(directory);
+                        var finalpath = directory + finalFileName;
+
+                        newImage.Save(finalpath);
+
+                        var updateResult = postService.UpdatePost(new UpdatePostRequest
+                        {
+                            Id = createResult.PostId,
+                            Title = model.Title,
+                            Summary = model.Summary,
+                            Body = model.Body,
+                            IdCategory = model.IdCategory,
+                            IsDraft = model.IsDraft,
+                            PrincipalImageName = finalFileName,
+                            Tags = model.Tags
+                        });
+                    }
 
                 return RedirectToAction("Index", "Post");
+            }
+                else
+                {
+                    ModelState.AddModelError("", "La extensión de la imagen no es válida, vuelva a cargarla.");
+                }
             }
 
             var categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
@@ -129,7 +174,9 @@
                 Summary = result.Summary,
                 Body = result.Body,
                 IdCategory = result.IdCategory,
-                IsDraft = result.IsDraft
+                IsDraft = result.IsDraft,
+                PrincipalImageName = result.PrincipalImageName,
+                Tags = result.Tags
             };
 
             var categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
@@ -150,6 +197,29 @@
         {
             var postService = new PostService();
             var categoryService = new CategoryService();
+            string finalFileName = string.Empty;
+
+            if (model.File != null)
+            {
+                if ((new AllowedExtensions()).ImageExtensions.Contains(Path.GetExtension(model.File.FileName).Remove(0, 1).ToLower()))
+                {
+                    var pathPostPrincipalImages = ConfigurationManager.AppSettings["PathPostPrincipalImages"];
+
+                    var newImage = new WebImage(model.File.InputStream);
+                    finalFileName = model.Id.ToString() + Path.GetExtension(model.File.FileName);
+                    var directory = Server.MapPath(pathPostPrincipalImages);
+
+                    // Se crea el directorio; si ya existe el directorio, la función no hace nada.
+                    Directory.CreateDirectory(directory);
+                    var finalpath = directory + finalFileName;
+
+                    newImage.Save(finalpath);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "La extensión de la imagen no es válida, vuelva a cargarla.");
+                }
+            }
 
             if (ModelState.IsValid)
             {
@@ -160,7 +230,9 @@
                     Summary = model.Summary,
                     Body = model.Body,
                     IdCategory = model.IdCategory,
-                    IsDraft = model.IsDraft
+                    IsDraft = model.IsDraft,
+                    PrincipalImageName = string.IsNullOrEmpty(finalFileName) ? model.PrincipalImageName : finalFileName,
+                    Tags = model.Tags
                 });
 
                 return RedirectToAction("Index", "Post");
@@ -189,7 +261,8 @@
                 Title = result.Title,
                 Summary = result.Summary,
                 CategoryTitle = result.CategoryTitle,
-                IsDraft = result.IsDraft
+                IsDraft = result.IsDraft,
+                Tags = result.Tags
             };
 
             return View(model);

@@ -16,6 +16,8 @@
 
         SearchPostsByCategoryIdResponse SearchPostsByCategoryId(SearchPostsByCategoryIdRequest request);
 
+        SearchPostsByTagResponse SearchPostsByTag(SearchPostsByTagRequest request);
+
         SearchPostsResponse SearchPosts(SearchPostsRequest request);
 
         GetPostByIdResponse GetPostById(GetPostByIdRequest request);

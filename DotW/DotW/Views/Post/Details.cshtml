@@ -24,6 +24,10 @@
     <hr>*@
 <!-- Post Content -->
 <p class="lead">@Html.Raw(Model.Body)</p>
+@foreach (var tag in Model.Tags)
+{
+    <a href="@Url.Action("List", "Post", new { tag = tag })" class="tag-link"><span class="tag label label-info">@tag</span></a>
+}
 <hr>
 <!-- Blog Comments -->
 <!-- Comments Form -->

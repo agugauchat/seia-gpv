@@ -520,6 +520,9 @@
     <Content Include="Content\Images\javascript.jpg" />
     <Content Include="Content\Images\net.jpg" />
     <Content Include="Content\Images\sql.jpg" />
+    <Content Include="Content\tagsinput\src\bootstrap-tagsinput-angular.js" />
+    <Content Include="Content\tagsinput\src\bootstrap-tagsinput.css" />
+    <Content Include="Content\tagsinput\src\bootstrap-tagsinput.js" />
     <Content Include="Content\ViewsStyles\Category\List.css" />
     <Content Include="Content\ViewsStyles\Post\UploadImagePartial.css" />
     <Content Include="favicon.ico" />
@@ -575,6 +578,8 @@
     <Content Include="Content\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
     <Content Include="Content\ckeditor\plugins\oembed\LICENSE.md" />
     <Content Include="Content\ckeditor\plugins\oembed\README.md" />
+    <Content Include="Content\tagsinput\LICENSE" />
+    <Content Include="Content\tagsinput\README.md" />
     <None Include="Properties\PublishProfiles\Nico.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Category\ckeditor.js" />
@@ -587,7 +592,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Post\ckeditor.js" />
+    <Content Include="Scripts\Post\Create.js" />
     <Content Include="Scripts\Post\Details.js" />
+    <Content Include="Scripts\Post\Edit.js" />
     <Content Include="Scripts\Post\List.js" />
     <Content Include="Scripts\Post\UploadImagePartial.js" />
     <Content Include="Scripts\respond.js" />

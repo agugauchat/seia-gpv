@@ -4,13 +4,13 @@
 }
 
 @section Styles {
-    <script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
     <link href="~/Content/ckeditor/ckeditor_style.css" rel="stylesheet" />
+    <link href="~/Content/tagsinput/src/bootstrap-tagsinput.css" rel="stylesheet" />
 }
 
 <h2>Crear una nueva publicación</h2>
 
-@using (Html.BeginForm("Create", "Post", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Create", "Post", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <hr />
@@ -19,6 +19,17 @@
         @Html.LabelFor(model => model.Title, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImageName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10 input-group">
+            <label class="input-group-btn">
+                <span class="btn btn-primary">
+                    Examinar… <input id="imageInput" type="file" name="File" accept="image/*" />
+                </span>
+            </label>
+            <input id="imageNameField" type="text" class="form-control" readonly="">
         </div>
     </div>
     <div class="form-group">
@@ -31,6 +42,23 @@
         @Html.LabelFor(model => model.Body, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextAreaFor(model => model.Body, new { @id = "postEditor", @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Tags</label>
+        <div class="col-md-10">
+            @if (Model != null)
+            {
+                <input type="text" id="postTags" value="@string.Join(",", Model.Tags)" data-role="tagsinput" />
+                foreach (var tag in Model.Tags)
+                {
+                    <input id="@tag" name="Tags" type="hidden" value="@tag" />;
+                }
+            }
+            else
+            {
+                <input type="text" id="postTags" data-role="tagsinput" />
+            }
         </div>
     </div>
     <div class="form-group">
@@ -57,5 +85,8 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/Post/ckeditor.js"></script>
+    <script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="~/Scripts/Post/ckeditor.js"></script>
+    <script type="text/javascript" src="~/Scripts/Post/Create.js"></script>
+    <script type="text/javascript" src="~/Content/tagsinput/src/bootstrap-tagsinput.js"></script>
 }

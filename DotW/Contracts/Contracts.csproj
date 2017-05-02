@@ -69,6 +69,7 @@
     <Compile Include="PostContracts\Request\DeletePostRequest.cs" />
     <Compile Include="PostContracts\Request\GetPostByIdRequest.cs" />
     <Compile Include="PostContracts\Request\SearchPostsByCategoryIdRequest.cs" />
+    <Compile Include="PostContracts\Request\SearchPostsByTagRequest.cs" />
     <Compile Include="PostContracts\Request\SearchPostsByUserIdRequest.cs" />
     <Compile Include="PostContracts\Request\SearchPostsRequest.cs" />
     <Compile Include="PostContracts\Request\UpdatePostRequest.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="PostContracts\Response\DeletePostResponse.cs" />
     <Compile Include="PostContracts\Response\GetPostByIdResponse.cs" />
     <Compile Include="PostContracts\Response\SearchPostsByCategoryIdResponse.cs" />
+    <Compile Include="PostContracts\Response\SearchPostsByTagResponse.cs" />
     <Compile Include="PostContracts\Response\SearchPostsByUserIdResponse.cs" />
     <Compile Include="PostContracts\Response\SearchPostsResponse.cs" />
     <Compile Include="PostContracts\Response\UpdatePostResponse.cs" />

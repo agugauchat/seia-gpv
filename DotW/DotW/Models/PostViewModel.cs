@@ -13,6 +13,11 @@ namespace DotW.Models
         [Display(Name = "Título")]
         public string Title { get; set; }
 
+        public HttpPostedFileBase File { get; set; }
+
+        [Display(Name = "Imagen principal")]
+        public string ImageName { get; set; }
+
         [Required(ErrorMessage = "El campo Escritor es requerido.")]
         [Display(Name = "Escritor")]
         public int IdWriter { get; set; }
@@ -32,6 +37,14 @@ namespace DotW.Models
 
         [Display(Name = "Es borrador")]
         public bool IsDraft { get; set; }
+
+        [Display(Name = "Tags")]
+        public List<string> Tags { get; set; }
+
+        public CreatePostViewModel()
+        {
+            Tags = new List<string>();
+        }
     }
 
     public class EditPostViewModel
@@ -41,6 +54,14 @@ namespace DotW.Models
         [Required(ErrorMessage = "El campo Título es requerido.")]
         [Display(Name = "Título")]
         public string Title { get; set; }
+
+        public HttpPostedFileBase File { get; set; }
+
+        [Display(Name = "Imagen principal")]
+        public string ImageName { get; set; }
+
+        [Display(Name = "Imagen cargada")]
+        public string PrincipalImageName { get; set; }
 
         [Required(ErrorMessage = "El campo Resumen es requerido.")]
         [MaxLength(500, ErrorMessage = "El Resumen debe tener como máximo una longitud de 500 caracteres.")]
@@ -57,6 +78,14 @@ namespace DotW.Models
 
         [Display(Name = "Es borrador")]
         public bool IsDraft { get; set; }
+
+        [Display(Name = "Tags")]
+        public List<string> Tags { get; set; }
+
+        public EditPostViewModel()
+        {
+            Tags = new List<string>();
+        }
     }
 
     public class DeletePostViewModel
@@ -74,6 +103,9 @@ namespace DotW.Models
 
         [Display(Name = "Estado")]
         public bool IsDraft { get; set; }
+
+        [Display(Name = "Tags")]
+        public List<string> Tags { get; set; }
     }
 
     public class IndexPostViewModel
