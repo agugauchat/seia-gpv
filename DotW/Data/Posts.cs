@@ -17,10 +17,10 @@ namespace Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Posts()
         {
-            this.Comments = new HashSet<Comments>();
             this.Tags = new HashSet<Tags>();
             this.Votes = new HashSet<Votes>();
             this.Complaints = new HashSet<Complaints>();
+            this.Comments = new HashSet<Comments>();
         }
     
         public int Id { get; set; }
@@ -35,8 +35,6 @@ namespace Data
         public string PrincipalImageName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comments> Comments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tags> Tags { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Votes> Votes { get; set; }
@@ -44,5 +42,7 @@ namespace Data
         public virtual ICollection<Complaints> Complaints { get; set; }
         public virtual Categories Categories { get; set; }
         public virtual Users Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comments> Comments { get; set; }
     }
 }

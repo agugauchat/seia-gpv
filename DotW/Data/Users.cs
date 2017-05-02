@@ -20,6 +20,7 @@ namespace Data
             this.Complaints = new HashSet<Complaints>();
             this.Posts = new HashSet<Posts>();
             this.Votes = new HashSet<Votes>();
+            this.Comments = new HashSet<Comments>();
         }
     
         public int Id { get; set; }
@@ -31,7 +32,6 @@ namespace Data
         public Nullable<System.DateTime> SuspendedDate { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
-        public virtual Comments Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Complaints> Complaints { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -39,5 +39,7 @@ namespace Data
         public virtual UserStates UserStates { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Votes> Votes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comments> Comments { get; set; }
     }
 }

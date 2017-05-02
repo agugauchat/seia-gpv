@@ -176,13 +176,13 @@
         </Association>
         <Association Name="FK_Comments_User">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comments" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Comments">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -503,20 +503,6 @@
           <Property Name="Summary" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Posts" Relationship="DotWModel.FK_Posts_Category" FromRole="Categories" ToRole="Posts" />
         </EntityType>
-        <EntityType Name="Comments">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdPost" Type="Int32" Nullable="false" />
-          <Property Name="IdUser" Type="Int32" Nullable="false" />
-          <Property Name="Commentary" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="EffectDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="NullDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Posts" Relationship="Self.FK_Comments_Post" FromRole="Comments" ToRole="Posts" />
-          <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_Comment" FromRole="Comments" ToRole="Complaints" />
-          <NavigationProperty Name="Users" Relationship="DotWModel.FK_Comments_User" FromRole="Comments" ToRole="Users" />
-        </EntityType>
         <EntityType Name="Posts">
           <Key>
             <PropertyRef Name="Id" />
@@ -527,7 +513,6 @@
           <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EffectDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="NullDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Post" FromRole="Posts" ToRole="Comments" />
           <NavigationProperty Name="Tags" Relationship="Self.FK_Tags_Posts" FromRole="Posts" ToRole="Tags" />
           <NavigationProperty Name="Votes" Relationship="Self.FK_Votes_Post" FromRole="Posts" ToRole="Votes" />
           <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_Post" FromRole="Posts" ToRole="Complaints" />
@@ -537,6 +522,7 @@
           <Property Name="IsDraft" Type="Boolean" Nullable="false" />
           <Property Name="Summary" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="PrincipalImageName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Comments" Relationship="DotWModel.FK_Comments_Post" FromRole="Posts" ToRole="Comments" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -579,18 +565,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Comments_Post">
-          <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Posts">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="IdPost" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tags_Posts">
           <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
           <End Role="Tags" Type="Self.Tags" Multiplicity="*" />
@@ -621,7 +595,6 @@
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
           <EntitySet Name="Categories" EntityType="Self.Categories" />
-          <EntitySet Name="Comments" EntityType="Self.Comments" />
           <EntitySet Name="Posts" EntityType="Self.Posts" />
           <EntitySet Name="Tags" EntityType="Self.Tags" />
           <EntitySet Name="UserStates" EntityType="Self.UserStates" />
@@ -629,10 +602,6 @@
           <AssociationSet Name="FK_Categories_Categories" Association="Self.FK_Categories_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comments_Post" Association="Self.FK_Comments_Post">
-            <End Role="Posts" EntitySet="Posts" />
-            <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
           <AssociationSet Name="FK_Tags_Posts" Association="Self.FK_Tags_Posts">
             <End Role="Posts" EntitySet="Posts" />
@@ -643,10 +612,6 @@
             <End Role="Votes" EntitySet="Votes" />
           </AssociationSet>
           <EntitySet Name="Complaints" EntityType="DotWModel.Complaints" />
-          <AssociationSet Name="FK_Complaints_Comment" Association="DotWModel.FK_Complaints_Comment">
-            <End Role="Comments" EntitySet="Comments" />
-            <End Role="Complaints" EntitySet="Complaints" />
-          </AssociationSet>
           <AssociationSet Name="FK_Complaints_Post" Association="DotWModel.FK_Complaints_Post">
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Complaints" EntitySet="Complaints" />
@@ -669,10 +634,6 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_Comments_User" Association="DotWModel.FK_Comments_User">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
           <AssociationSet Name="FK_Complaints_User" Association="DotWModel.FK_Complaints_User">
             <End Role="Users" EntitySet="Users" />
             <End Role="Complaints" EntitySet="Complaints" />
@@ -693,6 +654,19 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="Comments" EntityType="DotWModel.Comments" />
+          <AssociationSet Name="FK_Comments_Post" Association="DotWModel.FK_Comments_Post">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_User" Association="DotWModel.FK_Comments_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Complaints_Comment" Association="DotWModel.FK_Complaints_Comment">
+            <End Role="Comments" EntitySet="Comments" />
+            <End Role="Complaints" EntitySet="Complaints" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Complaints">
           <Key>
@@ -703,22 +677,10 @@
           <Property Name="IdComment" Type="Int32" />
           <Property Name="IdUser" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Comments" Relationship="DotWModel.FK_Complaints_Comment" FromRole="Complaints" ToRole="Comments" />
           <NavigationProperty Name="Posts" Relationship="DotWModel.FK_Complaints_Post" FromRole="Complaints" ToRole="Posts" />
           <NavigationProperty Name="Users" Relationship="DotWModel.FK_Complaints_User" FromRole="Complaints" ToRole="Users" />
+          <NavigationProperty Name="Comments" Relationship="DotWModel.FK_Complaints_Comment" FromRole="Complaints" ToRole="Comments" />
         </EntityType>
-        <Association Name="FK_Complaints_Comment">
-          <End Type="DotWModel.Comments" Role="Comments" Multiplicity="0..1" />
-          <End Type="DotWModel.Complaints" Role="Complaints" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Comments">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Complaints">
-              <PropertyRef Name="IdComment" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Complaints_Post">
           <End Type="DotWModel.Posts" Role="Posts" Multiplicity="0..1" />
           <End Type="DotWModel.Complaints" Role="Complaints" Multiplicity="*" />
@@ -776,11 +738,11 @@
           <Property Name="IdState" Type="Int32" Nullable="false" />
           <Property Name="SuspendedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="AspNetUsers" Relationship="DotWModel.FK_Users_AspNetUsers" FromRole="Users" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Comments" Relationship="DotWModel.FK_Comments_User" FromRole="Users" ToRole="Comments" />
           <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_User" FromRole="Users" ToRole="Complaints" />
           <NavigationProperty Name="Posts" Relationship="DotWModel.FK_Posts_Users" FromRole="Users" ToRole="Posts" />
           <NavigationProperty Name="UserStates" Relationship="DotWModel.FK_Users_UserStates" FromRole="Users" ToRole="UserStates" />
           <NavigationProperty Name="Votes" Relationship="DotWModel.FK_Votes_User" FromRole="Users" ToRole="Votes" />
+          <NavigationProperty Name="Comments" Relationship="DotWModel.FK_Comments_User" FromRole="Users" ToRole="Comments" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="DotWModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -819,18 +781,6 @@
             </Principal>
             <Dependent Role="Users">
               <PropertyRef Name="AspNetUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comments_User">
-          <End Type="DotWModel.Users" Role="Users" Multiplicity="1" />
-          <End Type="DotWModel.Comments" Role="Comments" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -886,6 +836,56 @@
           <End Type="DotWModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
           <End Type="DotWModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPost" Type="Int32" Nullable="false" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="Commentary" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="EffectDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NullDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Posts" Relationship="DotWModel.FK_Comments_Post" FromRole="Comments" ToRole="Posts" />
+          <NavigationProperty Name="Users" Relationship="DotWModel.FK_Comments_User" FromRole="Comments" ToRole="Users" />
+          <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_Comment" FromRole="Comments" ToRole="Complaints" />
+        </EntityType>
+        <Association Name="FK_Comments_Post">
+          <End Type="DotWModel.Posts" Role="Posts" Multiplicity="1" />
+          <End Type="DotWModel.Comments" Role="Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="IdPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_User">
+          <End Type="DotWModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="DotWModel.Comments" Role="Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Complaints_Comment">
+          <End Type="DotWModel.Comments" Role="Comments" Multiplicity="0..1" />
+          <End Type="DotWModel.Complaints" Role="Complaints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Complaints">
+              <PropertyRef Name="IdComment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -938,18 +938,6 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="NullDate" ColumnName="NullDate" />
                 <ScalarProperty Name="IdUpperCategory" ColumnName="IdUpperCategory" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Comments">
-            <EntityTypeMapping TypeName="DotWModel.Comments">
-              <MappingFragment StoreEntitySet="Comments">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IdPost" ColumnName="IdPost" />
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-                <ScalarProperty Name="Commentary" ColumnName="Commentary" />
-                <ScalarProperty Name="EffectDate" ColumnName="EffectDate" />
-                <ScalarProperty Name="NullDate" ColumnName="NullDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1047,6 +1035,18 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="DotWModel.Comments">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="NullDate" ColumnName="NullDate" />
+                <ScalarProperty Name="EffectDate" ColumnName="EffectDate" />
+                <ScalarProperty Name="Commentary" ColumnName="Commentary" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdPost" ColumnName="IdPost" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
