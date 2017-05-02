@@ -179,6 +179,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ComplaintViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -653,6 +654,7 @@
     <Content Include="Views\Category\List.cshtml" />
     <Content Include="Views\Post\UploadImagePartial.cshtml" />
     <Content Include="Views\Post\Details.cshtml" />
+    <Content Include="Views\Post\_Complaint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

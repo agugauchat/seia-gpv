@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="CommentaryServices\CommentaryService.cs" />
     <Compile Include="CategoryServices\CategoryService.cs" />
+    <Compile Include="ComplaintServices\ComplaintService.cs" />
     <Compile Include="PostServices\PostService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserServices\UserService.cs" />

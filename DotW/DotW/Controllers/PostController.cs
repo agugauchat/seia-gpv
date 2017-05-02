@@ -1,12 +1,14 @@
 ﻿namespace DotW.Controllers
 {
     using Contracts.CategoryContracts.Request;
+    using Contracts.ComplaintContracts.Request;
     using Contracts.PostContracts.Request;
     using Contracts.UserContracts.Request;
     using Entities.General;
     using Microsoft.AspNet.Identity;
     using Models;
     using Services.CategoryServices;
+    using Services.ComplaintServices;
     using Services.PostServices;
     using Services.UserServices;
     using System;
@@ -275,6 +277,18 @@
             var result = postService.DeletePost(new DeletePostRequest { Id = model.Id });
 
             return RedirectToAction("Index", "Post");
+        }
+
+        [Authorize(Roles = "User")]
+        [HttpPost]
+        public JsonResult Complaint(ComplaintPostViewModel model)
+        {
+            //var complaintService = new ComplaintService();
+
+            //var result = complaintService.CreatePostComplaint(new CreatePostComplaintRequest { PostId = model.PostId, UserId, Commentary = model.Commentary });
+
+            return Json(new { success = true, Message = "Su denuncia ha sido registrada. Gracias por contribuir con nuestra comunidad :)" }, JsonRequestBehavior.AllowGet);
+            //return Json(new { success = false, Message = "Ha ocurrido un error al procesar la solicitud." }, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize(Roles = "User")]

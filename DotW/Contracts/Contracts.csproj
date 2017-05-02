@@ -64,6 +64,9 @@
     <Compile Include="CategoryContracts\Response\SearchCategoriesByIdUpperCategoryResponse.cs" />
     <Compile Include="CategoryContracts\Response\SearchCategoriesResponse.cs" />
     <Compile Include="CategoryContracts\Response\UpdateCategoryResponse.cs" />
+    <Compile Include="ComplaintContracts\IComplaintService.cs" />
+    <Compile Include="ComplaintContracts\Request\CreatePostComplaintRequest.cs" />
+    <Compile Include="ComplaintContracts\Response\CreatePostComplaintResponse.cs" />
     <Compile Include="PostContracts\IPostService.cs" />
     <Compile Include="PostContracts\Request\CreatePostRequest.cs" />
     <Compile Include="PostContracts\Request\DeletePostRequest.cs" />
@@ -99,5 +102,6 @@
       <Name>Entities</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

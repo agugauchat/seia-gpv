@@ -1,0 +1,41 @@
+﻿@model DotW.Models.ComplaintPostViewModel
+
+<div id="denouncementModal" class="modal fade in" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content row">
+            <div class="modal-header custom-modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Denunciar Publicación</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Complaint", "Post", FormMethod.Post, new { @id = "complaintForm", @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group" id="commentary">
+                        @Html.LabelFor(model => model.Commentary, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Commentary, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group" id="result" style="display: none;">
+                        <div class="col-md-12">
+                            <p id="resultText"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.HiddenFor(model => model.PostId)
+                            <input type="submit" id="complaintSubmit" class="btn btn-success" value="Denunciar" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.ActionLink("Listado de Publicaciones", "List", "Post", null, new { @id = "goBackBtn", @class = "btn btn-success", @style = "display: none;" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
