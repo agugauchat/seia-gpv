@@ -1,11 +1,13 @@
 ﻿namespace DotW.Controllers
 {
     using Contracts.CategoryContracts.Request;
+    using Contracts.CommentaryContracts.Request;
     using Contracts.PostContracts.Request;
     using Contracts.UserContracts.Request;
     using Microsoft.AspNet.Identity;
     using Models;
     using Services.CategoryServices;
+    using Services.CommentaryServices;
     using Services.PostServices;
     using Services.UserServices;
     using System;
@@ -84,7 +86,7 @@
             {
                 model.IdWriter = user.Id;
             }
-            
+
             if (ModelState.IsValid)
             {
                 var request = new CreatePostRequest
@@ -266,8 +268,10 @@
         public ActionResult Details(int id)
         {
             var postService = new PostService();
+            var commentaryService = new CommentaryService();
 
-            var post = postService.GetPostById(new GetPostByIdRequest() { Id = id}).Post;
+            var post = postService.GetPostById(new GetPostByIdRequest() { Id = id }).Post;
+            ViewBag.Comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments;
 
             return View(post);
         }
