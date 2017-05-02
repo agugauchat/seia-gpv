@@ -14,6 +14,8 @@
 
         GetUserByAccountIdResponse GetUserByAccountId(GetUserByAccountIdRequest request);
 
+        GetUserByUsernameResponse GetUserByUsername(GetUserByUsernameRequest request);
+
         UpdateUserResponse UpdateUser(UpdateUserRequest request);
 
         DeleteUserResponse DeleteUser(DeleteUserRequest request);

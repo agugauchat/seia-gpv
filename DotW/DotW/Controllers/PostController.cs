@@ -2,12 +2,14 @@
 {
     using Contracts.CategoryContracts.Request;
     using Contracts.ComplaintContracts.Request;
+    using Contracts.CommentaryContracts.Request;
     using Contracts.PostContracts.Request;
     using Contracts.UserContracts.Request;
     using Entities.General;
     using Microsoft.AspNet.Identity;
     using Models;
     using Services.CategoryServices;
+    using Services.CommentaryServices;
     using Services.ComplaintServices;
     using Services.PostServices;
     using Services.UserServices;
@@ -93,7 +95,7 @@
             {
                 model.IdWriter = user.Id;
             }
-
+            
             if (ModelState.IsValid)
             {
                 // Verifica si el modelo no tiene imagen, o tiene imagen y la misma tiene una extensión permitida.
@@ -102,16 +104,16 @@
                     (new AllowedExtensions()).ImageExtensions.Contains(Path.GetExtension(model.File.FileName).Remove(0, 1).ToLower()))
                    )
                 {
-                    var request = new CreatePostRequest
-                    {
-                        IdWriter = model.IdWriter,
-                        Title = model.Title,
-                        Summary = model.Summary,
-                        Body = model.Body,
-                        CategoryId = model.IdCategory,
+                var request = new CreatePostRequest
+                {
+                    IdWriter = model.IdWriter,
+                    Title = model.Title,
+                    Summary = model.Summary,
+                    Body = model.Body,
+                    CategoryId = model.IdCategory,
                         IsDraft = model.IsDraft,
                         Tags = model.Tags
-                    };
+                };
 
                     var createResult = postService.CreatePost(request);
 
@@ -141,8 +143,8 @@
                         });
                     }
 
-                    return RedirectToAction("Index", "Post");
-                }
+                return RedirectToAction("Index", "Post");
+            }
                 else
                 {
                     ModelState.AddModelError("", "La extensión de la imagen no es válida, vuelva a cargarla.");
@@ -353,8 +355,10 @@
         public ActionResult Details(int id)
         {
             var postService = new PostService();
+            var commentaryService = new CommentaryService();
 
             var post = postService.GetPostById(new GetPostByIdRequest() { Id = id }).Post;
+            ViewBag.Comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments;
 
             return View(post);
         }

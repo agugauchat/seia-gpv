@@ -1,8 +1,11 @@
 ﻿namespace DotW.Controllers
 {
+    using Contracts.CommentaryContracts.Request;
+    using Contracts.UserContracts.Request;
     using Microsoft.AspNet.Identity;
     using Models;
     using Services.CommentaryServices;
+    using Services.UserServices;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -11,5 +14,26 @@
 
     public class CommentaryController : BaseController
     {
+        [Authorize(Roles = "User")]
+        [HttpPost]
+        public JsonResult AddComment(string text, int post)
+        {
+            var commentaryService = new CommentaryService();
+            var userService = new UserService();
+
+            if (ModelState.IsValid)
+            {
+                var request = new CreateCommentaryRequest
+                {
+                    CommentaryText = text,
+                    IdPost = post,
+                    IdUser = userService.GetUserByUsername(new GetUserByUsernameRequest() { Username = ViewBag.CurrentUser.UserName }).User.Id
+                };
+
+                var result = commentaryService.CreateCommentary(request);
+            }
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
     }
 }

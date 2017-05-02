@@ -59,6 +59,31 @@
             }
         }
 
+        public GetUserByUsernameResponse GetUserByUsername(GetUserByUsernameRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                var result = db.Users.FirstOrDefault(x => x.Name == request.Username);
+
+                var response = new GetUserByUsernameResponse();
+
+                if (result != null)
+                {
+                    response.User = new User
+                    {
+                        Id = result.Id,
+                        Name = result.Name,
+                        AspNetUserId = result.AspNetUserId,
+                        EffectDate = result.EffectDate,
+                        IdState = result.IdState,
+                        SuspendedDate = result.SuspendedDate
+                    };
+                }
+
+                return response;
+            }
+        }
+
         public UpdateUserResponse UpdateUser(UpdateUserRequest request)
         {
             using (var db = new DotWEntities())
