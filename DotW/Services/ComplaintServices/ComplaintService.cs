@@ -27,7 +27,11 @@
                 db.Complaints.Add(complaint);
                 db.SaveChanges();
 
-                return new CreatePostComplaintResponse { ComplaintId = complaint.Id };
+                var response = new CreatePostComplaintResponse { ComplaintId = complaint.Id, PostId = complaint.IdPost.Value };
+
+                response.PostComplaintsCount = db.Complaints.Count(x => x.IdPost == response.PostId);
+
+                return response;
             }
         }
 

@@ -4,6 +4,7 @@
     ViewBag.Title = Model.Title;
     var Comments = (List<Entities.CommentaryEntities.Commentary>)ViewBag.Comments;
     var userComplaints = (List<Entities.ComplaintEntities.Complaint>)ViewBag.UserComplaints;
+    List<string> currentRoles = ViewBag.RolesOfCurrentUser as List<string>;
 }
 
 @section Styles {
@@ -74,7 +75,7 @@
 </div>
 
 @*Verifica que el usuario esté logueado y que no haya denunciado anteriormente este post.*@
-@if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdPost == Model.Id))
+@if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdPost == Model.Id) && !currentRoles.Contains("Admin"))
 {
     <div class="col-md-offset-8 col-md-2">
         <a id="denunciate" href="#" class="btn btn-danger">Denunciar</a>

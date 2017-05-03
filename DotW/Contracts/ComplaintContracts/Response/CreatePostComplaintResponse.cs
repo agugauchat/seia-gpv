@@ -9,5 +9,9 @@
     public class CreatePostComplaintResponse
     {
         public int ComplaintId { get; set; }
+
+        public int PostId { get; set; }
+
+        public int PostComplaintsCount { get; set; }
     }
 }

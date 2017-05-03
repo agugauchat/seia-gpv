@@ -34,6 +34,34 @@
             }
         }
 
+        public GetUserByIdResponse GetUserById(GetUserByIdRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                var result = db.Users.FirstOrDefault(x => x.Id == request.UserId);
+
+                var response = new GetUserByIdResponse();
+
+                if (result != null)
+                {
+                    response.User = new User
+                    {
+                        Id = result.Id,
+                        Name = result.Name,
+                        AspNetUserId = result.AspNetUserId,
+                        EffectDate = result.EffectDate,
+                        IdState = result.IdState,
+                        SuspendedDate = result.SuspendedDate,
+                        Email = result.AspNetUsers.Email
+                    };
+                }
+
+                return response;
+            }
+
+            throw new NotImplementedException();
+        }
+
         public GetUserByAccountIdResponse GetUserByAccountId(GetUserByAccountIdRequest request)
         {
             using (var db = new DotWEntities())
@@ -51,7 +79,8 @@
                         AspNetUserId = result.AspNetUserId,
                         EffectDate = result.EffectDate,
                         IdState = result.IdState,
-                        SuspendedDate = result.SuspendedDate
+                        SuspendedDate = result.SuspendedDate,
+                        Email = result.AspNetUsers.Email
                     };
                 }
 
@@ -76,7 +105,8 @@
                         AspNetUserId = result.AspNetUserId,
                         EffectDate = result.EffectDate,
                         IdState = result.IdState,
-                        SuspendedDate = result.SuspendedDate
+                        SuspendedDate = result.SuspendedDate,
+                        Email = result.AspNetUsers.Email
                     };
                 }
 

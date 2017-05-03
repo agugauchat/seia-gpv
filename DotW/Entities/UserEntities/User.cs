@@ -14,5 +14,6 @@
         public DateTime EffectDate { get; set; }
         public int IdState { get; set; }
         public DateTime? SuspendedDate { get; set; }
+        public string Email { get; set; }
     }
 }

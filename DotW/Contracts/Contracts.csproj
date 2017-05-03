@@ -90,11 +90,13 @@
     <Compile Include="UserContracts\IUserService.cs" />
     <Compile Include="UserContracts\Request\CreateUserRequest.cs" />
     <Compile Include="UserContracts\Request\DeleteUserRequest.cs" />
+    <Compile Include="UserContracts\Request\GetUserByIdRequest.cs" />
     <Compile Include="UserContracts\Request\GetUserByUsernameRequest.cs" />
     <Compile Include="UserContracts\Request\GetUserByAccountIdRequest.cs" />
     <Compile Include="UserContracts\Request\UpdateUserRequest.cs" />
     <Compile Include="UserContracts\Response\CreateUserResponse.cs" />
     <Compile Include="UserContracts\Response\DeleteUserResponse.cs" />
+    <Compile Include="UserContracts\Response\GetUserByIdResponse.cs" />
     <Compile Include="UserContracts\Response\GetUserByUsernameResponse.cs" />
     <Compile Include="UserContracts\Response\GetUserByAccountIdResponse.cs" />
     <Compile Include="UserContracts\Response\UpdateUserResponse.cs" />

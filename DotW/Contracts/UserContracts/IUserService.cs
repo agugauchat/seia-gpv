@@ -12,6 +12,8 @@
     {
         CreateUserResponse CreateUser(CreateUserRequest request);
 
+        GetUserByIdResponse GetUserById(GetUserByIdRequest request);
+
         GetUserByAccountIdResponse GetUserByAccountId(GetUserByAccountIdRequest request);
 
         GetUserByUsernameResponse GetUserByUsername(GetUserByUsernameRequest request);
