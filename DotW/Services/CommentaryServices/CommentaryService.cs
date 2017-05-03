@@ -68,7 +68,7 @@
                         IdUser = x.IdUser,
                         WriterUserName = x.Users.Name,
                         EffectDate = x.EffectDate,
-                    }).FirstOrDefault(x => x.Id == request.Id && (!x.NullDate.HasValue));
+                    }).FirstOrDefault(x => x.Id == request.Id);
 
                 return response;
             }
@@ -95,11 +95,11 @@
         {
             using (var db = new DotWEntities())
             {
-                var Category = db.Categories.FirstOrDefault(x => x.Id == request.Id);
+                var commentary = db.Comments.FirstOrDefault(x => x.Id == request.Id);
 
-                if (Category != null)
+                if (commentary != null)
                 {
-                    Category.NullDate = DateTime.Now;
+                    commentary.NullDate = DateTime.Now;
 
                     db.SaveChanges();
                 }

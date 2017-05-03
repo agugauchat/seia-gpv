@@ -35,7 +35,12 @@
                     var result = commentaryService.CreateCommentary(request);
                 }
 
-                return Json(true, JsonRequestBehavior.AllowGet);
+                var imgPath = Url.Content("~/Content/Images/GenericUser.png");
+                var userName = User.Identity.GetUserName();
+                var date = DateTime.Now;
+                var htmlComment = "<div class=\"media\"><a class=\"pull-left\" href=\"#\"><img class=\"media-object\" src=\""+ imgPath + "\" height=\"64\" width=\"64\"></a><div class=\"media-body\"><h4 class=\"media-heading\">"+ userName +"<small> "+date+"</small></h4>" + text + "</div></div>";
+
+                return Json(new { success = htmlComment });
             }
 
             return Json(false, JsonRequestBehavior.AllowGet);

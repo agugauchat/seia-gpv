@@ -347,7 +347,7 @@
             var commentaryService = new CommentaryService();
 
             var post = postService.GetPostById(new GetPostByIdRequest() { Id = id }).Post;
-            ViewBag.Comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments;
+            ViewBag.Comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments.Where(x => !x.NullDate.HasValue).ToList();
 
             List<Complaint> userComplaints = new List<Complaint>();
 

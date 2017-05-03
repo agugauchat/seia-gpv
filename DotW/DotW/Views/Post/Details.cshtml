@@ -65,12 +65,10 @@
             </div>
         </div>
     }
-    @*else
-    {
-    <h3>      No existen comentarios cargados para esta categoría.</h3>
-    }*@
-    <hr>
 }
+
+<div id="newComment"></div>
+    <hr>
 
 <div class="col-md-2">
 <p>
@@ -109,17 +107,19 @@
         var idPost = parseInt('@Model.Id');
         $('#btnComment').click(function (e) {
             e.preventDefault();
+            var textComment = $('#textComment').val();
             $.ajax({
                 type: "POST",
                 url: "/Commentary/AddComment",
                 content: "application/json; charset=utf-8",
                 dataType: "json",
                 data: {
-                    text: $('#textComment').val(),
+                    text: textComment,
                     post: idPost
                 },
-                success: function (d) {
-                    alert('Funcionó')
+                success: function (data) {
+                    $("#newComment").html($("#newComment").html() + data.success);
+                    $('#textComment').val("");
                 }
             });
         });
