@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = Model.Title;
     var Comments = (List<Entities.CommentaryEntities.Commentary>)ViewBag.Comments;
+    var userComplaints = (List<Entities.ComplaintEntities.Complaint>)ViewBag.UserComplaints;
+    var Comments = (List<Entities.CommentaryEntities.Commentary>)ViewBag.Comments;
     List<string> currentRoles = ViewBag.RolesOfCurrentUser as List<string>;
     var Comments = (List<Entities.CommentaryEntities.Commentary>)ViewBag.Comments;
     var userComplaints = (List<Entities.ComplaintEntities.Complaint>)ViewBag.UserComplaints;
@@ -78,6 +80,16 @@
     @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
 </p>
 </div>
+
+@*Verifica que el usuario esté logueado y que no haya denunciado anteriormente este post.*@
+@if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdPost == Model.Id))
+{
+    <div class="col-md-offset-8 col-md-2">
+        <a id="denunciate" href="#" class="btn btn-danger">Denunciar</a>
+    </div>
+    { Html.RenderPartial("_Complaint", new DotW.Models.ComplaintPostViewModel { PostId = Model.Id }); }
+}
+
 
 @*Verifica que el usuario esté logueado y que no haya denunciado anteriormente este post.*@
 @if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdPost == Model.Id))
