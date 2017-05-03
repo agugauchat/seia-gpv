@@ -18,22 +18,27 @@
         [HttpPost]
         public JsonResult AddComment(string text, int post)
         {
-            var commentaryService = new CommentaryService();
-            var userService = new UserService();
-
-            if (ModelState.IsValid)
+            if ((text.Length > 0) && (text.Length < 251))
             {
-                var request = new CreateCommentaryRequest
-                {
-                    CommentaryText = text,
-                    IdPost = post,
-                    IdUser = userService.GetUserByUsername(new GetUserByUsernameRequest() { Username = ViewBag.CurrentUser.UserName }).User.Id
-                };
+                var commentaryService = new CommentaryService();
+                var userService = new UserService();
 
-                var result = commentaryService.CreateCommentary(request);
+                if (ModelState.IsValid)
+                {
+                    var request = new CreateCommentaryRequest
+                    {
+                        CommentaryText = text,
+                        IdPost = post,
+                        IdUser = userService.GetUserByAccountId(new GetUserByAccountIdRequest() { AccountId = User.Identity.GetUserId() }).User.Id
+                    };
+
+                    var result = commentaryService.CreateCommentary(request);
+                }
+
+                return Json(true, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
     }
 }
