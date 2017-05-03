@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="CommentaryEntities\Commentary.cs" />
     <Compile Include="CategoryEntities\Category.cs" />
+    <Compile Include="ComplaintEntities\Complaint.cs" />
     <Compile Include="General\AllowedExtensions.cs" />
     <Compile Include="PostEntities\Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

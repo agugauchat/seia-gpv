@@ -11,5 +11,7 @@
     public interface IComplaintService
     {
         CreatePostComplaintResponse CreatePostComplaint(CreatePostComplaintRequest request);
+
+        SearchComplaintsByUserIdResponse SearchComplaintsByUserId(SearchComplaintsByUserIdRequest request);
     }
 }

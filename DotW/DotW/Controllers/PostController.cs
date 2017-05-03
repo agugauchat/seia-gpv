@@ -1,10 +1,11 @@
 ﻿namespace DotW.Controllers
 {
     using Contracts.CategoryContracts.Request;
-    using Contracts.ComplaintContracts.Request;
     using Contracts.CommentaryContracts.Request;
+    using Contracts.ComplaintContracts.Request;
     using Contracts.PostContracts.Request;
     using Contracts.UserContracts.Request;
+    using Entities.ComplaintEntities;
     using Entities.General;
     using Microsoft.AspNet.Identity;
     using Models;
@@ -282,18 +283,6 @@
         }
 
         [Authorize(Roles = "User")]
-        [HttpPost]
-        public JsonResult Complaint(ComplaintPostViewModel model)
-        {
-            //var complaintService = new ComplaintService();
-
-            //var result = complaintService.CreatePostComplaint(new CreatePostComplaintRequest { PostId = model.PostId, UserId, Commentary = model.Commentary });
-
-            return Json(new { success = true, Message = "Su denuncia ha sido registrada. Gracias por contribuir con nuestra comunidad :)" }, JsonRequestBehavior.AllowGet);
-            //return Json(new { success = false, Message = "Ha ocurrido un error al procesar la solicitud." }, JsonRequestBehavior.AllowGet);
-        }
-
-        [Authorize(Roles = "User")]
         public ActionResult UploadImagePartial()
         {
             // Se obtiene el path de imagenes de Posts.
@@ -359,6 +348,17 @@
 
             var post = postService.GetPostById(new GetPostByIdRequest() { Id = id }).Post;
             ViewBag.Comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments;
+
+            List<Complaint> userComplaints = new List<Complaint>();
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var complaintService = new ComplaintService();
+
+                userComplaints = complaintService.SearchComplaintsByUserId(new SearchComplaintsByUserIdRequest { AspNetUserId = User.Identity.GetUserId() }).Complaints;
+            }
+
+            ViewBag.UserComplaints = userComplaints;
 
             return View(post);
         }

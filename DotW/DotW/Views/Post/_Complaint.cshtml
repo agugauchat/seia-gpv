@@ -9,7 +9,7 @@
                 <h4 class="modal-title">Denunciar Publicación</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Complaint", "Post", FormMethod.Post, new { @id = "complaintForm", @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("PostComplaint", "Complaint", FormMethod.Post, new { @id = "complaintForm", @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group" id="commentary">
