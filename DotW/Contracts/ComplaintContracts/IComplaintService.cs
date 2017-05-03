@@ -12,6 +12,8 @@
     {
         CreatePostComplaintResponse CreatePostComplaint(CreatePostComplaintRequest request);
 
+        CreateCommentaryComplaintResponse CreateCommentaryComplaint(CreateCommentaryComplaintRequest request);
+
         SearchComplaintsByUserIdResponse SearchComplaintsByUserId(SearchComplaintsByUserIdRequest request);
     }
 }

@@ -656,7 +656,8 @@
     <Content Include="Views\Category\List.cshtml" />
     <Content Include="Views\Post\UploadImagePartial.cshtml" />
     <Content Include="Views\Post\Details.cshtml" />
-    <Content Include="Views\Post\_Complaint.cshtml" />
+    <Content Include="Views\Post\_PostComplaint.cshtml" />
+    <Content Include="Views\Post\_CommentaryComplaint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

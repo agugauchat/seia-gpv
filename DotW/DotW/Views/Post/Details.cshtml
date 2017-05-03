@@ -5,6 +5,7 @@
     var Comments = (List<Entities.CommentaryEntities.Commentary>)ViewBag.Comments;
     var userComplaints = (List<Entities.ComplaintEntities.Complaint>)ViewBag.UserComplaints;
     List<string> currentRoles = ViewBag.RolesOfCurrentUser as List<string>;
+    var anyCommentaryComplaintPosibility = false;
 }
 
 @section Styles {
@@ -59,7 +60,15 @@
             <div class="media-body">
                 <h4 class="media-heading">
                     @commentary.WriterUserName
-                    <small>@commentary.EffectDate</small>
+                    <small>@commentary.EffectDate.ToString("dd/MM/yyyy")</small>
+
+                    @if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdComment == commentary.Id)
+                         && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
+                    {
+                        anyCommentaryComplaintPosibility = true;
+                        <span>&nbsp;</span>
+                        <small><a id="denunciateCommentary" class="text-danger" href="#" commentary-id="@commentary.Id">Denunciar comentario</a></small>
+                    }
                 </h4>
                 @commentary.CommentaryText
             </div>
@@ -76,26 +85,21 @@
 </p>
 </div>
 
-@*Verifica que el usuario esté logueado y que no haya denunciado anteriormente este post.*@
+@*Verifica que el usuario esté logueado y que no haya denunciado anteriormente esta misma publicación.*@
+@*TODO > Verificar que no sea el escritor de la publicación.*@
 @if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdPost == Model.Id)
      && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
 {
     <div class="col-md-offset-8 col-md-2">
-        <a id="denunciate" href="#" class="btn btn-danger">Denunciar</a>
+        <a id="denunciatePost" href="#" class="btn btn-danger">Denunciar Publicación</a>
     </div>
-    { Html.RenderPartial("_Complaint", new DotW.Models.ComplaintPostViewModel { PostId = Model.Id }); }
+    { Html.RenderPartial("_PostComplaint", new DotW.Models.PostComplaintViewModel { PostId = Model.Id }); }
 }
 
-
-@*Verifica que el usuario esté logueado y que no haya denunciado anteriormente este post.*@
-@if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdPost == Model.Id))
+@if (anyCommentaryComplaintPosibility)
 {
-    <div class="col-md-offset-8 col-md-2">
-        <a id="denunciate" href="#" class="btn btn-danger">Denunciar</a>
-    </div>
-    { Html.RenderPartial("_Complaint", new DotW.Models.ComplaintPostViewModel { PostId = Model.Id }); }
+    { Html.RenderPartial("_CommentaryComplaint", new DotW.Models.CommentaryComplaintViewModel()); }
 }
-
 
 @section Scripts {
     <!-- View JavaScript -->

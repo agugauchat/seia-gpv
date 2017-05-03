@@ -35,6 +35,28 @@
             }
         }
 
+        public CreateCommentaryComplaintResponse CreateCommentaryComplaint(CreateCommentaryComplaintRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                var complaint = new Complaints
+                {
+                    IdComment = request.CommentaryId,
+                    IdUser = request.UserId,
+                    Description = request.Commentary
+                };
+
+                db.Complaints.Add(complaint);
+                db.SaveChanges();
+
+                var response = new CreateCommentaryComplaintResponse { ComplaintId = complaint.Id, CommentaryId = complaint.IdComment.Value };
+
+                response.CommentaryComplaintsCount = db.Complaints.Count(x => x.IdComment == response.CommentaryId);
+
+                return response;
+            }
+        }
+
         public SearchComplaintsByUserIdResponse SearchComplaintsByUserId(SearchComplaintsByUserIdRequest request)
         {
             using (var db = new DotWEntities())
