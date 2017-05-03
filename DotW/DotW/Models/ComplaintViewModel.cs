@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Web;
 
-    public class ComplaintPostViewModel
+    public class PostComplaintViewModel
     {
         [Required(ErrorMessage = "El campo Comentario es obligatorio")]
         [Display(Name = "Comentario")]
@@ -14,5 +14,15 @@
 
         [Required]
         public int PostId { get; set; }
+    }
+
+    public class CommentaryComplaintViewModel
+    {
+        [Required(ErrorMessage = "El campo Comentario es obligatorio")]
+        [Display(Name = "Comentario")]
+        public string Commentary { get; set; }
+
+        [Required]
+        public int CommentaryId { get; set; }
     }
 }
