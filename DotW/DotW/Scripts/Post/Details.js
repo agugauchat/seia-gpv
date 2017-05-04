@@ -8,6 +8,7 @@
     })
 
     $('#postComplaintForm').submit(function (e) {
+        UpdatePostComplaintModalWithWaitMessage();
         e.preventDefault();
         $.ajax({
             type: 'POST',
@@ -18,11 +19,11 @@
                     UpdatePostComplaintModalWithSuccess(response);
                 }
                 else {
-                    UpdatePostComplaintModalWithError();
+                    UpdatePostComplaintModalWithError(response);
                 }
             },
             error: function (response) {
-                UpdatePostComplaintModalWithError
+                UpdatePostComplaintModalWithError(response)
             }
         });
     });
@@ -41,6 +42,7 @@
     })
 
     $('#commentaryComplaintForm').submit(function (e) {
+        UpdateCommentaryComplaintModalWithWaitMessage();
         e.preventDefault();
         $.ajax({
             type: 'POST',
@@ -51,17 +53,27 @@
                     UpdateCommentaryComplaintModalWithSuccess(response);
                 }
                 else {
-                    UpdateCommentaryComplaintModalWithError();
+                    UpdateCommentaryComplaintModalWithError(response);
                 }
             },
             error: function (response) {
-                UpdateCommentaryComplaintModalWithError();
+                UpdateCommentaryComplaintModalWithError(response);
             }
         });
     });
 })
 
 // Posts Region
+
+function UpdatePostComplaintModalWithWaitMessage()
+{
+    // Se quita todo el formulario y se muestra el mensaje de exito.
+    $("#postComplaintResultText").text("Su denuncia está siendo registrada. Por favor espere...");
+    $("#postComplaintResultText").addClass("text-success");
+    $("#postComplaintCommentary").hide();
+    $("#postComplaintSubmit").remove();
+    $("#postComplaintResult").fadeIn(300);
+}
 
 function UpdatePostComplaintModalWithSuccess(response) {
     // Se quita todo el formulario y se muestra el mensaje de exito.
@@ -76,9 +88,18 @@ function UpdatePostComplaintModalWithSuccess(response) {
     $("#denunciatePost").remove();
 }
 
-function UpdatePostComplaintModalWithError() {
+function UpdatePostComplaintModalWithError(response) {
     // Se quita todo el formulario y se muestra el mensaje de error.
-    $("#postComplaintResultText").text("Ha ocurrido un error al procesar la solicitud.");
+
+    var message = "";
+    if (response.Message != "") {
+        message = response.Message;
+    }
+    else {
+        message = "Ha ocurrido un error al procesar la solicitud.";
+    }
+
+    $("#postComplaintResultText").text(message);
     $("#postComplaintResultText").addClass("text-danger");
     $("#postComplaintCommentary").remove();
     $("#postComplaintSubmit").remove();
@@ -92,6 +113,15 @@ function UpdatePostComplaintModalWithError() {
 // End Posts Region
 
 // Commentary Region
+
+function UpdateCommentaryComplaintModalWithWaitMessage() {
+    // Se quita todo el formulario y se muestra el mensaje de exito.
+    $("#commentaryComplaintResultText").text("Su denuncia está siendo registrada. Por favor espere...");
+    $("#commentaryComplaintResultText").addClass("text-success");
+    $("#commentaryComplaintComment").hide();
+    $("#commentaryComplaintSubmit").hide();
+    $("#commentaryComplaintResult").fadeIn(300);
+}
 
 function UpdateCommentaryComplaintModalWithSuccess(response) {
     // Se quita todo el formulario y se muestra el mensaje de exito.
@@ -107,9 +137,18 @@ function UpdateCommentaryComplaintModalWithSuccess(response) {
     $("[commentary-id = " + commentaryId + "]").remove();
 }
 
-function UpdateCommentaryComplaintModalWithError() {
+function UpdateCommentaryComplaintModalWithError(response) {
     // Se quita todo el formulario y se muestra el mensaje de error.
-    $("#commentaryComplaintResultText").text("Ha ocurrido un error al procesar la solicitud.");
+
+    var message = "";
+    if (response.Message != "") {
+        message = response.Message;
+    }
+    else {
+        message = "Ha ocurrido un error al procesar la solicitud.";
+    }
+
+    $("#commentaryComplaintResultText").text(message);
     $("#commentaryComplaintResultText").addClass("text-danger");
     $("#commentaryComplaintComment").hide();
     $("#commentaryComplaintSubmit").hide();

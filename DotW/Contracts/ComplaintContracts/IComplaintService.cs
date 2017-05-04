@@ -15,5 +15,9 @@
         CreateCommentaryComplaintResponse CreateCommentaryComplaint(CreateCommentaryComplaintRequest request);
 
         SearchComplaintsByUserIdResponse SearchComplaintsByUserId(SearchComplaintsByUserIdRequest request);
+
+        SearchComplaintsByPostIdResponse SearchComplaintsByPostId(SearchComplaintsByPostIdRequest request);
+
+        SearchComplaintsByCommentaryIdResponse SearchComplaintsByCommentaryId(SearchComplaintsByCommentaryIdRequest request);
     }
 }

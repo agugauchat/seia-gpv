@@ -89,5 +89,43 @@
                 return new SearchComplaintsByUserIdResponse { Complaints = result };
             }
         }
+
+        public SearchComplaintsByPostIdResponse SearchComplaintsByPostId(SearchComplaintsByPostIdRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                var result = new List<Complaint>();
+
+                result = db.Complaints.Where(x => x.IdPost == request.PostId).Select(x => new Complaint
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    IdComment = x.IdComment,
+                    IdPost = x.IdPost,
+                    IdUser = x.IdUser
+                }).ToList();
+
+                return new SearchComplaintsByPostIdResponse { Complaints = result };
+            }
+        }
+
+        public SearchComplaintsByCommentaryIdResponse SearchComplaintsByCommentaryId(SearchComplaintsByCommentaryIdRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                var result = new List<Complaint>();
+
+                result = db.Complaints.Where(x => x.IdComment == request.CommentaryId).Select(x => new Complaint
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    IdComment = x.IdComment,
+                    IdPost = x.IdPost,
+                    IdUser = x.IdUser
+                }).ToList();
+
+                return new SearchComplaintsByCommentaryIdResponse { Complaints = result };
+            }
+        }
     }
 }

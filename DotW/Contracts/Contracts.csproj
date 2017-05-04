@@ -67,9 +67,13 @@
     <Compile Include="ComplaintContracts\IComplaintService.cs" />
     <Compile Include="ComplaintContracts\Request\CreateCommentaryComplaintRequest.cs" />
     <Compile Include="ComplaintContracts\Request\CreatePostComplaintRequest.cs" />
+    <Compile Include="ComplaintContracts\Request\SearchComplaintsByCommentaryIdRequest.cs" />
+    <Compile Include="ComplaintContracts\Request\SearchComplaintsByPostIdRequest.cs" />
     <Compile Include="ComplaintContracts\Request\SearchComplaintsByUserIdRequest.cs" />
     <Compile Include="ComplaintContracts\Response\CreateCommentaryComplaintResponse.cs" />
     <Compile Include="ComplaintContracts\Response\CreatePostComplaintResponse.cs" />
+    <Compile Include="ComplaintContracts\Response\SearchComplaintsByCommentaryIdResponse.cs" />
+    <Compile Include="ComplaintContracts\Response\SearchComplaintsByPostIdResponse.cs" />
     <Compile Include="ComplaintContracts\Response\SearchComplaintsByUserIdResponse.cs" />
     <Compile Include="PostContracts\IPostService.cs" />
     <Compile Include="PostContracts\Request\CreatePostRequest.cs" />

@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-namespace DotW.Controllers
+﻿namespace DotW.Controllers
 {
     using Contracts.CommentaryContracts.Request;
     using Contracts.ComplaintContracts.Request;
     using Contracts.PostContracts.Request;
     using Contracts.UserContracts.Request;
-    using Contracts.UserContracts.Response;
     using DotW.Models;
+    using Entities.CommentaryEntities;
+    using Entities.ComplaintEntities;
+    using Entities.PostEntities;
     using Microsoft.AspNet.Identity;
     using Services.CommentaryServices;
     using Services.ComplaintServices;
     using Services.PostServices;
     using Services.UserServices;
+    using System;
+    using System.Collections.Generic;
     using System.Configuration;
-    using System.Web;
+    using System.IO;
+    using System.Linq;
     using System.Web.Mvc;
 
     public class ComplaintController : BaseController
@@ -26,6 +28,7 @@ namespace DotW.Controllers
         {
             var complaintService = new ComplaintService();
             var userService = new UserService();
+            var postService = new PostService();
 
             try
             {
@@ -40,18 +43,23 @@ namespace DotW.Controllers
                         return Json(new { success = false, Message = "Ya se ha registrado una denuncia para esta cuenta en esta publicación." }, JsonRequestBehavior.AllowGet);
                     }
 
+                    var post = postService.GetPostById(new GetPostByIdRequest { Id = model.PostId }).Post;
+
+                    if (post.IdWriter == user.Id)
+                    {
+                        return Json(new { success = false, Message = "No puede denunciar su propia publicación." }, JsonRequestBehavior.AllowGet);
+                    }
+
                     var complaintResult = complaintService.CreatePostComplaint(new CreatePostComplaintRequest { PostId = model.PostId, UserId = user.Id, Commentary = model.Commentary });
 
                     if (complaintResult.PostComplaintsCount >= 3)
                     {
-                        var postService = new PostService();
-
-                        var post = postService.GetPostById(new GetPostByIdRequest { Id = complaintResult.PostId }).Post;
-
                         // Se da de baja la publicación por haber alcanzado/superado las 3 denuncias.
                         var deletePostResult = postService.DeletePost(new DeletePostRequest { Id = complaintResult.PostId });
 
-                        SendPostDeletedEmailToWriter(post.IdWriter);
+                        var complaints = complaintService.SearchComplaintsByPostId(new SearchComplaintsByPostIdRequest { PostId = post.Id }).Complaints;
+
+                        SendPostDeletedEmailToWriter(post, complaints);
                     }
 
                     return Json(new { success = true, Message = "Su denuncia ha sido registrada. Gracias por contribuir con nuestra comunidad :)" }, JsonRequestBehavior.AllowGet);
@@ -71,6 +79,7 @@ namespace DotW.Controllers
         [HttpPost]
         public JsonResult CommentaryComplaint(CommentaryComplaintViewModel model)
         {
+            var commentaryService = new CommentaryService();
             var complaintService = new ComplaintService();
             var userService = new UserService();
 
@@ -87,18 +96,23 @@ namespace DotW.Controllers
                         return Json(new { success = false, Message = "Ya se ha registrado una denuncia para esta cuenta en este comentario." }, JsonRequestBehavior.AllowGet);
                     }
 
+                    var commentary = commentaryService.GetCommentaryById(new GetCommentaryByIdRequest { Id = model.CommentaryId }).Commentary;
+
+                    if (commentary.IdUser == user.Id)
+                    {
+                        return Json(new { success = false, Message = "No puede denunciar su propio comentario." }, JsonRequestBehavior.AllowGet);
+                    }
+
                     var complaintResult = complaintService.CreateCommentaryComplaint(new CreateCommentaryComplaintRequest { CommentaryId = model.CommentaryId, UserId = user.Id, Commentary = model.Commentary });
 
                     if (complaintResult.CommentaryComplaintsCount >= 3)
-                    {
-                        var commentaryService = new CommentaryService();
-
-                        var commentary = commentaryService.GetCommentaryById(new GetCommentaryByIdRequest { Id = complaintResult.CommentaryId }).Commentary;
-
+                    {                       
                         // Se da de baja el comentario por haber alcanzado/superado las 3 denuncias.
                         var deletePostResult = commentaryService.DeleteCommentary(new DeleteCommentaryRequest { Id = complaintResult.CommentaryId });
 
-                        SendCommentaryDeletedEmailToWriter(commentary.IdUser);
+                        var complaints = complaintService.SearchComplaintsByCommentaryId(new SearchComplaintsByCommentaryIdRequest { CommentaryId = commentary.Id }).Complaints;
+
+                        SendCommentaryDeletedEmailToWriter(commentary, complaints);
                     }
 
                     return Json(new { success = true, Message = "Su denuncia ha sido registrada. Gracias por contribuir con nuestra comunidad :)" }, JsonRequestBehavior.AllowGet);
@@ -116,11 +130,11 @@ namespace DotW.Controllers
 
         #region Private Methods
 
-        private void SendPostDeletedEmailToWriter(int idWriter)
+        private void SendPostDeletedEmailToWriter(Post post, IList<Complaint> complaints)
         {
             var userService = new UserService();
 
-            var writerUser = userService.GetUserById(new GetUserByIdRequest { UserId = idWriter }).User;
+            var writerUser = userService.GetUserById(new GetUserByIdRequest { UserId = post.IdWriter }).User;
 
             if (writerUser != null)
             {
@@ -128,9 +142,22 @@ namespace DotW.Controllers
                         new System.Net.Mail.MailAddress("no-reply@devsoftheweb.com", "Devs of the Web"),
                         new System.Net.Mail.MailAddress(writerUser.Email));
 
-                m.Subject = "Publicación eliminada por denuncias";
-                m.Body = string.Format("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"><h3>Hola {0}!</h3><p>Tu publicación fue dada de baja.</p><br/><p align=\"right\"><small>Devs of the Web Team. &#169;</small></p>", writerUser.Name);
-                //m.Body = System.IO.File.ReadAllText(Server.MapPath("EmailTemplates/Customer.htm"));
+                m.Subject = "Publicación eliminada por denuncias.";
+
+                string body = string.Empty;
+                using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/EmailTemplate/PostDeleted.html")))
+                {
+                    body = reader.ReadToEnd();
+                }
+
+                body = body.Replace("{UserName}", writerUser.Name);
+                body = body.Replace("{PostTitle}", post.Title);
+                body = body.Replace("{FirstComplaint}", complaints[0].Description);
+                body = body.Replace("{SecondComplaint}", complaints[1].Description);
+                body = body.Replace("{ThirdComplaint}", complaints[2].Description);
+
+                m.Body = body;
+
                 m.IsBodyHtml = true;
                 System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com");
                 smtp.Port = 587;
@@ -141,11 +168,13 @@ namespace DotW.Controllers
             }
         }
 
-        private void SendCommentaryDeletedEmailToWriter(int idUser)
+        private void SendCommentaryDeletedEmailToWriter(Commentary commentary, IList<Complaint> complaints)
         {
+            var postService = new PostService();
             var userService = new UserService();
 
-            var writerUser = userService.GetUserById(new GetUserByIdRequest { UserId = idUser }).User;
+            var writerUser = userService.GetUserById(new GetUserByIdRequest { UserId = commentary.IdUser }).User;
+            var post = postService.GetPostById(new GetPostByIdRequest { Id = commentary.IdPost }).Post;
 
             if (writerUser != null)
             {
@@ -153,9 +182,23 @@ namespace DotW.Controllers
                         new System.Net.Mail.MailAddress("no-reply@devsoftheweb.com", "Devs of the Web"),
                         new System.Net.Mail.MailAddress(writerUser.Email));
 
-                m.Subject = "Comentario eliminado por denuncias";
-                m.Body = string.Format("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"><h3>Hola {0}!</h3><p>Tu comentario fue dada de baja.</p><br/><p align=\"right\"><small>Devs of the Web Team. &#169;</small></p>", writerUser.Name);
-                //m.Body = System.IO.File.ReadAllText(Server.MapPath("EmailTemplates/Customer.htm"));
+                m.Subject = "Comentario eliminado por denuncias.";
+
+                string body = string.Empty;
+                using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/EmailTemplate/CommentaryDeleted.html")))
+                {
+                    body = reader.ReadToEnd();
+                }
+
+                body = body.Replace("{UserName}", writerUser.Name);
+                body = body.Replace("{Commentary}", commentary.CommentaryText);
+                body = body.Replace("{PostTitle}", post.Title);
+                body = body.Replace("{FirstComplaint}", complaints[0].Description);
+                body = body.Replace("{SecondComplaint}", complaints[1].Description);
+                body = body.Replace("{ThirdComplaint}", complaints[2].Description);
+
+                m.Body = body;
+
                 m.IsBodyHtml = true;
                 System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com");
                 smtp.Port = 587;
