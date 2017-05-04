@@ -82,6 +82,9 @@ namespace DotW.Models
         [Display(Name = "Tags")]
         public List<string> Tags { get; set; }
 
+        [Display(Name = "Publicación sin imagen")]
+        public bool DeleteImage { get; set; }
+
         public EditPostViewModel()
         {
             Tags = new List<string>();

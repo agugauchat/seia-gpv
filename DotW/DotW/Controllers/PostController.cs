@@ -179,6 +179,7 @@
                 IdCategory = result.IdCategory,
                 IsDraft = result.IsDraft,
                 PrincipalImageName = result.PrincipalImageName,
+                DeleteImage = false,
                 Tags = result.Tags
             };
 
@@ -202,7 +203,7 @@
             var categoryService = new CategoryService();
             string finalFileName = string.Empty;
 
-            if (model.File != null)
+            if (model.File != null && !model.DeleteImage)
             {
                 if ((new AllowedExtensions()).ImageExtensions.Contains(Path.GetExtension(model.File.FileName).Remove(0, 1).ToLower()))
                 {
@@ -234,7 +235,7 @@
                     Body = model.Body,
                     IdCategory = model.IdCategory,
                     IsDraft = model.IsDraft,
-                    PrincipalImageName = string.IsNullOrEmpty(finalFileName) ? model.PrincipalImageName : finalFileName,
+                    PrincipalImageName = string.IsNullOrEmpty(finalFileName) && !model.DeleteImage ? model.PrincipalImageName : finalFileName,
                     Tags = model.Tags
                 });
 

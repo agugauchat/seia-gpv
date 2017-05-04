@@ -14,6 +14,24 @@
     $('#postTags').on('itemRemoved', function (event) {
         $("[id = '" + event.item + "']").remove();
     });
+
+    $("#deleteImage").change(function () {
+        var value = $(this).is(":checked");
+
+        if (value) {
+            $("#imageInputContainer").fadeOut(700);
+            $("#imagePreview").fadeOut(700);
+        }
+        else {
+            $("#imageInputContainer").fadeIn(700);
+
+            // Si ya se había cargado una nueva imagen durante la edición,
+            // entonces no debe mostrarse el botón 'Ver imagen'
+            if ($("#imageInput").val() == "") {
+                $("#imagePreview").fadeIn(700);
+            }
+        }
+    })
 });
 
 function UpdateFileName() {
@@ -22,4 +40,6 @@ function UpdateFileName() {
     $("#imageNameField").val(imageName);
 
     $("#imagePreview").fadeOut(700);
+
+    $("#deleteImageContainer").show();
 }
