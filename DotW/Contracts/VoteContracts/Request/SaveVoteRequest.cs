@@ -10,9 +10,9 @@
     {
         public int UserId { get; set; }
 
-        public bool? Good { get; set; }
+        public bool Good { get; set; }
 
-        public bool? Bad { get; set; }
+        public bool Bad { get; set; }
 
         public int PostId { get; set; }
     }

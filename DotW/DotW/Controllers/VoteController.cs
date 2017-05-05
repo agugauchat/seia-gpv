@@ -15,7 +15,7 @@
     {
         [Authorize(Roles = "User")]
         [HttpPost]
-        public JsonResult SaveVote(int postId, bool? goodVote, bool? badVote)
+        public JsonResult SaveVote(int postId, bool goodVote, bool badVote)
         {
             var userService = new UserService();
             var voteService = new VoteService();

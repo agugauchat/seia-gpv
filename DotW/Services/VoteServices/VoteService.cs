@@ -26,7 +26,7 @@
                     {
                         IdPost = request.PostId,
                         IdUser = request.UserId,
-                        God = request.Good,
+                        Good = request.Good,
                         Bad = request.Bad
                     };
 
@@ -37,7 +37,7 @@
                 {
                     vote = previousVote;
 
-                    vote.God = request.Good;
+                    vote.Good = request.Good;
                     vote.Bad = request.Bad;
 
                     db.SaveChanges();
@@ -47,8 +47,8 @@
                 {
                     VoteId = vote.Id,
                     PostId = vote.IdPost,
-                    PostGoodVotes = db.Votes.Where(x => x.IdPost == request.PostId).Count(x => x.God.HasValue && x.God.Value),
-                    PostBadVotes = db.Votes.Where(x => x.IdPost == request.PostId).Count(x => x.Bad.HasValue && x.Bad.Value)
+                    PostGoodVotes = db.Votes.Where(x => x.IdPost == request.PostId).Count(x => x.Good),
+                    PostBadVotes = db.Votes.Where(x => x.IdPost == request.PostId).Count(x => x.Bad)
                 };
 
                 return response;
@@ -61,8 +61,8 @@
             {
                 var result = new GetVotesCountByPostIdResponse();
 
-                result.GoodVotes = db.Votes.Where(x => x.IdPost == request.PostId).Count(x => x.God.HasValue && x.God.Value);
-                result.BadVotes = db.Votes.Where(x => x.IdPost == request.PostId).Count(x => x.Bad.HasValue && x.Bad.Value);
+                result.GoodVotes = db.Votes.Where(x => x.IdPost == request.PostId).Count(x => x.Good);
+                result.BadVotes = db.Votes.Where(x => x.IdPost == request.PostId).Count(x => x.Bad);
 
                 return result;
             }
@@ -76,8 +76,8 @@
 
                 var vote = db.Votes.FirstOrDefault(x => x.IdPost == request.PostId && x.IdUser == request.UserId);
 
-                result.Good = vote != null && vote.God.HasValue ? vote.God.Value : false;
-                result.Bad = vote != null && vote.Bad.HasValue ? vote.Bad.Value : false;
+                result.Good = vote != null ? vote.Good : false;
+                result.Bad = vote != null ? vote.Bad : false;
 
                 return result;
             }

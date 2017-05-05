@@ -16,8 +16,8 @@ namespace Data
     {
         public int Id { get; set; }
         public int IdUser { get; set; }
-        public Nullable<bool> God { get; set; }
-        public Nullable<bool> Bad { get; set; }
+        public bool Good { get; set; }
+        public bool Bad { get; set; }
         public int IdPost { get; set; }
     
         public virtual Posts Posts { get; set; }

@@ -71,7 +71,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/Vote/SaveVote',
-                data: { "postId": $("#postId").val(), "goodVote": false, "badVote" : null },
+                data: { "postId": $("#postId").val(), "goodVote": false, "badVote" : false },
                 success: function (response) {
                     if (response != null && response.success) {
                         DeactivateLikeButton();
@@ -90,7 +90,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/Vote/SaveVote',
-                data: { "postId": $("#postId").val(), "goodVote" : true, "badVote" : null },
+                data: { "postId": $("#postId").val(), "goodVote" : true, "badVote" : false },
                 success: function (response) {
                     if (response != null && response.success) {
                         DeactivateDislikeButton();
@@ -115,7 +115,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/Vote/SaveVote',
-                data: { "postId": $("#postId").val(), "goodVote": null, "badVote": false },
+                data: { "postId": $("#postId").val(), "goodVote": false, "badVote": false },
                 success: function (response) {
                     if (response != null && response.success) {
                         DeactivateDislikeButton();
@@ -133,7 +133,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/Vote/SaveVote',
-                data: { "postId": $("#postId").val(), "goodVote": null, "badVote": true },
+                data: { "postId": $("#postId").val(), "goodVote": false, "badVote": true },
                 success: function (response) {
                     if (response != null && response.success) {
                         DeactivateLikeButton();

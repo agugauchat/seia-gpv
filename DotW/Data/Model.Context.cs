@@ -33,10 +33,10 @@ namespace Data
         public virtual DbSet<Posts> Posts { get; set; }
         public virtual DbSet<Tags> Tags { get; set; }
         public virtual DbSet<UserStates> UserStates { get; set; }
-        public virtual DbSet<Votes> Votes { get; set; }
         public virtual DbSet<Complaints> Complaints { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Comments> Comments { get; set; }
+        public virtual DbSet<Votes> Votes { get; set; }
     }
 }
