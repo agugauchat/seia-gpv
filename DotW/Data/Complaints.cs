@@ -20,8 +20,8 @@ namespace Data
         public int IdUser { get; set; }
         public string Description { get; set; }
     
+        public virtual Comments Comments { get; set; }
         public virtual Posts Posts { get; set; }
         public virtual Users Users { get; set; }
-        public virtual Comments Comments { get; set; }
     }
 }

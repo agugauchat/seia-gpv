@@ -361,19 +361,19 @@
                 var complaintService = new ComplaintService();
 
                 userComplaints = complaintService.SearchComplaintsByUserId(new SearchComplaintsByUserIdRequest { AspNetUserId = User.Identity.GetUserId() }).Complaints;
+
+                var user = userService.GetUserByAccountId(new GetUserByAccountIdRequest { AccountId = User.Identity.GetUserId() }).User;
+
+                var postVotes = votesService.GetVotesCountByPostId(new GetVotesCountByPostIdRequest { PostId = post.Id });
+                var userVotes = votesService.GetVoteByUserAndPostId(new GetVoteByUserAndPostIdRequest { PostId = post.Id, UserId = user.Id });
+
+                ViewBag.GoodVotes = postVotes.GoodVotes;
+                ViewBag.BadVotes = postVotes.BadVotes;
+                ViewBag.UserGoodVote = userVotes.Good ? "true" : "false";
+                ViewBag.UserBadVote = userVotes.Bad ? "true" : "false";
             }
 
             ViewBag.UserComplaints = userComplaints;
-
-            var user = userService.GetUserByAccountId(new GetUserByAccountIdRequest { AccountId = User.Identity.GetUserId() }).User;
-
-            var postVotes = votesService.GetVotesCountByPostId(new GetVotesCountByPostIdRequest { PostId = post.Id });
-            var userVotes = votesService.GetVoteByUserAndPostId(new GetVoteByUserAndPostIdRequest { PostId = post.Id, UserId = user.Id });
-
-            ViewBag.GoodVotes = postVotes.GoodVotes;
-            ViewBag.BadVotes = postVotes.BadVotes;
-            ViewBag.UserGoodVote = userVotes.Good ? "true" : "false";
-            ViewBag.UserBadVote = userVotes.Bad ? "true" : "false";
 
             return View(post);
         }

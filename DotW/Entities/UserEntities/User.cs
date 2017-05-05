@@ -13,7 +13,7 @@
         public string AspNetUserId { get; set; }
         public DateTime EffectDate { get; set; }
         public int IdState { get; set; }
-        public DateTime? SuspendedDate { get; set; }
+        public DateTime? ActivationDate { get; set; }
         public string Email { get; set; }
     }
 }

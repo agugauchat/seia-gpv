@@ -33,21 +33,26 @@
 <p class="lead">@Html.Raw(Model.Body)</p>
 @*<hr />*@
 <br />
-<div class="form-group">
-    <input id="postId" type="hidden" value="@Model.Id"/>
-    <a href="#" id="likeBtn" pressed="@userGoodVote" class="btn btn-default fa fa-thumbs-o-up" style="border-radius: 10%;">&nbsp;@goodVotesCount</a>
-    <a href="#" id="dislikeBtn" pressed="@userBadVote" class="btn btn-default fa fa-thumbs-o-down" style="border-radius: 10%;">&nbsp;@badVotesCount</a>
-</div>
+
+@if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
+{
+    <div class="form-group">
+        <input id="postId" type="hidden" value="@Model.Id" />
+        <a href="#" id="likeBtn" pressed="@userGoodVote" class="btn btn-default fa fa-thumbs-o-up" style="border-radius: 10%;">&nbsp;@goodVotesCount</a>
+        <a href="#" id="dislikeBtn" pressed="@userBadVote" class="btn btn-default fa fa-thumbs-o-down" style="border-radius: 10%;">&nbsp;@badVotesCount</a>
+    </div>
+}
+
 @foreach (var tag in Model.Tags)
 {
-    <a href="@Url.Action(" List", "Post" , new { tag=tag })" class="tag-link"><span class="tag label label-info">@tag</span></a>
+    <a href="@Url.Action("List", "Post" , new { tag=tag })" class="tag-link"><span class="tag label label-info">@tag</span></a>
 }
 <br />
-<hr />
 <!-- Blog Comments -->
 <!-- Comments Form -->
 @if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
 {
+    <hr />
     <div class="well">
         <h4>Deja tu comentario:</h4>
         <form role="form">
@@ -58,7 +63,7 @@
         </form>
     </div>
 }
-<hr />
+
 
 @if (Comments.Any())
 {

@@ -17,9 +17,9 @@ namespace Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Posts()
         {
-            this.Tags = new HashSet<Tags>();
-            this.Complaints = new HashSet<Complaints>();
             this.Comments = new HashSet<Comments>();
+            this.Complaints = new HashSet<Complaints>();
+            this.Tags = new HashSet<Tags>();
             this.Votes = new HashSet<Votes>();
         }
     
@@ -33,15 +33,16 @@ namespace Data
         public bool IsDraft { get; set; }
         public string Summary { get; set; }
         public string PrincipalImageName { get; set; }
+        public bool DeletedByComplaints { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tags> Tags { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Complaints> Complaints { get; set; }
         public virtual Categories Categories { get; set; }
-        public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comments> Comments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Complaints> Complaints { get; set; }
+        public virtual Users Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tags> Tags { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Votes> Votes { get; set; }
     }

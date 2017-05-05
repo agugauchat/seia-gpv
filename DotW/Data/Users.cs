@@ -17,9 +17,9 @@ namespace Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Users()
         {
+            this.Comments = new HashSet<Comments>();
             this.Complaints = new HashSet<Complaints>();
             this.Posts = new HashSet<Posts>();
-            this.Comments = new HashSet<Comments>();
             this.Votes = new HashSet<Votes>();
         }
     
@@ -29,16 +29,23 @@ namespace Data
         public System.DateTime EffectDate { get; set; }
         public Nullable<System.DateTime> NullDate { get; set; }
         public int IdState { get; set; }
-        public Nullable<System.DateTime> SuspendedDate { get; set; }
+        public Nullable<System.DateTime> ActivationDate { get; set; }
+        public string FullName { get; set; }
+        public string Phone { get; set; }
+        public string Description { get; set; }
+        public string Email { get; set; }
+        public bool ShowData { get; set; }
+        public int BlockedPublications { get; set; }
+        public int BlockedComments { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comments> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Complaints> Complaints { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Posts> Posts { get; set; }
         public virtual UserStates UserStates { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comments> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Votes> Votes { get; set; }
     }

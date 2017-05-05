@@ -26,6 +26,7 @@ namespace Data
         public string Commentary { get; set; }
         public System.DateTime EffectDate { get; set; }
         public Nullable<System.DateTime> NullDate { get; set; }
+        public bool DeletedByComplaints { get; set; }
     
         public virtual Posts Posts { get; set; }
         public virtual Users Users { get; set; }

@@ -23,7 +23,7 @@
                     AspNetUserId = request.User.AspNetUserId,
                     EffectDate = DateTime.Now,
                     IdState = (int)UserAccountStates.Active,
-                    SuspendedDate = (DateTime?)null
+                    ActivationDate = (DateTime?)null
                 };
 
                 db.Users.Add(user);
@@ -51,7 +51,7 @@
                         AspNetUserId = result.AspNetUserId,
                         EffectDate = result.EffectDate,
                         IdState = result.IdState,
-                        SuspendedDate = result.SuspendedDate,
+                        ActivationDate = result.ActivationDate,
                         Email = result.AspNetUsers.Email
                     };
                 }
@@ -79,7 +79,7 @@
                         AspNetUserId = result.AspNetUserId,
                         EffectDate = result.EffectDate,
                         IdState = result.IdState,
-                        SuspendedDate = result.SuspendedDate,
+                        ActivationDate = result.ActivationDate,
                         Email = result.AspNetUsers.Email
                     };
                 }
@@ -105,7 +105,7 @@
                         AspNetUserId = result.AspNetUserId,
                         EffectDate = result.EffectDate,
                         IdState = result.IdState,
-                        SuspendedDate = result.SuspendedDate,
+                        ActivationDate = result.ActivationDate,
                         Email = result.AspNetUsers.Email
                     };
                 }

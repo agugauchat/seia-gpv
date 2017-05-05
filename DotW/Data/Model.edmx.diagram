@@ -10,31 +10,31 @@
         <EntityTypeShape EntityType="DotWModel.AspNetUserClaims" Width="1.625" PointX="2.375" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DotWModel.AspNetUserLogins" Width="1.75" PointX="0.5" PointY="12.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DotWModel.Categories" Width="1.875" PointX="10.875" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DotWModel.Posts" Width="2.125" PointX="8.875" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DotWModel.Tags" Width="1.5" PointX="11.75" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="DotWModel.UserStates" Width="1.5" PointX="4.375" PointY="4.875" IsExpanded="true" />
         <AssociationConnector Association="DotWModel.FK_Categories_Categories" ManuallyRouted="false" />
-        <AssociationConnector Association="DotWModel.FK_Tags_Posts" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DotWModel.Complaints" Width="1.625" PointX="7.75" PointY="14.375" IsExpanded="true" />
-        <AssociationConnector Association="DotWModel.FK_Complaints_Post" />
-        <AssociationConnector Association="DotWModel.FK_Posts_Category" />
         <EntityTypeShape EntityType="DotWModel.AspNetUsers" Width="2.5" PointX="0.5" PointY="7.25" />
-        <EntityTypeShape EntityType="DotWModel.Users" Width="2.25" PointX="3.75" PointY="7.875" />
         <AssociationConnector Association="DotWModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="DotWModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="DotWModel.FK_Users_AspNetUsers" />
-        <AssociationConnector Association="DotWModel.FK_Complaints_User" />
-        <AssociationConnector Association="DotWModel.FK_Posts_Users" />
-        <AssociationConnector Association="DotWModel.FK_Users_UserStates" />
         <AssociationConnector Association="DotWModel.AspNetUserRoles" />
-        <EntityTypeShape EntityType="DotWModel.Comments" Width="1.875" PointX="5.25" PointY="12" />
+        <EntityTypeShape EntityType="DotWModel.Votes" Width="1.5" PointX="7.75" PointY="6.375" />
+        <EntityTypeShape EntityType="DotWModel.Comments" Width="2.25" PointX="3.25" PointY="13.25" />
+        <EntityTypeShape EntityType="DotWModel.Posts" Width="2.375" PointX="7.75" PointY="9.5" />
+        <EntityTypeShape EntityType="DotWModel.Users" Width="2" PointX="4.25" PointY="7.375" />
+        <AssociationConnector Association="DotWModel.FK_Users_AspNetUsers" />
+        <AssociationConnector Association="DotWModel.FK_Posts_Category" />
         <AssociationConnector Association="DotWModel.FK_Comments_Post" />
         <AssociationConnector Association="DotWModel.FK_Comments_User" />
         <AssociationConnector Association="DotWModel.FK_Complaints_Comment" />
-        <EntityTypeShape EntityType="DotWModel.Votes" Width="1.5" PointX="7.75" PointY="6.375" />
+        <AssociationConnector Association="DotWModel.FK_Complaints_Post" />
+        <AssociationConnector Association="DotWModel.FK_Complaints_User" />
+        <AssociationConnector Association="DotWModel.FK_Posts_Users" />
+        <AssociationConnector Association="DotWModel.FK_Tags_Posts" />
         <AssociationConnector Association="DotWModel.FK_Votes_Post" />
+        <AssociationConnector Association="DotWModel.FK_Users_UserStates" />
         <AssociationConnector Association="DotWModel.FK_Votes_User" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
