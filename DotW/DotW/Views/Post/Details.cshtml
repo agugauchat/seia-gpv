@@ -65,7 +65,7 @@
     foreach (var commentary in Comments)
     {
     <!-- Comment -->
-        <div class="media">
+        <div class="media" id="@commentary.Id">
             <a class="pull-left" href="#">
                 <img class="media-object" src="~/Content/Images/GenericUser.png" height="64" width="64">
             </a>
@@ -74,12 +74,20 @@
                     @commentary.WriterUserName
                     <small>@commentary.EffectDate.ToString("dd/MM/yyyy")</small>
 
-                    @if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdComment == commentary.Id)
-                         && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
+                    @if ((User.Identity.IsAuthenticated) && (User.Identity.Name == commentary.WriterUserName))
                     {
-                        anyCommentaryComplaintPosibility = true;
                         <span>&nbsp;</span>
-                        <small><a id="denunciateCommentary" class="text-danger" href="#" commentary-id="@commentary.Id">Denunciar comentario</a></small>
+                        <small><a class="deleteCommentary text-danger" href="#" id="@commentary.Id">Eliminar comentario</a></small>
+                    }
+                    else
+                    {
+                        if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdComment == commentary.Id)
+                             && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
+                        {
+                            anyCommentaryComplaintPosibility = true;
+                            <span>&nbsp;</span>
+                            <small><a id="denunciateCommentary" class="text-danger" href="#" commentary-id="@commentary.Id">Denunciar comentario</a></small>
+                        }
                     }
                 </h4>
                 @commentary.CommentaryText
@@ -136,8 +144,32 @@
                 success: function (data) {
                     $("#newComment").html($("#newComment").html() + data.success);
                     $('#textComment').val("");
+                    
+                    DeleteCommentaryAjax();
                 }
             });
         });
+
+
+        function DeleteCommentaryAjax() {
+            $(".deleteCommentary").click(function (e) {
+                e.preventDefault();
+                var idComment = parseInt(this.id);
+                $.ajax({
+                    type: "POST",
+                    url: "/Commentary/DeleteComment",
+                    content: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: {
+                        idCommentary: idComment
+                    },
+                    success: function (data) {
+                        $("#"+idComment).hide();
+                    }
+                });
+            });
+        }
+
+        DeleteCommentaryAjax();
     </script>
 }

@@ -22,6 +22,7 @@
             {
                 var commentaryService = new CommentaryService();
                 var userService = new UserService();
+                var commentaryId = 0;
 
                 if (ModelState.IsValid)
                 {
@@ -33,14 +34,33 @@
                     };
 
                     var result = commentaryService.CreateCommentary(request);
+                    commentaryId = result.CommentaryId;
                 }
 
                 var imgPath = Url.Content("~/Content/Images/GenericUser.png");
                 var userName = User.Identity.GetUserName();
-                var date = DateTime.Now;
-                var htmlComment = "<div class=\"media\"><a class=\"pull-left\" href=\"#\"><img class=\"media-object\" src=\""+ imgPath + "\" height=\"64\" width=\"64\"></a><div class=\"media-body\"><h4 class=\"media-heading\">"+ userName +"<small> "+date+"</small></h4>" + text + "</div></div>";
+                var date = DateTime.Now.ToString("dd/MM/yyyy");
+                var htmlComment = "<div class=\"media\" id=\"" + commentaryId + "\"><a class=\"pull-left\" href=\"#\"><img class=\"media-object\" src=\"" + imgPath + "\" height=\"64\" width=\"64\"></a><div class=\"media-body\"><h4 class=\"media-heading\">"+ userName +"<small> "+date+ "</small><span>&nbsp;&nbsp;&nbsp;</span><small><a class=\"deleteCommentary text-danger\" href=\"#\" id=\"" + commentaryId + "\">Eliminar comentario</a></small></h4>" + text + "</div></div>";
 
                 return Json(new { success = htmlComment });
+            }
+
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize(Roles = "User")]
+        [HttpPost]
+        public JsonResult DeleteComment(int idCommentary)
+        {
+            var commentaryService = new CommentaryService();
+
+            var commentary = commentaryService.GetCommentaryById(new GetCommentaryByIdRequest() { Id = idCommentary }).Commentary;
+
+            if ((commentary != null) && (commentary.WriterUserName == User.Identity.Name))
+            {
+                var result = commentaryService.DeleteCommentary(new DeleteCommentaryRequest() { Id = idCommentary });
+
+                return Json(true, JsonRequestBehavior.AllowGet);
             }
 
             return Json(false, JsonRequestBehavior.AllowGet);
