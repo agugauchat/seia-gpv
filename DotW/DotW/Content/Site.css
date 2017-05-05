@@ -70,3 +70,23 @@ a.tag-link:hover {
     a.tag-link:hover span {
         background-color: #0663b3;
     }
+
+/*#likeBtn {
+    background-color: white;
+    color: black;
+}
+
+    #likeBtn:hover {
+        background-color: #5bc0de;
+        color: white;
+    }
+
+#dislikeBtn {
+    background-color: white;
+    color: black;
+}
+
+    #dislikeBtn:hover {
+        background-color: #e03333;
+        color: white;
+    }*/

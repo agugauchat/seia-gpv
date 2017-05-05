@@ -48,6 +48,7 @@
     <Compile Include="PostEntities\Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserEntities\User.cs" />
+    <Compile Include="VoteEntities\Vote.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,6 +5,7 @@
     using Contracts.ComplaintContracts.Request;
     using Contracts.PostContracts.Request;
     using Contracts.UserContracts.Request;
+    using Contracts.VoteContracts.Request;
     using Entities.ComplaintEntities;
     using Entities.General;
     using Microsoft.AspNet.Identity;
@@ -14,6 +15,7 @@
     using Services.ComplaintServices;
     using Services.PostServices;
     using Services.UserServices;
+    using Services.VoteServices;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -344,8 +346,10 @@
 
         public ActionResult Details(int id)
         {
-            var postService = new PostService();
             var commentaryService = new CommentaryService();
+            var postService = new PostService();
+            var userService = new UserService();
+            var votesService = new VoteService();
 
             var post = postService.GetPostById(new GetPostByIdRequest() { Id = id }).Post;
             ViewBag.Comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments.Where(x => !x.NullDate.HasValue).ToList();
@@ -360,6 +364,16 @@
             }
 
             ViewBag.UserComplaints = userComplaints;
+
+            var user = userService.GetUserByAccountId(new GetUserByAccountIdRequest { AccountId = User.Identity.GetUserId() }).User;
+
+            var postVotes = votesService.GetVotesCountByPostId(new GetVotesCountByPostIdRequest { PostId = post.Id });
+            var userVotes = votesService.GetVoteByUserAndPostId(new GetVoteByUserAndPostIdRequest { PostId = post.Id, UserId = user.Id });
+
+            ViewBag.GoodVotes = postVotes.GoodVotes;
+            ViewBag.BadVotes = postVotes.BadVotes;
+            ViewBag.UserGoodVote = userVotes.Good ? "true" : "false";
+            ViewBag.UserBadVote = userVotes.Bad ? "true" : "false";
 
             return View(post);
         }

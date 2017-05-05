@@ -107,6 +107,13 @@
     <Compile Include="UserContracts\Response\GetUserByAccountIdResponse.cs" />
     <Compile Include="UserContracts\Response\UpdateUserResponse.cs" />
     <Compile Include="UserContracts\UserAccountStates.cs" />
+    <Compile Include="VoteContracts\IVoteService.cs" />
+    <Compile Include="VoteContracts\Request\GetVoteByUserAndPostIdRequest.cs" />
+    <Compile Include="VoteContracts\Request\GetVotesCountByPostIdRequest.cs" />
+    <Compile Include="VoteContracts\Request\SaveVoteRequest.cs" />
+    <Compile Include="VoteContracts\Response\GetVoteByUserAndPostIdResponse.cs" />
+    <Compile Include="VoteContracts\Response\GetVotesCountByPostIdResponse.cs" />
+    <Compile Include="VoteContracts\Response\SaveVoteResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj">

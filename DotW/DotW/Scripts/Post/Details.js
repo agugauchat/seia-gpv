@@ -61,7 +61,145 @@
             }
         });
     });
+
+    InitializeVoteButtonsColor();
+
+    // Botón "Like"
+    $("#likeBtn").on("click", function () {
+        var isButtonPressed = $("#likeBtn").attr("pressed");
+        if (isButtonPressed == "true") {
+            $.ajax({
+                type: 'POST',
+                url: '/Vote/SaveVote',
+                data: { "postId": $("#postId").val(), "goodVote": false, "badVote" : null },
+                success: function (response) {
+                    if (response != null && response.success) {
+                        DeactivateLikeButton();
+                        $("#likeBtn").text(" " + response.goodVotes);
+                        $("#dislikeBtn").text(" " + response.badVotes);
+                    }
+                    else {
+                    }
+                },
+                error: function (response) {
+                }
+            });
+        }
+        else
+        {
+            $.ajax({
+                type: 'POST',
+                url: '/Vote/SaveVote',
+                data: { "postId": $("#postId").val(), "goodVote" : true, "badVote" : null },
+                success: function (response) {
+                    if (response != null && response.success) {
+                        DeactivateDislikeButton();
+                        ActivateLikeButton();
+                        $("#likeBtn").text(" " + response.goodVotes);
+                        $("#dislikeBtn").text(" " + response.badVotes);
+                    }
+                    else {
+                    }
+                },
+                error: function (response) {
+                }
+            });
+        }
+        return false
+    })
+
+    // Botón "Dislike"
+    $("#dislikeBtn").on("click", function () {
+        var isButtonPressed = $("#dislikeBtn").attr("pressed");
+        if (isButtonPressed == "true") {
+            $.ajax({
+                type: 'POST',
+                url: '/Vote/SaveVote',
+                data: { "postId": $("#postId").val(), "goodVote": null, "badVote": false },
+                success: function (response) {
+                    if (response != null && response.success) {
+                        DeactivateDislikeButton();
+                        $("#likeBtn").text(" " + response.goodVotes);
+                        $("#dislikeBtn").text(" " + response.badVotes);
+                    }
+                    else {
+                    }
+                },
+                error: function (response) {
+                }
+            });
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: '/Vote/SaveVote',
+                data: { "postId": $("#postId").val(), "goodVote": null, "badVote": true },
+                success: function (response) {
+                    if (response != null && response.success) {
+                        DeactivateLikeButton();
+                        ActivateDislikeButton();
+                        $("#likeBtn").text(" " + response.goodVotes);
+                        $("#dislikeBtn").text(" " + response.badVotes);
+                    }
+                    else {
+                    }
+                },
+                error: function (response) {
+                }
+            });
+        }
+        return false
+    })
 })
+
+function InitializeVoteButtonsColor() {
+    // Inicializa el color de los botones de los votos en función del voto del usuario
+    // que estaba registrado al momento de cargar la página.
+
+    var isLikeBtnPressed = $("#likeBtn").attr("pressed");
+    var isDislikeBtnPressed = $("#dislikeBtn").attr("pressed");
+    if (isLikeBtnPressed == "true")
+    {
+        // El usuario había votado positivamente.
+        // Entonces se colorea el botón "Like".
+        $("#likeBtn").css("background-color", "#357ebd");
+        $("#likeBtn").css("color", "white");
+    }
+
+    if (isDislikeBtnPressed == "true") {
+        // El usuario había votado negativamente.
+        // Entonces se colorea el botón "Dislike".
+        $("#dislikeBtn").css("background-color", "#e03333");
+        $("#dislikeBtn").css("color", "white");
+    }
+}
+
+// Botón "Like"
+function ActivateLikeButton() {
+    $("#likeBtn").css("background-color", "#357ebd");
+    $("#likeBtn").css("color", "white");
+    $("#likeBtn").attr("pressed", "true");
+}
+
+function DeactivateLikeButton() {
+    $("#likeBtn").css("background-color", "white");
+    $("#likeBtn").css("color", "black");
+    $("#likeBtn").attr("pressed", "false");
+}
+
+// Botón "Dislike"
+function ActivateDislikeButton() {
+    $("#dislikeBtn").css("background-color", "#e03333");
+    $("#dislikeBtn").css("color", "white");
+    $("#dislikeBtn").attr("pressed", "true");
+}
+
+function DeactivateDislikeButton() {
+    $("#dislikeBtn").css("background-color", "white");
+    $("#dislikeBtn").css("color", "black");
+    $("#dislikeBtn").attr("pressed", "false");
+}
+
 
 // Posts Region
 

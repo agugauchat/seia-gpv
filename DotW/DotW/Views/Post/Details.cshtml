@@ -5,6 +5,10 @@
     var Comments = (List<Entities.CommentaryEntities.Commentary>)ViewBag.Comments;
     var userComplaints = (List<Entities.ComplaintEntities.Complaint>)ViewBag.UserComplaints;
     List<string> currentRoles = ViewBag.RolesOfCurrentUser as List<string>;
+    var goodVotesCount = ViewBag.GoodVotes;
+    var badVotesCount = ViewBag.BadVotes;
+    var userGoodVote = ViewBag.UserGoodVote;
+    var userBadVote = ViewBag.UserBadVote;
     var anyCommentaryComplaintPosibility = false;
 }
 
@@ -27,26 +31,34 @@
     <hr>*@
 <!-- Post Content -->
 <p class="lead">@Html.Raw(Model.Body)</p>
+@*<hr />*@
+<br />
+<div class="form-group">
+    <input id="postId" type="hidden" value="@Model.Id"/>
+    <a href="#" id="likeBtn" pressed="@userGoodVote" class="btn btn-default fa fa-thumbs-o-up" style="border-radius: 10%;">&nbsp;@goodVotesCount</a>
+    <a href="#" id="dislikeBtn" pressed="@userBadVote" class="btn btn-default fa fa-thumbs-o-down" style="border-radius: 10%;">&nbsp;@badVotesCount</a>
+</div>
 @foreach (var tag in Model.Tags)
 {
     <a href="@Url.Action(" List", "Post" , new { tag=tag })" class="tag-link"><span class="tag label label-info">@tag</span></a>
 }
-<hr>
+<br />
+<hr />
 <!-- Blog Comments -->
 <!-- Comments Form -->
 @if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
 {
-<div class="well">
-    <h4>Deja tu comentario:</h4>
-    <form role="form">
-        <div class="form-group">
-            <textarea class="form-control" rows="3" maxlength="250" id="textComment"></textarea>
-        </div>
-        <button id="btnComment" class="btn btn-primary">Comentar</button>
-    </form>
-</div>
+    <div class="well">
+        <h4>Deja tu comentario:</h4>
+        <form role="form">
+            <div class="form-group">
+                <textarea class="form-control" rows="3" maxlength="250" id="textComment"></textarea>
+            </div>
+            <button id="btnComment" class="btn btn-primary">Comentar</button>
+        </form>
+    </div>
 }
-<hr>
+<hr />
 
 @if (Comments.Any())
 {
@@ -77,18 +89,18 @@
 }
 
 <div id="newComment"></div>
-    <hr>
+<hr>
 
 <div class="col-md-2">
-<p>
-    @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
-</p>
+    <p>
+        @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
+    </p>
 </div>
 
 @*Verifica que el usuario esté logueado y que no haya denunciado anteriormente esta misma publicación.*@
 @*TODO > Verificar que no sea el escritor de la publicación.*@
 @if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdPost == Model.Id)
-     && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
+                                         && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
 {
     <div class="col-md-offset-8 col-md-2">
         <a id="denunciatePost" href="#" class="btn btn-danger">Denunciar Publicación</a>
