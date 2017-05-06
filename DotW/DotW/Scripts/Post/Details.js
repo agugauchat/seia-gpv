@@ -68,13 +68,21 @@
     $("#likeBtn").on("click", function () {
         var isButtonPressed = $("#likeBtn").attr("pressed");
         if (isButtonPressed == "true") {
+            // Se actualizan los contadores manualmente en caso de que las acciones en el controller demoren demasiado.
+            // De no hacerlo así, la parte visual de los botones solamente se actualizará cuando el "control" retorne al ajax.
+            var actualLikes = parseInt($("#likeBtn").text()[1]);
+            actualLikes = actualLikes == 0 ? 0 : actualLikes - 1;
+            $("#likeBtn").text(" " + (actualLikes).toString());
+
+            DeactivateLikeButton();
+
             $.ajax({
                 type: 'POST',
                 url: '/Vote/SaveVote',
                 data: { "postId": $("#postId").val(), "goodVote": false, "badVote" : false },
                 success: function (response) {
                     if (response != null && response.success) {
-                        DeactivateLikeButton();
+                        
                         $("#likeBtn").text(" " + response.goodVotes);
                         $("#dislikeBtn").text(" " + response.badVotes);
                     }
@@ -87,14 +95,26 @@
         }
         else
         {
+            // Se actualizan los contadores manualmente en caso de que las acciones en el controller demoren demasiado.
+            // De no hacerlo así, la parte visual de los botones solamente se actualizará cuando el "control" retorne al ajax.
+            if ($("#dislikeBtn").attr("pressed") == "true") {
+                var actualDislikes = parseInt($("#dislikeBtn").text()[1]);
+                actualDislikes = actualDislikes == 0 ? 0 : actualDislikes - 1;
+                $("#dislikeBtn").text(" " + (actualDislikes).toString());
+            }
+
+            DeactivateDislikeButton();
+            ActivateLikeButton();
+
+            var actualLikes = parseInt($("#likeBtn").text()[1]);
+            $("#likeBtn").text(" " + (actualLikes + 1).toString());
+
             $.ajax({
                 type: 'POST',
                 url: '/Vote/SaveVote',
                 data: { "postId": $("#postId").val(), "goodVote" : true, "badVote" : false },
                 success: function (response) {
                     if (response != null && response.success) {
-                        DeactivateDislikeButton();
-                        ActivateLikeButton();
                         $("#likeBtn").text(" " + response.goodVotes);
                         $("#dislikeBtn").text(" " + response.badVotes);
                     }
@@ -112,13 +132,20 @@
     $("#dislikeBtn").on("click", function () {
         var isButtonPressed = $("#dislikeBtn").attr("pressed");
         if (isButtonPressed == "true") {
+            // Se actualizan los contadores manualmente en caso de que las acciones en el controller demoren demasiado.
+            // De no hacerlo así, la parte visual de los botones solamente se actualizará cuando el "control" retorne al ajax.
+            var actualDislikes = parseInt($("#dislikeBtn").text()[1]);
+            actualDislikes = actualDislikes == 0 ? 0 : actualDislikes - 1;
+            $("#dislikeBtn").text(" " + (actualDislikes).toString());
+
+            DeactivateDislikeButton();
+
             $.ajax({
                 type: 'POST',
                 url: '/Vote/SaveVote',
                 data: { "postId": $("#postId").val(), "goodVote": false, "badVote": false },
                 success: function (response) {
                     if (response != null && response.success) {
-                        DeactivateDislikeButton();
                         $("#likeBtn").text(" " + response.goodVotes);
                         $("#dislikeBtn").text(" " + response.badVotes);
                     }
@@ -130,14 +157,26 @@
             });
         }
         else {
+            // Se actualizan los contadores manualmente en caso de que las acciones en el controller demoren demasiado.
+            // De no hacerlo así, la parte visual de los botones solamente se actualizará cuando el "control" retorne al ajax.
+            if ($("#likeBtn").attr("pressed") == "true") {
+                var actualLikes = parseInt($("#likeBtn").text()[1]);
+                actualLikes = actualLikes == 0 ? 0 : actualLikes - 1;
+                $("#likeBtn").text(" " + (actualLikes).toString());
+            }
+            
+            var actualDislikes = parseInt($("#dislikeBtn").text()[1]);
+            $("#dislikeBtn").text(" " + (actualDislikes + 1).toString());
+
+            DeactivateLikeButton();
+            ActivateDislikeButton();
+
             $.ajax({
                 type: 'POST',
                 url: '/Vote/SaveVote',
                 data: { "postId": $("#postId").val(), "goodVote": false, "badVote": true },
                 success: function (response) {
                     if (response != null && response.success) {
-                        DeactivateLikeButton();
-                        ActivateDislikeButton();
                         $("#likeBtn").text(" " + response.goodVotes);
                         $("#dislikeBtn").text(" " + response.badVotes);
                     }

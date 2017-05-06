@@ -9,5 +9,7 @@
     public class VerifyAndUpdateUserStateByCommentsResponse
     {
         public bool UserSuspended { get; set; }
+
+        public DateTime ActivationDate { get; set; }
     }
 }

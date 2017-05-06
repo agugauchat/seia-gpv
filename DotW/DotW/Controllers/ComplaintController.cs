@@ -64,7 +64,13 @@
                         SendPostDeletedEmailToWriter(post, complaints);
 
                         // Se verifica y de ser necesario, se suspende temporalmente la cuenta del usuario.
-                        var verifyResult = userService.VerifyAndUpdateUserStateByPosts(new VerifyAndUpdateUserStateByPostsRequest { UserId = user.Id });
+                        var verifyResult = userService.VerifyAndUpdateUserStateByPosts(new VerifyAndUpdateUserStateByPostsRequest { UserId = post.IdWriter });
+
+                        if (verifyResult.UserSuspended)
+                        {
+                            var reason = "La cantidad de publicaciones dadas de baja por denuncias/votos ha alcanzando el número estipulado para suspender temporalmente su cuenta.";
+                            SendAccountBlockedToWriter(post.IdWriter, verifyResult.ActivationDate, reason);
+                        };
                     }
 
                     return Json(new { success = true, Message = "Su denuncia ha sido registrada. Gracias por contribuir con nuestra comunidad :)" }, JsonRequestBehavior.AllowGet);
@@ -121,7 +127,13 @@
                         SendCommentaryDeletedEmailToWriter(commentary, complaints);
 
                         // Se verifica y de ser necesario, se suspende temporalmente la cuenta del usuario.
-                        var verifyResult = userService.VerifyAndUpdateUserStateByComments(new VerifyAndUpdateUserStateByCommentsRequest { UserId = user.Id });
+                        var verifyResult = userService.VerifyAndUpdateUserStateByComments(new VerifyAndUpdateUserStateByCommentsRequest { UserId = commentary.IdUser });
+
+                        if (verifyResult.UserSuspended)
+                        {
+                            var reason = "La cantidad de comentarios dados de baja por denuncias ha alcanzando el número estipulado para suspender temporalmente su cuenta.";
+                            SendAccountBlockedToWriter(commentary.IdUser, verifyResult.ActivationDate, reason);
+                        };
                     }
 
                     return Json(new { success = true, Message = "Su denuncia ha sido registrada. Gracias por contribuir con nuestra comunidad :)" }, JsonRequestBehavior.AllowGet);
@@ -154,7 +166,7 @@
                 m.Subject = "Publicación eliminada por denuncias.";
 
                 string body = string.Empty;
-                using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/EmailTemplate/PostDeleted.html")))
+                using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/EmailTemplate/PostDeletedByComplaints.html")))
                 {
                     body = reader.ReadToEnd();
                 }
@@ -205,6 +217,42 @@
                 body = body.Replace("{FirstComplaint}", complaints[0].Description);
                 body = body.Replace("{SecondComplaint}", complaints[1].Description);
                 body = body.Replace("{ThirdComplaint}", complaints[2].Description);
+
+                m.Body = body;
+
+                m.IsBodyHtml = true;
+                System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com");
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                string emailPassword = ConfigurationManager.AppSettings["EmailPassword"];
+                smtp.Credentials = new System.Net.NetworkCredential("devsoftheweb@gmail.com", emailPassword);
+                smtp.Send(m);
+            }
+        }
+
+        private void SendAccountBlockedToWriter(int idWriter, DateTime activationDate, string reason)
+        {
+            var userService = new UserService();
+
+            var writerUser = userService.GetUserById(new GetUserByIdRequest { UserId = idWriter }).User;
+
+            if (writerUser != null)
+            {
+                System.Net.Mail.MailMessage m = new System.Net.Mail.MailMessage(
+                        new System.Net.Mail.MailAddress("no-reply@devsoftheweb.com", "Devs of the Web"),
+                        new System.Net.Mail.MailAddress(writerUser.Email));
+
+                m.Subject = "Cuenta suspendida.";
+
+                string body = string.Empty;
+                using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/EmailTemplate/AccountBlocked.html")))
+                {
+                    body = reader.ReadToEnd();
+                }
+
+                body = body.Replace("{UserName}", writerUser.Name);
+                body = body.Replace("{Reason}", reason);
+                body = body.Replace("{ActivationDate}", activationDate.ToString("dd/MM/yyyy"));
 
                 m.Body = body;
 

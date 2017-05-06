@@ -182,29 +182,35 @@
 
                 if (user != null)
                 {
-                    decimal divisionMod = user.BlockedPublications % (int)DividersToBlockUser.PostBlockedDivider;
-
-                    if (divisionMod == 0)
+                    // Se verifica si la cantidad de posts bloqueados es mayor a 0 porque la operación
+                    // 0 % PostBlockedDivider da como resultado 0 y se podría bloquear un usuario cuando en realidad no corresponde.
+                    if (user.BlockedPublications > 0)
                     {
-                        // Se debe suspender al usuario.
-                        user.IdState = db.UserStates.Where(x => x.State == UserAccountStates.Suspended.ToString()).Select(x => x.Id).FirstOrDefault();
+                        decimal divisionMod = user.BlockedPublications % (int)DividersToBlockUser.PostBlockedDivider;
 
-                        DateTime previousActivationDate;
-
-                        if (user.ActivationDate.HasValue)
+                        if (divisionMod == 0)
                         {
-                            previousActivationDate = user.ActivationDate.Value;
+                            // Se debe suspender al usuario.
+                            user.IdState = db.UserStates.Where(x => x.State == UserAccountStates.Suspended.ToString()).Select(x => x.Id).FirstOrDefault();
+
+                            DateTime previousActivationDate;
+
+                            if (user.ActivationDate.HasValue)
+                            {
+                                previousActivationDate = user.ActivationDate.Value;
+                            }
+                            else
+                            {
+                                previousActivationDate = DateTime.Now;
+                            }
+
+                            user.ActivationDate = previousActivationDate.AddDays((int)SuspendDays.SuspendedByPosts);
+
+                            db.SaveChanges();
+
+                            response.UserSuspended = true;
+                            response.ActivationDate = user.ActivationDate.Value;
                         }
-                        else
-                        {
-                            previousActivationDate = DateTime.Now;
-                        }
-
-                        user.ActivationDate = previousActivationDate.AddDays((int)SuspendDays.SuspendedByPosts);
-
-                        db.SaveChanges();
-
-                        response.UserSuspended = true;
                     }
                 }
 
@@ -231,29 +237,35 @@
 
                 if (user != null)
                 {
-                    decimal divisionMod = user.BlockedComments % (int)DividersToBlockUser.CommentaryBlockedDivider;
-
-                    if (divisionMod == 0)
+                    // Se verifica si la cantidad de comentarios bloqueados es mayor a 0 porque la operación
+                    // 0 % CommentaryBlockedDivider da como resultado 0 y se podría bloquear un usuario cuando en realidad no corresponde.
+                    if (user.BlockedComments > 0)
                     {
-                        // Se debe suspender al usuario.
-                        user.IdState = db.UserStates.Where(x => x.State == UserAccountStates.Suspended.ToString()).Select(x => x.Id).FirstOrDefault();
+                        decimal divisionMod = user.BlockedComments % (int)DividersToBlockUser.CommentaryBlockedDivider;
 
-                        DateTime previousActivationDate;
-
-                        if (user.ActivationDate.HasValue)
+                        if (divisionMod == 0)
                         {
-                            previousActivationDate = user.ActivationDate.Value;
+                            // Se debe suspender al usuario.
+                            user.IdState = db.UserStates.Where(x => x.State == UserAccountStates.Suspended.ToString()).Select(x => x.Id).FirstOrDefault();
+
+                            DateTime previousActivationDate;
+
+                            if (user.ActivationDate.HasValue)
+                            {
+                                previousActivationDate = user.ActivationDate.Value;
+                            }
+                            else
+                            {
+                                previousActivationDate = DateTime.Now;
+                            }
+
+                            user.ActivationDate = previousActivationDate.AddDays((int)SuspendDays.SuspendedByComments);
+
+                            db.SaveChanges();
+
+                            response.UserSuspended = true;
+                            response.ActivationDate = user.ActivationDate.Value;
                         }
-                        else
-                        {
-                            previousActivationDate = DateTime.Now;
-                        }
-
-                        user.ActivationDate = previousActivationDate.AddDays((int)SuspendDays.SuspendedByComments);
-
-                        db.SaveChanges();
-
-                        response.UserSuspended = true;
                     }
                 }
 
