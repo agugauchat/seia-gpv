@@ -35,7 +35,7 @@ namespace Data
         public string Description { get; set; }
         public string Email { get; set; }
         public bool ShowData { get; set; }
-        public int BlockedPublications { get; set; }
+        public int BlockedPosts { get; set; }
         public int BlockedComments { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }

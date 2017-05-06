@@ -113,7 +113,7 @@
           <Property Name="IsDraft" Type="bit" Nullable="false" />
           <Property Name="Summary" Type="varchar" MaxLength="500" />
           <Property Name="PrincipalImageName" Type="varchar" MaxLength="30" />
-          <Property Name="DeletedByComplaints" Type="bit" Nullable="false" />
+          <Property Name="DeletedByComplaintsOrVotes" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -139,7 +139,7 @@
           <Property Name="Description" Type="varchar" MaxLength="500" />
           <Property Name="Email" Type="varchar" MaxLength="150" />
           <Property Name="ShowData" Type="bit" Nullable="false" />
-          <Property Name="BlockedPublications" Type="int" Nullable="false" />
+          <Property Name="BlockedPosts" Type="int" Nullable="false" />
           <Property Name="BlockedComments" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserStates">
@@ -569,6 +569,10 @@
           </AssociationSet>
           <EntitySet Name="Votes" EntityType="DotWModel.Votes" />
           <EntitySet Name="Comments" EntityType="DotWModel.Comments" />
+          <AssociationSet Name="FK_Complaints_Comment" Association="DotWModel.FK_Complaints_Comment">
+            <End Role="Comments" EntitySet="Comments" />
+            <End Role="Complaints" EntitySet="Complaints" />
+          </AssociationSet>
           <EntitySet Name="Posts" EntityType="DotWModel.Posts" />
           <EntitySet Name="Users" EntityType="DotWModel.Users" />
           <AssociationSet Name="FK_Users_AspNetUsers" Association="DotWModel.FK_Users_AspNetUsers">
@@ -586,10 +590,6 @@
           <AssociationSet Name="FK_Comments_User" Association="DotWModel.FK_Comments_User">
             <End Role="Users" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Complaints_Comment" Association="DotWModel.FK_Complaints_Comment">
-            <End Role="Comments" EntitySet="Comments" />
-            <End Role="Complaints" EntitySet="Complaints" />
           </AssociationSet>
           <AssociationSet Name="FK_Complaints_Post" Association="DotWModel.FK_Complaints_Post">
             <End Role="Posts" EntitySet="Posts" />
@@ -619,7 +619,7 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Votes" EntitySet="Votes" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Complaints">
           <Key>
             <PropertyRef Name="Id" />
@@ -697,7 +697,7 @@
           <Property Name="IdPost" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Posts" Relationship="DotWModel.FK_Votes_Post" FromRole="Votes" ToRole="Posts" />
           <NavigationProperty Name="Users" Relationship="DotWModel.FK_Votes_User" FromRole="Votes" ToRole="Users" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="Comments">
           <Key>
             <PropertyRef Name="Id" />
@@ -709,10 +709,22 @@
           <Property Name="EffectDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="NullDate" Type="DateTime" Precision="3" />
           <Property Name="DeletedByComplaints" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_Comment" FromRole="Comments" ToRole="Complaints" />
           <NavigationProperty Name="Posts" Relationship="DotWModel.FK_Comments_Post" FromRole="Comments" ToRole="Posts" />
           <NavigationProperty Name="Users" Relationship="DotWModel.FK_Comments_User" FromRole="Comments" ToRole="Users" />
-          <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_Comment" FromRole="Comments" ToRole="Complaints" />
         </EntityType>
+        <Association Name="FK_Complaints_Comment">
+          <End Type="DotWModel.Comments" Role="Comments" Multiplicity="0..1" />
+          <End Type="DotWModel.Complaints" Role="Complaints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Complaints">
+              <PropertyRef Name="IdComment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="Posts">
           <Key>
             <PropertyRef Name="Id" />
@@ -727,7 +739,7 @@
           <Property Name="IsDraft" Type="Boolean" Nullable="false" />
           <Property Name="Summary" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="PrincipalImageName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="DeletedByComplaints" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedByComplaintsOrVotes" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Categories" Relationship="DotWModel.FK_Posts_Category" FromRole="Posts" ToRole="Categories" />
           <NavigationProperty Name="Comments" Relationship="DotWModel.FK_Comments_Post" FromRole="Posts" ToRole="Comments" />
           <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_Post" FromRole="Posts" ToRole="Complaints" />
@@ -751,7 +763,7 @@
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="ShowData" Type="Boolean" Nullable="false" />
-          <Property Name="BlockedPublications" Type="Int32" Nullable="false" />
+          <Property Name="BlockedPosts" Type="Int32" Nullable="false" />
           <Property Name="BlockedComments" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AspNetUsers" Relationship="DotWModel.FK_Users_AspNetUsers" FromRole="Users" ToRole="AspNetUsers" />
           <NavigationProperty Name="Comments" Relationship="DotWModel.FK_Comments_User" FromRole="Users" ToRole="Comments" />
@@ -805,18 +817,6 @@
             </Principal>
             <Dependent Role="Comments">
               <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Complaints_Comment">
-          <End Type="DotWModel.Comments" Role="Comments" Multiplicity="0..1" />
-          <End Type="DotWModel.Complaints" Role="Complaints" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Comments">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Complaints">
-              <PropertyRef Name="IdComment" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -904,7 +904,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1040,7 +1040,7 @@
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="DotWModel.Posts">
               <MappingFragment StoreEntitySet="Posts">
-                <ScalarProperty Name="DeletedByComplaints" ColumnName="DeletedByComplaints" />
+                <ScalarProperty Name="DeletedByComplaintsOrVotes" ColumnName="DeletedByComplaintsOrVotes" />
                 <ScalarProperty Name="PrincipalImageName" ColumnName="PrincipalImageName" />
                 <ScalarProperty Name="Summary" ColumnName="Summary" />
                 <ScalarProperty Name="IsDraft" ColumnName="IsDraft" />
@@ -1058,7 +1058,7 @@
             <EntityTypeMapping TypeName="DotWModel.Users">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="BlockedComments" ColumnName="BlockedComments" />
-                <ScalarProperty Name="BlockedPublications" ColumnName="BlockedPublications" />
+                <ScalarProperty Name="BlockedPosts" ColumnName="BlockedPosts" />
                 <ScalarProperty Name="ShowData" ColumnName="ShowData" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

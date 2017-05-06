@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Contracts.UserContracts.Request;
+using DotW.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Services.UserServices;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
@@ -55,6 +58,13 @@ namespace DotW.Controllers
             {
                 ViewBag.CurrentUser = UserManager.FindById(userId);
                 roles.AddRange(UserManager.GetRoles(userId));
+
+                if (!User.IsInRole(RoleTypes.Admin.ToString()))
+                {
+                    var userService = new UserService();
+
+                    TempData["UserAccountSuspended"] = userService.VerifyIfIsSuspendedAndUpdateUser(new VerifyIfIsSuspendedAndUpdateUserRequest { AspNetUserId = User.Identity.GetUserId() }).UserSuspended;
+                }
             }
 
             ViewBag.RolesOfCurrentUser = roles;

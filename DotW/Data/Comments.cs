@@ -28,9 +28,9 @@ namespace Data
         public Nullable<System.DateTime> NullDate { get; set; }
         public bool DeletedByComplaints { get; set; }
     
-        public virtual Posts Posts { get; set; }
-        public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Complaints> Complaints { get; set; }
+        public virtual Posts Posts { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

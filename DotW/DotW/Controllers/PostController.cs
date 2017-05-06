@@ -67,6 +67,11 @@
         [Authorize(Roles = "User")]
         public ActionResult Create()
         {
+            if ((bool)TempData["UserAccountSuspended"])
+            {
+                return RedirectToAction("Suspended", "Account");
+            }
+
             var categoryService = new CategoryService();
 
             var categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
@@ -85,6 +90,11 @@
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreatePostViewModel model)
         {
+            if ((bool)TempData["UserAccountSuspended"])
+            {
+                return RedirectToAction("Suspended", "Account");
+            }
+
             var userService = new UserService();
             var postService = new PostService();
             var categoryService = new CategoryService();
@@ -167,6 +177,11 @@
         [Authorize(Roles = "User")]
         public ActionResult Edit(int id)
         {
+            if ((bool)TempData["UserAccountSuspended"])
+            {
+                return RedirectToAction("Suspended", "Account");
+            }
+
             var postService = new PostService();
             var categoryService = new CategoryService();
 
@@ -201,6 +216,11 @@
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EditPostViewModel model)
         {
+            if ((bool)TempData["UserAccountSuspended"])
+            {
+                return RedirectToAction("Suspended", "Account");
+            }
+
             var postService = new PostService();
             var categoryService = new CategoryService();
             string finalFileName = string.Empty;
@@ -257,6 +277,11 @@
         [Authorize(Roles = "User")]
         public ActionResult Delete(int id)
         {
+            if ((bool)TempData["UserAccountSuspended"])
+            {
+                return RedirectToAction("Suspended", "Account");
+            }
+
             var postService = new PostService();
 
             var result = postService.GetPostById(new GetPostByIdRequest { Id = id }).Post;
@@ -278,6 +303,11 @@
         [HttpPost]
         public ActionResult Delete(DeletePostViewModel model)
         {
+            if ((bool)TempData["UserAccountSuspended"])
+            {
+                return RedirectToAction("Suspended", "Account");
+            }
+
             var postService = new PostService();
 
             var result = postService.DeletePost(new DeletePostRequest { Id = model.Id, IsComplaintOrVoteDifference = false });

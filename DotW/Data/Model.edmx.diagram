@@ -20,13 +20,13 @@
         <AssociationConnector Association="DotWModel.AspNetUserRoles" />
         <EntityTypeShape EntityType="DotWModel.Votes" Width="1.5" PointX="7.75" PointY="6.375" />
         <EntityTypeShape EntityType="DotWModel.Comments" Width="2.25" PointX="3.25" PointY="13.25" />
-        <EntityTypeShape EntityType="DotWModel.Posts" Width="2.375" PointX="7.75" PointY="9.5" />
-        <EntityTypeShape EntityType="DotWModel.Users" Width="2" PointX="4.25" PointY="7.375" />
+        <AssociationConnector Association="DotWModel.FK_Complaints_Comment" />
+        <EntityTypeShape EntityType="DotWModel.Posts" Width="2.75" PointX="7.875" PointY="9.375" />
+        <EntityTypeShape EntityType="DotWModel.Users" Width="2" PointX="4.625" PointY="7.375" />
         <AssociationConnector Association="DotWModel.FK_Users_AspNetUsers" />
         <AssociationConnector Association="DotWModel.FK_Posts_Category" />
         <AssociationConnector Association="DotWModel.FK_Comments_Post" />
         <AssociationConnector Association="DotWModel.FK_Comments_User" />
-        <AssociationConnector Association="DotWModel.FK_Complaints_Comment" />
         <AssociationConnector Association="DotWModel.FK_Complaints_Post" />
         <AssociationConnector Association="DotWModel.FK_Complaints_User" />
         <AssociationConnector Association="DotWModel.FK_Posts_Users" />

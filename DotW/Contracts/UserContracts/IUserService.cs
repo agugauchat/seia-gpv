@@ -25,5 +25,7 @@
         VerifyAndUpdateUserStateByPostsResponse VerifyAndUpdateUserStateByPosts(VerifyAndUpdateUserStateByPostsRequest request);
 
         VerifyAndUpdateUserStateByCommentsResponse VerifyAndUpdateUserStateByComments(VerifyAndUpdateUserStateByCommentsRequest request);
+
+        VerifyIfIsSuspendedAndUpdateUserResponse VerifyIfIsSuspendedAndUpdateUser(VerifyIfIsSuspendedAndUpdateUserRequest request);
     }
 }

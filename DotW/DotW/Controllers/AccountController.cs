@@ -71,6 +71,21 @@ namespace DotW.Controllers
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
+        [Authorize(Roles = "User")]
+        public ActionResult Suspended()
+        {
+            var userService = new UserService();
+
+            var user = userService.GetUserByAccountId(new GetUserByAccountIdRequest { AccountId = User.Identity.GetUserId() }).User;
+
+            var model = new SuspendedViewModel
+            {
+                ActivationDate = user.ActivationDate.Value
+            };
+
+            return View(model);
+        }
+
         // POST: /Account/VerifyCode
         [HttpPost]
         [AllowAnonymous]

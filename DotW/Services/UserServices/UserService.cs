@@ -184,9 +184,9 @@
                 {
                     // Se verifica si la cantidad de posts bloqueados es mayor a 0 porque la operación
                     // 0 % PostBlockedDivider da como resultado 0 y se podría bloquear un usuario cuando en realidad no corresponde.
-                    if (user.BlockedPublications > 0)
+                    if (user.BlockedPosts > 0)
                     {
-                        decimal divisionMod = user.BlockedPublications % (int)DividersToBlockUser.PostBlockedDivider;
+                        decimal divisionMod = user.BlockedPosts % (int)DividersToBlockUser.PostBlockedDivider;
 
                         if (divisionMod == 0)
                         {
@@ -270,6 +270,45 @@
                 }
 
                 return response;
+            }
+        }
+
+        public VerifyIfIsSuspendedAndUpdateUserResponse VerifyIfIsSuspendedAndUpdateUser(VerifyIfIsSuspendedAndUpdateUserRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                Users user;
+
+                if (request.UserId.HasValue)
+                {
+                    user = db.Users.FirstOrDefault(x => x.Id == request.UserId.Value);
+                }
+                else
+                {
+                    user = db.Users.FirstOrDefault(x => x.AspNetUserId == request.AspNetUserId);
+                }
+
+                if (user.UserStates.State == UserAccountStates.Active.ToString())
+                {
+                    return new VerifyIfIsSuspendedAndUpdateUserResponse { UserSuspended = false };
+                }
+                else
+                {
+                    if (user.ActivationDate.HasValue && user.ActivationDate <= DateTime.Now)
+                    {
+                        user.ActivationDate = null;
+                        user.IdState = (int)UserAccountStates.Active;
+
+                        db.SaveChanges();
+
+                        return new VerifyIfIsSuspendedAndUpdateUserResponse { UserSuspended = false };
+                    }
+                    else
+                    {
+                        return new VerifyIfIsSuspendedAndUpdateUserResponse { UserSuspended = true };
+                    }
+                }
+
             }
         }
     }

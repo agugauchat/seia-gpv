@@ -104,6 +104,7 @@
     <Compile Include="UserContracts\Request\UpdateUserRequest.cs" />
     <Compile Include="UserContracts\Request\VerifyAndUpdateUserStateByCommentsRequest.cs" />
     <Compile Include="UserContracts\Request\VerifyAndUpdateUserStateByPostsRequest.cs" />
+    <Compile Include="UserContracts\Request\VerifyIfIsSuspendedAndUpdateUserRequest.cs" />
     <Compile Include="UserContracts\Response\CreateUserResponse.cs" />
     <Compile Include="UserContracts\Response\DeleteUserResponse.cs" />
     <Compile Include="UserContracts\Response\GetUserByIdResponse.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="UserContracts\Response\UpdateUserResponse.cs" />
     <Compile Include="UserContracts\Response\VerifyAndUpdateUserStateByCommentsResponse.cs" />
     <Compile Include="UserContracts\Response\VerifyAndUpdateUserStateByPostsResponse.cs" />
+    <Compile Include="UserContracts\Response\VerifyIfIsSuspendedAndUpdateUserResponse.cs" />
     <Compile Include="UserContracts\SuspendDays.cs" />
     <Compile Include="UserContracts\UserAccountStates.cs" />
     <Compile Include="VoteContracts\IVoteService.cs" />

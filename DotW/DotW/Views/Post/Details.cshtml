@@ -34,7 +34,8 @@
 @*<hr />*@
 <br />
 
-@if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
+@if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
+     && !(bool)TempData["UserAccountSuspended"])
 {
     <div class="form-group">
         <input id="postId" type="hidden" value="@Model.Id" />
@@ -50,7 +51,8 @@
 <br />
 <!-- Blog Comments -->
 <!-- Comments Form -->
-@if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
+@if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
+     && !(bool)TempData["UserAccountSuspended"])
 {
     <hr />
     <div class="well">
@@ -79,7 +81,8 @@
                     @commentary.WriterUserName
                     <small>@commentary.EffectDate.ToString("dd/MM/yyyy")</small>
 
-                    @if ((User.Identity.IsAuthenticated) && (User.Identity.Name == commentary.WriterUserName))
+                    @if ((User.Identity.IsAuthenticated) && (User.Identity.Name == commentary.WriterUserName)
+                         && !(bool)TempData["UserAccountSuspended"])
                     {
                         <span>&nbsp;</span>
                         <small><a class="deleteCommentary text-danger" href="#" id="@commentary.Id">Eliminar comentario</a></small>
@@ -87,7 +90,8 @@
                     else
                     {
                         if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdComment == commentary.Id)
-                             && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
+                             && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
+                             && !(bool)TempData["UserAccountSuspended"])
                         {
                             anyCommentaryComplaintPosibility = true;
                             <span>&nbsp;</span>
@@ -113,7 +117,8 @@
 @*Verifica que el usuario esté logueado, que no sea el escritor de la publicación y que no haya denunciado anteriormente esta misma publicación.*@
 @if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdPost == Model.Id)
      && (User.Identity.Name != Model.WriterUserName)
-     && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
+     && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
+     && !(bool)TempData["UserAccountSuspended"])
 {
     <div class="col-md-offset-8 col-md-2">
         <a id="denunciatePost" href="#" class="btn btn-danger">Denunciar Publicación</a>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DotW.Models
@@ -116,5 +117,10 @@ namespace DotW.Models
         [EmailAddress(ErrorMessage = "Ingrese una dirección de correo válida.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+
+    public class SuspendedViewModel
+    {
+        public DateTime ActivationDate { get; set; }
     }
 }

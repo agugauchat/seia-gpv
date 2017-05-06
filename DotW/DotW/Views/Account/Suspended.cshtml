@@ -1,0 +1,17 @@
+﻿@model DotW.Models.SuspendedViewModel
+@{
+    ViewBag.Title = "Cuenta suspendida";
+}
+
+<h2>Cuenta deshabilitada temporalmente.</h2>
+
+<p>Estimado usuario, lamentamos informarle que su cuenta se encuentra deshabilitada temporalmente y, por tal motivo, se han restringido algunas acciones dentro de la comunidad.</p>
+<p>Hemos enviado un correo eléctronico en el momento en que se produjo la suspensión.</p>
+<p>A continuación le presentamos datos asociados a su cuenta</p>
+<ul>
+    <li><b>Estado:&nbsp;</b>Suspendida.</li>
+    <li><b>Fecha Fin de Suspensión:&nbsp;</b>@Model.ActivationDate.ToString("dd/MM/yyyy")</li>
+    <li><b>Hora Fin de Suspensión:&nbsp;</b>@Model.ActivationDate.ToString("HH:mm")</li>
+</ul>
+
+

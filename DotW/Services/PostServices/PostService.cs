@@ -27,7 +27,7 @@
                     IdCategory = request.CategoryId,
                     IsDraft = request.IsDraft,
                     PrincipalImageName = request.PrincipalImageName,
-                    DeletedByComplaints = false,
+                    DeletedByComplaintsOrVotes = false,
                 };
 
                 db.Posts.Add(post);
@@ -263,11 +263,11 @@
 
                     if (request.IsComplaintOrVoteDifference)
                     {
-                        post.DeletedByComplaints = true;
+                        post.DeletedByComplaintsOrVotes = true;
 
                         var user = db.Users.FirstOrDefault(x => x.Id == post.IdWriter);
 
-                        user.BlockedPublications += 1;
+                        user.BlockedPosts += 1;
                     }
 
                     db.SaveChanges();
