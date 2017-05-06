@@ -21,5 +21,9 @@
         UpdateUserResponse UpdateUser(UpdateUserRequest request);
 
         DeleteUserResponse DeleteUser(DeleteUserRequest request);
+
+        VerifyAndUpdateUserStateByPostsResponse VerifyAndUpdateUserStateByPosts(VerifyAndUpdateUserStateByPostsRequest request);
+
+        VerifyAndUpdateUserStateByCommentsResponse VerifyAndUpdateUserStateByComments(VerifyAndUpdateUserStateByCommentsRequest request);
     }
 }

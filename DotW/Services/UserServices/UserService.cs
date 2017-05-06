@@ -162,5 +162,103 @@
                 return new DeleteUserResponse();
             }
         }
+
+        public VerifyAndUpdateUserStateByPostsResponse VerifyAndUpdateUserStateByPosts(VerifyAndUpdateUserStateByPostsRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                Users user;
+
+                if (request.UserId.HasValue)
+                {
+                    user = db.Users.FirstOrDefault(x => x.Id == request.UserId.Value);
+                }
+                else
+                {
+                    user = db.Users.FirstOrDefault(x => x.AspNetUserId == request.AspNetUserId);
+                }
+
+                var response = new VerifyAndUpdateUserStateByPostsResponse();
+
+                if (user != null)
+                {
+                    decimal divisionMod = user.BlockedPublications % (int)DividersToBlockUser.PostBlockedDivider;
+
+                    if (divisionMod == 0)
+                    {
+                        // Se debe suspender al usuario.
+                        user.IdState = db.UserStates.Where(x => x.State == UserAccountStates.Suspended.ToString()).Select(x => x.Id).FirstOrDefault();
+
+                        DateTime previousActivationDate;
+
+                        if (user.ActivationDate.HasValue)
+                        {
+                            previousActivationDate = user.ActivationDate.Value;
+                        }
+                        else
+                        {
+                            previousActivationDate = DateTime.Now;
+                        }
+
+                        user.ActivationDate = previousActivationDate.AddDays((int)SuspendDays.SuspendedByPosts);
+
+                        db.SaveChanges();
+
+                        response.UserSuspended = true;
+                    }
+                }
+
+                return response;
+            }
+        }
+
+        public VerifyAndUpdateUserStateByCommentsResponse VerifyAndUpdateUserStateByComments(VerifyAndUpdateUserStateByCommentsRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                Users user;
+
+                if (request.UserId.HasValue)
+                {
+                    user = db.Users.FirstOrDefault(x => x.Id == request.UserId.Value);
+                }
+                else
+                {
+                    user = db.Users.FirstOrDefault(x => x.AspNetUserId == request.AspNetUserId);
+                }
+
+                var response = new VerifyAndUpdateUserStateByCommentsResponse();
+
+                if (user != null)
+                {
+                    decimal divisionMod = user.BlockedComments % (int)DividersToBlockUser.CommentaryBlockedDivider;
+
+                    if (divisionMod == 0)
+                    {
+                        // Se debe suspender al usuario.
+                        user.IdState = db.UserStates.Where(x => x.State == UserAccountStates.Suspended.ToString()).Select(x => x.Id).FirstOrDefault();
+
+                        DateTime previousActivationDate;
+
+                        if (user.ActivationDate.HasValue)
+                        {
+                            previousActivationDate = user.ActivationDate.Value;
+                        }
+                        else
+                        {
+                            previousActivationDate = DateTime.Now;
+                        }
+
+                        user.ActivationDate = previousActivationDate.AddDays((int)SuspendDays.SuspendedByComments);
+
+                        db.SaveChanges();
+
+                        response.UserSuspended = true;
+                    }
+                }
+
+                return response;
+            }
+        }
     }
 }

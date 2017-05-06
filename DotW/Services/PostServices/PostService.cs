@@ -264,6 +264,10 @@
                     if (request.IsComplaintOrVoteDifference)
                     {
                         post.DeletedByComplaints = true;
+
+                        var user = db.Users.FirstOrDefault(x => x.Id == post.IdWriter);
+
+                        user.BlockedPublications += 1;
                     }
 
                     db.SaveChanges();

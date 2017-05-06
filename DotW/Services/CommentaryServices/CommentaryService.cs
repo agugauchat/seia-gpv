@@ -105,6 +105,10 @@
                     if (request.IsComplaintOrVoteDifference)
                     {
                         commentary.DeletedByComplaints = true;
+
+                        var user = db.Users.FirstOrDefault(x => x.Id == commentary.IdUser);
+
+                        user.BlockedComments += 1;
                     }
 
                     db.SaveChanges();

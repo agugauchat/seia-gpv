@@ -45,6 +45,9 @@
 
                     // Se notifica la baja del post via correo electrónico al escritor.
                     SendPostDeletedByVotesEmailToWriter(post, voteResult);
+
+                    // Se verifica y de ser necesario, se suspende temporalmente la cuenta del usuario.
+                    var verifyResult = userService.VerifyAndUpdateUserStateByPosts(new VerifyAndUpdateUserStateByPostsRequest { UserId = user.Id });
                 }
 
                 return Json(new { success = true, goodVotes = voteResult.PostGoodVotes, badVotes = voteResult.PostBadVotes }, JsonRequestBehavior.AllowGet);

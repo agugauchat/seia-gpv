@@ -62,6 +62,9 @@
 
                         // Se notifica la baja del post via correo electrónico al escritor.
                         SendPostDeletedEmailToWriter(post, complaints);
+
+                        // Se verifica y de ser necesario, se suspende temporalmente la cuenta del usuario.
+                        var verifyResult = userService.VerifyAndUpdateUserStateByPosts(new VerifyAndUpdateUserStateByPostsRequest { UserId = user.Id });
                     }
 
                     return Json(new { success = true, Message = "Su denuncia ha sido registrada. Gracias por contribuir con nuestra comunidad :)" }, JsonRequestBehavior.AllowGet);
@@ -116,6 +119,9 @@
 
                         // Se notifica la baja del comentario via correo electrónico al escritor.
                         SendCommentaryDeletedEmailToWriter(commentary, complaints);
+
+                        // Se verifica y de ser necesario, se suspende temporalmente la cuenta del usuario.
+                        var verifyResult = userService.VerifyAndUpdateUserStateByComments(new VerifyAndUpdateUserStateByCommentsRequest { UserId = user.Id });
                     }
 
                     return Json(new { success = true, Message = "Su denuncia ha sido registrada. Gracias por contribuir con nuestra comunidad :)" }, JsonRequestBehavior.AllowGet);
