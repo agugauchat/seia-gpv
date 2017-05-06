@@ -23,7 +23,8 @@
                     AspNetUserId = request.User.AspNetUserId,
                     EffectDate = DateTime.Now,
                     IdState = (int)UserAccountStates.Active,
-                    ActivationDate = (DateTime?)null
+                    ActivationDate = (DateTime?)null,
+                    Email = request.User.Email
                 };
 
                 db.Users.Add(user);
@@ -125,6 +126,7 @@
                     if (user != null)
                     {
                         user.Name = request.Name;
+                        user.Email = request.Email;
 
                         db.SaveChanges();
                     }
@@ -136,6 +138,7 @@
                     if (user != null)
                     {
                         user.Name = request.Name;
+                        user.Email = request.Email;
 
                         db.SaveChanges();
                     }

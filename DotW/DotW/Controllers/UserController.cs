@@ -52,6 +52,7 @@
                         {
                             Name = user.UserName,
                             AspNetUserId = user.Id,
+                            Email = user.Email
                         }
                     };
 
@@ -132,7 +133,8 @@
                 var request = new UpdateUserRequest
                 {
                     AspNetUserId = user.Id,
-                    Name = user.UserName
+                    Name = user.UserName,
+                    Email = user.Email
                 };
 
                 var response = userService.UpdateUser(request);
