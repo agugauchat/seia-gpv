@@ -280,9 +280,47 @@
         {
             var postService = new PostService();
 
-            var result = postService.DeletePost(new DeletePostRequest { Id = model.Id });
+            var result = postService.DeletePost(new DeletePostRequest { Id = model.Id, IsComplaintOrVoteDifference = false });
 
             return RedirectToAction("Index", "Post");
+        }
+
+        public ActionResult Details(int id)
+        {
+            var commentaryService = new CommentaryService();
+            var postService = new PostService();
+            var userService = new UserService();
+            var votesService = new VoteService();
+
+            var post = postService.GetPostById(new GetPostByIdRequest() { Id = id }).Post;
+
+            // Se obtienen los comentarios del post.
+            ViewBag.Comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments.Where(x => !x.NullDate.HasValue).ToList();
+
+            List<Complaint> userComplaints = new List<Complaint>();
+
+            if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+            {
+                var complaintService = new ComplaintService();
+
+                // Se obtienen las denuncias/quejas realizadas por el usuario.
+                userComplaints = complaintService.SearchComplaintsByUserId(new SearchComplaintsByUserIdRequest { AspNetUserId = User.Identity.GetUserId() }).Complaints;
+
+                var user = userService.GetUserByAccountId(new GetUserByAccountIdRequest { AccountId = User.Identity.GetUserId() }).User;
+
+                // Se obtienen los votos del post y del usuario
+                var postVotes = votesService.GetVotesCountByPostId(new GetVotesCountByPostIdRequest { PostId = post.Id });
+                var userVotes = votesService.GetVoteByUserAndPostId(new GetVoteByUserAndPostIdRequest { PostId = post.Id, UserId = user.Id });
+
+                ViewBag.GoodVotes = postVotes.GoodVotes;
+                ViewBag.BadVotes = postVotes.BadVotes;
+                ViewBag.UserGoodVote = userVotes.Good ? "true" : "false";
+                ViewBag.UserBadVote = userVotes.Bad ? "true" : "false";
+            }
+
+            ViewBag.UserComplaints = userComplaints;
+
+            return View(post);
         }
 
         [Authorize(Roles = "User")]
@@ -342,40 +380,6 @@
             }
 
             return Json(null, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult Details(int id)
-        {
-            var commentaryService = new CommentaryService();
-            var postService = new PostService();
-            var userService = new UserService();
-            var votesService = new VoteService();
-
-            var post = postService.GetPostById(new GetPostByIdRequest() { Id = id }).Post;
-            ViewBag.Comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments.Where(x => !x.NullDate.HasValue).ToList();
-
-            List<Complaint> userComplaints = new List<Complaint>();
-
-            if (User.Identity.IsAuthenticated)
-            {
-                var complaintService = new ComplaintService();
-
-                userComplaints = complaintService.SearchComplaintsByUserId(new SearchComplaintsByUserIdRequest { AspNetUserId = User.Identity.GetUserId() }).Complaints;
-
-                var user = userService.GetUserByAccountId(new GetUserByAccountIdRequest { AccountId = User.Identity.GetUserId() }).User;
-
-                var postVotes = votesService.GetVotesCountByPostId(new GetVotesCountByPostIdRequest { PostId = post.Id });
-                var userVotes = votesService.GetVoteByUserAndPostId(new GetVoteByUserAndPostIdRequest { PostId = post.Id, UserId = user.Id });
-
-                ViewBag.GoodVotes = postVotes.GoodVotes;
-                ViewBag.BadVotes = postVotes.BadVotes;
-                ViewBag.UserGoodVote = userVotes.Good ? "true" : "false";
-                ViewBag.UserBadVote = userVotes.Bad ? "true" : "false";
-            }
-
-            ViewBag.UserComplaints = userComplaints;
-
-            return View(post);
         }
     }
 }

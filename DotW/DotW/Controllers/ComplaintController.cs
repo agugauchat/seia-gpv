@@ -1,6 +1,7 @@
 ﻿namespace DotW.Controllers
 {
     using Contracts.CommentaryContracts.Request;
+    using Contracts.ComplaintContracts;
     using Contracts.ComplaintContracts.Request;
     using Contracts.PostContracts.Request;
     using Contracts.UserContracts.Request;
@@ -52,13 +53,14 @@
 
                     var complaintResult = complaintService.CreatePostComplaint(new CreatePostComplaintRequest { PostId = model.PostId, UserId = user.Id, Commentary = model.Commentary });
 
-                    if (complaintResult.PostComplaintsCount >= 3)
+                    if (complaintResult.PostComplaintsCount >= (int)AllowedComplaints.MaxPostAndCommentaryComplaints)
                     {
                         // Se da de baja la publicación por haber alcanzado/superado las 3 denuncias.
-                        var deletePostResult = postService.DeletePost(new DeletePostRequest { Id = complaintResult.PostId });
+                        var deletePostResult = postService.DeletePost(new DeletePostRequest { Id = complaintResult.PostId, IsComplaintOrVoteDifference = true });
 
                         var complaints = complaintService.SearchComplaintsByPostId(new SearchComplaintsByPostIdRequest { PostId = post.Id }).Complaints;
 
+                        // Se notifica la baja del post via correo electrónico al escritor.
                         SendPostDeletedEmailToWriter(post, complaints);
                     }
 
@@ -105,13 +107,14 @@
 
                     var complaintResult = complaintService.CreateCommentaryComplaint(new CreateCommentaryComplaintRequest { CommentaryId = model.CommentaryId, UserId = user.Id, Commentary = model.Commentary });
 
-                    if (complaintResult.CommentaryComplaintsCount >= 3)
+                    if (complaintResult.CommentaryComplaintsCount >= (int)AllowedComplaints.MaxPostAndCommentaryComplaints)
                     {                       
                         // Se da de baja el comentario por haber alcanzado/superado las 3 denuncias.
-                        var deletePostResult = commentaryService.DeleteCommentary(new DeleteCommentaryRequest { Id = complaintResult.CommentaryId });
+                        var deletePostResult = commentaryService.DeleteCommentary(new DeleteCommentaryRequest { Id = complaintResult.CommentaryId, IsComplaintOrVoteDifference = true });
 
                         var complaints = complaintService.SearchComplaintsByCommentaryId(new SearchComplaintsByCommentaryIdRequest { CommentaryId = commentary.Id }).Complaints;
 
+                        // Se notifica la baja del comentario via correo electrónico al escritor.
                         SendCommentaryDeletedEmailToWriter(commentary, complaints);
                     }
 

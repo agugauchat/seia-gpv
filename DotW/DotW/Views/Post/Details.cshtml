@@ -110,10 +110,10 @@
     </p>
 </div>
 
-@*Verifica que el usuario esté logueado y que no haya denunciado anteriormente esta misma publicación.*@
-@*TODO > Verificar que no sea el escritor de la publicación.*@
+@*Verifica que el usuario esté logueado, que no sea el escritor de la publicación y que no haya denunciado anteriormente esta misma publicación.*@
 @if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdPost == Model.Id)
-                                         && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
+     && (User.Identity.Name != Model.WriterUserName)
+     && currentRoles.Contains("User") && !currentRoles.Contains("Admin"))
 {
     <div class="col-md-offset-8 col-md-2">
         <a id="denunciatePost" href="#" class="btn btn-danger">Denunciar Publicación</a>

@@ -614,6 +614,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\EmailTemplate\CommentaryDeleted.html" />
     <Content Include="Views\EmailTemplate\PostDeleted.html" />
+    <Content Include="Views\EmailTemplate\PostDeletedByVotes.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

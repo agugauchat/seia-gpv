@@ -64,6 +64,7 @@
     <Compile Include="CategoryContracts\Response\SearchCategoriesByIdUpperCategoryResponse.cs" />
     <Compile Include="CategoryContracts\Response\SearchCategoriesResponse.cs" />
     <Compile Include="CategoryContracts\Response\UpdateCategoryResponse.cs" />
+    <Compile Include="ComplaintContracts\AllowedComplaints.cs" />
     <Compile Include="ComplaintContracts\IComplaintService.cs" />
     <Compile Include="ComplaintContracts\Request\CreateCommentaryComplaintRequest.cs" />
     <Compile Include="ComplaintContracts\Request\CreatePostComplaintRequest.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="VoteContracts\Response\GetVoteByUserAndPostIdResponse.cs" />
     <Compile Include="VoteContracts\Response\GetVotesCountByPostIdResponse.cs" />
     <Compile Include="VoteContracts\Response\SaveVoteResponse.cs" />
+    <Compile Include="VoteContracts\VotesDifferenceToDelete.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj">

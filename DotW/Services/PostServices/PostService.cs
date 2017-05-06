@@ -26,7 +26,8 @@
                     EffectDate = DateTime.Now,
                     IdCategory = request.CategoryId,
                     IsDraft = request.IsDraft,
-                    PrincipalImageName = request.PrincipalImageName
+                    PrincipalImageName = request.PrincipalImageName,
+                    DeletedByComplaints = false,
                 };
 
                 db.Posts.Add(post);
@@ -259,6 +260,11 @@
                 if (post != null)
                 {
                     post.NullDate = DateTime.Now;
+
+                    if (request.IsComplaintOrVoteDifference)
+                    {
+                        post.DeletedByComplaints = true;
+                    }
 
                     db.SaveChanges();
                 }

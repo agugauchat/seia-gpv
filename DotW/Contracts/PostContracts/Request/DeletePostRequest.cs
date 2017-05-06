@@ -9,5 +9,7 @@
     public class DeletePostRequest
     {
         public int Id { get; set; }
+
+        public bool IsComplaintOrVoteDifference { get; set; }
     }
 }

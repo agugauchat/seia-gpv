@@ -22,7 +22,8 @@
                     Commentary = request.CommentaryText,
                     EffectDate = DateTime.Now,
                     IdPost = request.IdPost,
-                    IdUser = request.IdUser
+                    IdUser = request.IdUser,
+                    DeletedByComplaints = false
                 };
 
                 db.Comments.Add(commentary);
@@ -100,6 +101,11 @@
                 if (commentary != null)
                 {
                     commentary.NullDate = DateTime.Now;
+
+                    if (request.IsComplaintOrVoteDifference)
+                    {
+                        commentary.DeletedByComplaints = true;
+                    }
 
                     db.SaveChanges();
                 }
