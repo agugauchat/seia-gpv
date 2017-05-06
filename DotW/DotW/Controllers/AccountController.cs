@@ -179,6 +179,7 @@ namespace DotW.Controllers
                         {
                             Name = user.UserName,
                             AspNetUserId = user.Id,
+                            Email = user.Email
                         }
                     };
 
