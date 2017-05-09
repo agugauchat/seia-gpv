@@ -53,7 +53,11 @@
                         EffectDate = result.EffectDate,
                         IdState = result.IdState,
                         ActivationDate = result.ActivationDate,
-                        Email = result.AspNetUsers.Email
+                        Email = result.AspNetUsers.Email,
+                        Phone = result.Phone,
+                        Description = result.Description,
+                        FullName = result.FullName,
+                        ShowData = result.ShowData
                     };
                 }
 
@@ -81,7 +85,11 @@
                         EffectDate = result.EffectDate,
                         IdState = result.IdState,
                         ActivationDate = result.ActivationDate,
-                        Email = result.AspNetUsers.Email
+                        Email = result.AspNetUsers.Email,
+                        Phone = result.Phone,
+                        Description = result.Description,
+                        FullName = result.FullName,
+                        ShowData = result.ShowData
                     };
                 }
 
@@ -107,7 +115,11 @@
                         EffectDate = result.EffectDate,
                         IdState = result.IdState,
                         ActivationDate = result.ActivationDate,
-                        Email = result.AspNetUsers.Email
+                        Email = result.AspNetUsers.Email,
+                        Phone = result.Phone,
+                        Description = result.Description,
+                        FullName = result.FullName,
+                        ShowData = result.ShowData
                     };
                 }
 
@@ -312,6 +324,26 @@
                     }
                 }
 
+            }
+        }
+
+        public UpdateProfileResponse UpdateProfile(UpdateProfileRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                var user = db.Users.FirstOrDefault(x => x.Id == request.Id);
+
+                if (user != null)
+                {
+                    user.FullName = request.FullName;
+                    user.Phone = request.Phone;
+                    user.Description = request.Description;
+                    user.ShowData = request.ShowData;
+
+                    db.SaveChanges();
+                }
+
+                return new UpdateProfileResponse();
             }
         }
     }

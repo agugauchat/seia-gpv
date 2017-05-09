@@ -48,4 +48,23 @@
 
         public string Token { get; set; }
     }
+
+    public class EditProfileViewModel
+    {
+        [StringLength(25, ErrorMessage = "El campo Teléfono excede el límite de caracteres permitidos.")]
+        [Phone(ErrorMessage = "Ingrese un número de teléfono válido.")]
+        [Display(Name = "Teléfono")]
+        public string Phone { get; set; }
+
+        [StringLength(500, ErrorMessage = "La descripción excede el límite de caracteres permitidos.")]
+        [Display(Name = "Descripción personal")]
+        public string Description { get; set; }
+
+        [StringLength(50, ErrorMessage = "El campo Nombre excede el límite de caracteres permitidos.")]
+        [Display(Name = "Nombre completo")]
+        public string FullName { get; set; }
+
+        [Display(Name = "¿Mostrar sus datos personales?")]
+        public bool ShowData { get; set; }
+    }
 }

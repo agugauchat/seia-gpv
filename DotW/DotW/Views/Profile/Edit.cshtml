@@ -1,0 +1,46 @@
+﻿@model DotW.Models.EditProfileViewModel
+@{
+    ViewBag.Title = "Editar Información Personal";
+}
+
+
+<h2>Editar Información Personal</h2>
+
+@using (Html.BeginForm("Edit", "Profile", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.FullName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Phone, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Description, new { @maxlength = "500", @id = "categoryEditor", @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group col-md-offset-1">
+        @*@Html.LabelFor(model => model.ShowData, new { @class = "col-md-2 control-label" })
+        <div class="col-md-1">
+            @Html.CheckBoxFor(model => model.ShowData, new { @class = "form-control" })
+        </div>*@
+        <p>@Html.LabelFor(model => model.ShowData) 
+        @Html.CheckBoxFor(model => model.ShowData)</p>
+        <small><strong>Aclaración:</strong> al tildar la opción '¿Mostrar sus datos personales?' usted está accediendo a que su información personal, como email, teléfono, etc. sea visible para el resto de los usuarios del sitio.</small>
+    </div>
+    <br>
+    <p>
+        @Html.ActionLink("Cancelar", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
+        <input type="submit" class="btn btn-success" value="Guardar" />
+    </p>
+}

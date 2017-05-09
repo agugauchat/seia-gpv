@@ -101,6 +101,7 @@
     <Compile Include="UserContracts\Request\GetUserByIdRequest.cs" />
     <Compile Include="UserContracts\Request\GetUserByUsernameRequest.cs" />
     <Compile Include="UserContracts\Request\GetUserByAccountIdRequest.cs" />
+    <Compile Include="UserContracts\Request\UpdateProfileRequest.cs" />
     <Compile Include="UserContracts\Request\UpdateUserRequest.cs" />
     <Compile Include="UserContracts\Request\VerifyAndUpdateUserStateByCommentsRequest.cs" />
     <Compile Include="UserContracts\Request\VerifyAndUpdateUserStateByPostsRequest.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="UserContracts\Response\GetUserByIdResponse.cs" />
     <Compile Include="UserContracts\Response\GetUserByUsernameResponse.cs" />
     <Compile Include="UserContracts\Response\GetUserByAccountIdResponse.cs" />
+    <Compile Include="UserContracts\Response\UpdateProfileResponse.cs" />
     <Compile Include="UserContracts\Response\UpdateUserResponse.cs" />
     <Compile Include="UserContracts\Response\VerifyAndUpdateUserStateByCommentsResponse.cs" />
     <Compile Include="UserContracts\Response\VerifyAndUpdateUserStateByPostsResponse.cs" />

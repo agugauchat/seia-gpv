@@ -20,6 +20,8 @@
 
         UpdateUserResponse UpdateUser(UpdateUserRequest request);
 
+        UpdateProfileResponse UpdateProfile(UpdateProfileRequest request);
+
         DeleteUserResponse DeleteUser(DeleteUserRequest request);
 
         VerifyAndUpdateUserStateByPostsResponse VerifyAndUpdateUserStateByPosts(VerifyAndUpdateUserStateByPostsRequest request);

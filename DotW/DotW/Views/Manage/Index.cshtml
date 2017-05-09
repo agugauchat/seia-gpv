@@ -8,8 +8,27 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
     <h4>Modifica los ajustes de tu cuenta</h4>
+
     <hr />
-    <dl class="dl-horizontal">
+    <div class="row">
+    @Html.ActionLink("Editar información personal", "Edit", "Profile", null, new { @class = "btn btn-primary btn-large" })
+    </div>
+
+    <br>
+
+    <div class="row">
+        @if (Model.HasPassword)
+                {
+            @Html.ActionLink("Modificar contraseña", "ChangePassword", "Manage", null, new { @class = "btn btn-primary btn-large" })
+        }
+        else
+        {
+            @Html.ActionLink("Establecer contraseña", "SetPassword", "Manage", null, new { @class = "btn btn-primary btn-large" })
+        }
+    </div>
+</div>
+
+    @*<dl class="dl-horizontal">
         <dt>Contraseña:</dt>
         <dd>
             @if (Model.HasPassword)
@@ -79,7 +98,6 @@
                         <input type="submit" value="Enable" class="btn btn-link" />
                         </text>
                     }
-                }*@
+                }
         </dd>
-    </dl>
-</div>
+    </dl>*@
