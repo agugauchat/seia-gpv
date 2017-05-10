@@ -356,6 +356,7 @@
                 if (user != null)
                 {
                     user.ActivationDate = null;
+                    user.IdState = (int)UserAccountStates.Active;
 
                     db.SaveChanges();
                 }

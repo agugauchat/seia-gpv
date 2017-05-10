@@ -14,9 +14,9 @@
     using System.Web;
     using System.Web.Mvc;
 
-    [Authorize(Roles = "User")]
     public class ProfileController : BaseController
     {
+        [Authorize]
         public ActionResult Details(int id)
         {
             var userService = new UserService();
@@ -35,6 +35,7 @@
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize(Roles = "User")]
         public ActionResult Edit()
         {
             var userService = new UserService();
@@ -58,6 +59,7 @@
             }
         }
 
+        [Authorize(Roles = "User")]
         [HttpPost]
         public ActionResult Edit(EditProfileViewModel model)
         {
