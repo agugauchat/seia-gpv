@@ -1,9 +1,11 @@
 ﻿namespace DotW.Controllers
 {
+    using Contracts.PostContracts.Request;
     using Contracts.UserContracts.Request;
     using Entities.UserEntities;
     using Microsoft.AspNet.Identity;
     using Models;
+    using Services.PostServices;
     using Services.UserServices;
     using System;
     using System.Collections.Generic;
@@ -15,6 +17,24 @@
     [Authorize(Roles = "User")]
     public class ProfileController : BaseController
     {
+        public ActionResult Details(int id)
+        {
+            var userService = new UserService();
+            var postService = new PostService();
+            var user = userService.GetUserById(new GetUserByIdRequest() { UserId = id }).User;
+
+            if (user != null)
+            {
+                var posts = postService.SearchPostsByUserId(new SearchPostsByUserIdRequest() { UserId = id }).Posts;
+
+                ViewBag.Posts = posts;
+
+                return View(user);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
         public ActionResult Edit()
         {
             var userService = new UserService();

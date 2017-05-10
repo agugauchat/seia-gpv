@@ -17,9 +17,34 @@
     {
         public ActionResult Index()
         {
+            var userService = new UserService();
             var model = UserManager.Users.ToList().OrderBy(x => x.UserName);
+            var blockedUsers = new List<string>();
 
+            foreach (var user in model)
+            {
+                var userModel = userService.GetUserByAccountId(new GetUserByAccountIdRequest() { AccountId = user.Id }).User;
+                if ((userModel != null) && (userModel.ActivationDate != null))
+                {
+                    blockedUsers.Add(user.Id);
+                }
+            }
+
+            ViewBag.BlockedUsers = blockedUsers;
             return View(model);
+        }
+
+        public ActionResult Activate(string token)
+        {
+            var userService = new UserService();
+            var user = userService.GetUserByAccountId(new GetUserByAccountIdRequest() { AccountId = token }).User;
+
+            if ((user != null) && (user.ActivationDate != null))
+            {
+                userService.ActivateUser(new ActivateUserRequest() { Id = user.Id });
+            }
+
+            return RedirectToAction("Index", "User");
         }
 
         public ActionResult Create()

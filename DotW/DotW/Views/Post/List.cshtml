@@ -24,7 +24,7 @@
                 foreach (var post in Model.Posts)
                 {
                     <h4><a href="@Url.Action("Details", "Post", new { id = post.Id })">@post.Title</a></h4>
-                    <p><span class="glyphicon glyphicon-time"></span> Publicado el @post.EffectDate.ToString("dd/MM/yyyy") por <a href="#">@post.WriterUserName</a></p>
+                    <p><span class="glyphicon glyphicon-time"></span> Publicado el @post.EffectDate.ToString("dd/MM/yyyy") por <a href="@Url.Action("Details", "Profile", new { id = post.IdWriter })">@post.WriterUserName</a></p>
                     <!-- Preview Image -->
                     if (!string.IsNullOrEmpty(post.PrincipalImageName))
                     {

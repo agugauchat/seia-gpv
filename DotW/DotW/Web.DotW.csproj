@@ -674,6 +674,7 @@
     <Content Include="Views\Post\_CommentaryComplaint.cshtml" />
     <Content Include="Views\Account\Suspended.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\Profile\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

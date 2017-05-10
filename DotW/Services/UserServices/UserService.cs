@@ -346,5 +346,22 @@
                 return new UpdateProfileResponse();
             }
         }
+
+        public ActivateUserResponse ActivateUser(ActivateUserRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                var user = db.Users.FirstOrDefault(x => x.Id == request.Id);
+
+                if (user != null)
+                {
+                    user.ActivationDate = null;
+
+                    db.SaveChanges();
+                }
+
+                return new ActivateUserResponse();
+            }
+        }
     }
 }

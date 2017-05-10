@@ -1,0 +1,78 @@
+﻿@using System.Configuration;
+
+@model Entities.UserEntities.User
+
+@{
+    ViewBag.Title = "Detalle del Usuario";
+    var posts = ViewBag.Posts as List<Entities.PostEntities.Post>;
+}
+
+<h2>Usuario: @Model.Name</h2>
+
+<br>
+
+@if (Model.ShowData)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>Datos Personales</strong></div>
+        <div class="panel-body">
+            @if (Model.FullName != null)
+            {
+                <p>
+                    <strong>@Html.DisplayNameFor(model => model.FullName) : </strong>
+                    @Model.FullName
+                </p>
+            }
+            @if (Model.Phone != null)
+            {
+                <p>
+                    <strong>@Html.DisplayNameFor(model => model.Phone) : </strong>
+                    @Model.Phone
+                </p>
+            }
+            @if (Model.Description != null)
+            {
+                <p>
+                    <strong>@Html.DisplayNameFor(model => model.Description) : </strong>
+                    @Model.Description
+                </p>
+            }
+        </div>
+    </div>
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading"><strong>Publicaciones asociadas</strong></div>
+    <div class="panel-body">
+        @if (posts.Any())
+        {
+            foreach (var post in posts)
+            {
+                <h4><a href="@Url.Action("Details", "Post", new { id = post.Id })">@post.Title</a></h4>
+                <p><span class="glyphicon glyphicon-time"></span> Publicado el @post.EffectDate.ToString("dd/MM/yyyy")</p>
+                if (!string.IsNullOrEmpty(post.PrincipalImageName))
+                {
+                    <a href="@Url.Action("Details", "Post", new { id = post.Id })"><img class="img-responsive" src="@Url.Content((ConfigurationManager.AppSettings["PathPostPrincipalImages"]) + post.PrincipalImageName)" alt=""></a>
+                }
+                <br />
+                <p class="post-summary">@post.Summary</p>
+                foreach (var tag in post.Tags)
+                {
+                    <a href="@Url.Action("List", "Post", new { tag = tag })" class="tag-link"><span class="tag label label-info">@tag</span></a>
+                }
+                <hr />
+            }
+        }
+        else
+        {
+            <h3>No existen publicaciones asociadas a este usuario.</h3>
+        }
+    </div>
+</div>
+
+
+<div class="col-md-2">
+    <p>
+        @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
+    </p>
+</div>

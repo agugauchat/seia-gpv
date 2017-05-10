@@ -29,5 +29,7 @@
         VerifyAndUpdateUserStateByCommentsResponse VerifyAndUpdateUserStateByComments(VerifyAndUpdateUserStateByCommentsRequest request);
 
         VerifyIfIsSuspendedAndUpdateUserResponse VerifyIfIsSuspendedAndUpdateUser(VerifyIfIsSuspendedAndUpdateUserRequest request);
+
+        ActivateUserResponse ActivateUser(ActivateUserRequest request);
     }
 }

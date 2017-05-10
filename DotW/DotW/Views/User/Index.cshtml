@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Administrar Usuarios";
+    var blockedUsers = ViewBag.BlockedUsers as List<string>;
 }
 
 <h2>Administración de Usuarios</h2>
@@ -39,6 +40,10 @@
                     @if (user.UserName != "admin")
                     {
                         @Html.ActionLink("Eliminar", "Delete", "User", new { token = user.Id }, new { id = user.Id, @class = "btn btn-danger" })
+                    }
+                    @if (blockedUsers.Contains(user.Id))
+                    {
+                        @Html.ActionLink("Desbloquear", "Activate", "User", new { token = user.Id }, new { id = user.Id, @class = "btn btn-success" })
                     }
                 </td>
             </tr>
