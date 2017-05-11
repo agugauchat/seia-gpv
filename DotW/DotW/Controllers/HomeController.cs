@@ -12,5 +12,10 @@ namespace DotW.Controllers
         {
             return View();
         }
+
+        public ActionResult TermsAndConditions()
+        {
+            return View();
+        }
     }
 }

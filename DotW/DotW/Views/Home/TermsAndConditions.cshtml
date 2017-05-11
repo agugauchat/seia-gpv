@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Términos y Condiciones";
+}
+
+@section Styles {
+    <link href="~/Content/ViewsStyles/Home/TermsAndConditions.css" rel="stylesheet" />
+}
+
+<h4><b>Denuncias a Publicaciones</b></h4>
+<p>Una publicación que tenga 3 o más denuncias es automáticamente eliminada del sitio.</p>
+<br />
+
+<h4><b>Denuncias a Comentarios</b></h4>
+<p>Un comentario que tenga 3 o más denuncias es automáticamente eliminado del sitio.</p>
+<br />
+
+<h4><b>Votos en Publicaciones</b></h4>
+<p>Toda publicación cuya diferencia entre votos negativos y positivos sea mayor o igual a 5 es automáticamente eliminada del sitio.</p>
+<br />
+
+<h4><b>Suspensión de Usuarios</b></h4>
+<p>El sitio acumula la cantidad de publicaciones eliminadas (sea por denuncias o por votos) y la cantidad de comentarios eliminados (por denuncias) de cada usuario.</p>
+
+<h5><b>Suspensión por Publicaciones</b></h5>
+<p>Cuando el contador de publicaciones eliminadas alcanza un número tal que al dividirlo por 5 se obtiene una división entera, entonces el usuario será suspendido por 5 días. Dicho de otro modo, su cuenta estará en estado suspendida hasta la próxima fecha de activación, que será dentro de 5 días.</p>
+
+<h5><b>Suspensión por Comentarios</b></h5>
+<p>Cuando el contador de comentarios eliminados alcanza un número tal que al dividirlo por 3 se obtiene una división entera, entonces el usuario será suspendido por 3 días. Dicho de otro modo, su cuenta estará en estado suspendida hasta la próxima fecha de activación, que será dentro de 3 días.</p>
+
+<p><b>Nota: </b>si al momento de aplicar la suspensión el usuario ya se encontraba en dicho estado y por ende poseía una fecha de activación, entonces a dicha fecha se le <i>SUMA</i> la cantidad de días correspondientes a la nueva suspensión.</p>
+<br />
+
+<h4><b>Estados de la cuenta del usuario</b></h4>
+<p>A continuación se listan los estados por los cuales puede pasar una cuenta de usuario.</p>
+<ul>
+    <li><b>Activa: </b>el usuario puede hacer uso de todas las características ofrecidas por el sitio.</li>
+    <br />
+    <li><b>Suspendida: </b>el usuario estará en este estado temporalmente hasta alcanzar la fecha de reactivación correspondiente.
+        <p>En el presente estado, el usuario podrá navegar por el sitio pero <b>NO</b> tendrá permitido:</p>
+        <ul>
+            <li>Publicar nuevo contenido en el sitio.</li>
+            <li>Editor sus publicaciones.</li>
+            <li>Comentar contenido en el sitio.</li>
+            <li>Votar publicaciones en el sitio.</li>
+            <li>Denunciar contenido en el sitio</li>
+        </ul>
+    </li>
+</ul>
+<br />
+<div class="col-md-2">
+    <p>
+        @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
+    </p>
+</div>

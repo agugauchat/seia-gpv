@@ -533,7 +533,9 @@
     <Content Include="Content\tagsinput\src\bootstrap-tagsinput.js" />
     <Content Include="Content\ViewsStyles\Category\List.css" />
     <Content Include="Content\ViewsStyles\Post\UploadImagePartial.css" />
+    <Content Include="Content\ViewsStyles\Home\TermsAndConditions.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -593,6 +595,11 @@
     <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\Nico.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Category\ckeditor.js" />
@@ -675,6 +682,7 @@
     <Content Include="Views\Account\Suspended.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Profile\Details.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
