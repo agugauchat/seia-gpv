@@ -95,7 +95,9 @@
     <Compile Include="PostContracts\Response\UpdatePostResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchContracts\ISearchService.cs" />
+    <Compile Include="SearchContracts\Request\SearchInCommentsRequest.cs" />
     <Compile Include="SearchContracts\Request\SearchInPostsRequest.cs" />
+    <Compile Include="SearchContracts\Response\SearchInCommentsResponse.cs" />
     <Compile Include="SearchContracts\Response\SearchInPostsResponse.cs" />
     <Compile Include="UserContracts\DividersToBlockUser.cs" />
     <Compile Include="UserContracts\IUserService.cs" />

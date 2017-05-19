@@ -41,6 +41,7 @@ namespace Data
         public virtual DbSet<Posts> Posts { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<vw_Posts> vw_Posts { get; set; }
+        public virtual DbSet<vw_Comments> vw_Comments { get; set; }
     
         public virtual int sp_PostsSearch(string text)
         {
@@ -49,6 +50,15 @@ namespace Data
                 new ObjectParameter("text", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_PostsSearch", textParameter);
+        }
+    
+        public virtual int sp_CommentsSearch(string text)
+        {
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CommentsSearch", textParameter);
         }
     }
 }

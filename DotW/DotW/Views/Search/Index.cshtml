@@ -2,14 +2,15 @@
 @{
     ViewBag.Title = "Resultados de Búsqueda";
     var postsList = ViewBag.PostsList as List<Entities.SearchEntities.PostsSearchResult>;
+    var commentsList = ViewBag.CommentsList as List<Entities.SearchEntities.CommentsSearchResult>;
 }
 
 <div class="container">
     <div class="row">
         <div class="col-lg-8">
-            <h3>Publicaciones que coinciden con su criterio de búsqueda.<h3>
             @if (postsList.Any())
             {
+                <h4>Publicaciones que coinciden con su criterio de búsqueda.</h4>
                 foreach (var post in postsList)
                 {
                     <h4><a href="@Url.Action("Details", "Post", new { id = post.Id })">@post.Title</a></h4>
@@ -20,7 +21,33 @@
             }
             else
             {
-                <h1>No se han encontrado resultados. Intente con una búsqueda diferente</h1>
+                <h4>No se han encontrado resultados dentro de las publicaciones. Intente con una búsqueda diferente.</h4>
+                <br />
+            }
+            @if (commentsList.Any())
+            {
+                <hr />
+                <h4>Comentarios que coinciden con su criterio de búsqueda.</h4>
+                <br />
+                foreach (var commentary in commentsList)
+                {
+                    <div class="media" id="@commentary.Id">
+                        <a class="pull-left" href="#">
+                            <img class="media-object" src="~/Content/Images/GenericUser.png" height="64" width="64">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <a href="@Url.Action("Details", "Profile", new { id = commentary.IdUser })">@commentary.WriterUserName</a>
+                            </h4>
+                            <a href="/Post/Details/@(commentary.IdPost)#@commentary.Id">@commentary.Commentary</a>
+                        </div>
+                    </div>
+                }
+                <br />
+            }
+            else
+            {
+                <h4>No se han encontrado resultados dentro de los comentarios. Intente con una búsqueda diferente.</h4>
             }
         </div>
         <div class="col-md-4">

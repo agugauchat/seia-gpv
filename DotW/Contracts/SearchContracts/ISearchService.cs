@@ -11,5 +11,7 @@
     public interface ISearchService
     {
         SearchInPostsResponse SearchInPosts(SearchInPostsRequest request);
+
+        SearchInCommentsResponse SearchInComments(SearchInCommentsRequest request);
     }
 }

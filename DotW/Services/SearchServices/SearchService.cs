@@ -28,5 +28,20 @@
                 return response;
             }
         }
+
+        public SearchInCommentsResponse SearchInComments(SearchInCommentsRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                var response = new SearchInCommentsResponse { CommentsSearchResult = new List<CommentsSearchResult>() };
+
+                if (!string.IsNullOrEmpty(request.Text))
+                {
+                    response.CommentsSearchResult.AddRange(db.Database.SqlQuery<CommentsSearchResult>("sp_CommentsSearch @text", new SqlParameter("text", request.Text)).ToList());
+                }
+
+                return response;
+            }
+        }
     }
 }

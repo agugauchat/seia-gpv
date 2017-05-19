@@ -104,6 +104,9 @@
     <Compile Include="Votes.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_Comments.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_Posts.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

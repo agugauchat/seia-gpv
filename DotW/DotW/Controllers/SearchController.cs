@@ -16,6 +16,8 @@ namespace DotW.Controllers
 
             ViewBag.PostsList = searchService.SearchInPosts(new SearchInPostsRequest { Text = text }).PostsSearchResult;
 
+            ViewBag.CommentsList = searchService.SearchInComments(new SearchInCommentsRequest { Text = text }).CommentsSearchResult;
+
             return View();
         }
     }

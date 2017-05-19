@@ -1,0 +1,20 @@
+USE [DotW]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_CommentsSearch] 
+	@text varchar(20)
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+    SELECT * FROM vw_Comments WHERE FREETEXT(*, @text)
+END
+GO
+
+

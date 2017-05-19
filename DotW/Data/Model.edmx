@@ -160,6 +160,22 @@
           <Property Name="IdPost" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'DotW.dbo.vw_Comments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_Comments">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="IdPost" />
+            <PropertyRef Name="Commentary" />
+            <PropertyRef Name="IdUser" />
+            <PropertyRef Name="WriterUserName" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="IdPost" Type="int" Nullable="false" />
+          <Property Name="Commentary" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="WriterUserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'DotW.dbo.vw_Posts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_Posts">
           <Key>
@@ -398,6 +414,9 @@ warning 6002: The table/view 'DotW.dbo.vw_Posts' does not have a primary key def
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_CommentsSearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="text" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_PostsSearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="text" Type="varchar" Mode="In" />
         </Function>
@@ -416,6 +435,15 @@ warning 6002: The table/view 'DotW.dbo.vw_Posts' does not have a primary key def
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserStates" EntityType="Self.UserStates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Votes" EntityType="Self.Votes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_Comments" EntityType="Self.vw_Comments" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Comments].[Id] AS [Id], 
+    [vw_Comments].[IdPost] AS [IdPost], 
+    [vw_Comments].[Commentary] AS [Commentary], 
+    [vw_Comments].[IdUser] AS [IdUser], 
+    [vw_Comments].[WriterUserName] AS [WriterUserName]
+    FROM [dbo].[vw_Comments] AS [vw_Comments]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_Posts" EntityType="Self.vw_Posts" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_Posts].[Id] AS [Id], 
@@ -669,6 +697,10 @@ warning 6002: The table/view 'DotW.dbo.vw_Posts' does not have a primary key def
           <Parameter Name="text" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="vw_Posts" EntityType="DotWModel.vw_Posts" />
+          <FunctionImport Name="sp_CommentsSearch">
+          <Parameter Name="text" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="vw_Comments" EntityType="DotWModel.vw_Comments" />
           </EntityContainer>
         <EntityType Name="Complaints">
           <Key>
@@ -979,6 +1011,20 @@ warning 6002: The table/view 'DotW.dbo.vw_Posts' does not have a primary key def
           <Property Name="DeletedByComplaintsOrVotes" Type="Boolean" Nullable="false" />
           <Property Name="WriterUserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="vw_Comments">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="IdPost" />
+            <PropertyRef Name="Commentary" />
+            <PropertyRef Name="IdUser" />
+            <PropertyRef Name="WriterUserName" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="IdPost" Type="Int32" Nullable="false" />
+          <Property Name="Commentary" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="WriterUserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1164,6 +1210,18 @@ warning 6002: The table/view 'DotW.dbo.vw_Posts' does not have a primary key def
                 <ScalarProperty Name="Body" ColumnName="Body" />
                 <ScalarProperty Name="IdWriter" ColumnName="IdWriter" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_CommentsSearch" FunctionName="DotWModel.Store.sp_CommentsSearch" />
+          <EntitySetMapping Name="vw_Comments">
+            <EntityTypeMapping TypeName="DotWModel.vw_Comments">
+              <MappingFragment StoreEntitySet="vw_Comments">
+                <ScalarProperty Name="WriterUserName" ColumnName="WriterUserName" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Commentary" ColumnName="Commentary" />
+                <ScalarProperty Name="IdPost" ColumnName="IdPost" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
