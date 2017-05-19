@@ -159,6 +159,33 @@
           <Property Name="Bad" Type="bit" Nullable="false" />
           <Property Name="IdPost" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DotW.dbo.vw_Posts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_Posts">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="IdWriter" />
+            <PropertyRef Name="Body" />
+            <PropertyRef Name="EffectDate" />
+            <PropertyRef Name="IdCategory" />
+            <PropertyRef Name="IsDraft" />
+            <PropertyRef Name="DeletedByComplaintsOrVotes" />
+            <PropertyRef Name="WriterUserName" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdWriter" Type="int" Nullable="false" />
+          <Property Name="Body" Type="varchar(max)" Nullable="false" />
+          <Property Name="EffectDate" Type="datetime" Nullable="false" />
+          <Property Name="NullDate" Type="datetime" />
+          <Property Name="IdCategory" Type="int" Nullable="false" />
+          <Property Name="IsDraft" Type="bit" Nullable="false" />
+          <Property Name="Summary" Type="varchar" MaxLength="500" />
+          <Property Name="PrincipalImageName" Type="varchar" MaxLength="30" />
+          <Property Name="DeletedByComplaintsOrVotes" Type="bit" Nullable="false" />
+          <Property Name="WriterUserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Categories_Categories">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
           <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
@@ -371,6 +398,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_PostsSearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="text" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="DotWModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -386,6 +416,22 @@
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserStates" EntityType="Self.UserStates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Votes" EntityType="Self.Votes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_Posts" EntityType="Self.vw_Posts" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Posts].[Id] AS [Id], 
+    [vw_Posts].[Title] AS [Title], 
+    [vw_Posts].[IdWriter] AS [IdWriter], 
+    [vw_Posts].[Body] AS [Body], 
+    [vw_Posts].[EffectDate] AS [EffectDate], 
+    [vw_Posts].[NullDate] AS [NullDate], 
+    [vw_Posts].[IdCategory] AS [IdCategory], 
+    [vw_Posts].[IsDraft] AS [IsDraft], 
+    [vw_Posts].[Summary] AS [Summary], 
+    [vw_Posts].[PrincipalImageName] AS [PrincipalImageName], 
+    [vw_Posts].[DeletedByComplaintsOrVotes] AS [DeletedByComplaintsOrVotes], 
+    [vw_Posts].[WriterUserName] AS [WriterUserName]
+    FROM [dbo].[vw_Posts] AS [vw_Posts]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Categories_Categories" Association="Self.FK_Categories_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
@@ -619,6 +665,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Votes" EntitySet="Votes" />
           </AssociationSet>
+          <FunctionImport Name="sp_PostsSearch">
+          <Parameter Name="text" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="vw_Posts" EntityType="DotWModel.vw_Posts" />
           </EntityContainer>
         <EntityType Name="Complaints">
           <Key>
@@ -904,6 +954,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vw_Posts">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="IdWriter" />
+            <PropertyRef Name="Body" />
+            <PropertyRef Name="EffectDate" />
+            <PropertyRef Name="IdCategory" />
+            <PropertyRef Name="IsDraft" />
+            <PropertyRef Name="DeletedByComplaintsOrVotes" />
+            <PropertyRef Name="WriterUserName" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdWriter" Type="Int32" Nullable="false" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EffectDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NullDate" Type="DateTime" Precision="3" />
+          <Property Name="IdCategory" Type="Int32" Nullable="false" />
+          <Property Name="IsDraft" Type="Boolean" Nullable="false" />
+          <Property Name="Summary" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PrincipalImageName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DeletedByComplaintsOrVotes" Type="Boolean" Nullable="false" />
+          <Property Name="WriterUserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1070,6 +1145,25 @@
                 <ScalarProperty Name="EffectDate" ColumnName="EffectDate" />
                 <ScalarProperty Name="AspNetUserId" ColumnName="AspNetUserId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_PostsSearch" FunctionName="DotWModel.Store.sp_PostsSearch" />
+          <EntitySetMapping Name="vw_Posts">
+            <EntityTypeMapping TypeName="DotWModel.vw_Posts">
+              <MappingFragment StoreEntitySet="vw_Posts">
+                <ScalarProperty Name="WriterUserName" ColumnName="WriterUserName" />
+                <ScalarProperty Name="DeletedByComplaintsOrVotes" ColumnName="DeletedByComplaintsOrVotes" />
+                <ScalarProperty Name="PrincipalImageName" ColumnName="PrincipalImageName" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="IsDraft" ColumnName="IsDraft" />
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
+                <ScalarProperty Name="NullDate" ColumnName="NullDate" />
+                <ScalarProperty Name="EffectDate" ColumnName="EffectDate" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="IdWriter" ColumnName="IdWriter" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

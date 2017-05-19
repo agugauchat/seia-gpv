@@ -45,17 +45,17 @@
             }
         </div>
         <div class="col-md-4">
-            @*<div class="well">
-                    <h4>Blog Search</h4>
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
-                    </div>
-                </div>*@
+            <div class="well">
+                <h4>Buscar en el sitio</h4>
+                <div class="input-group">
+                    <input id="searchInput" type="text" class="form-control">
+                    <span class="input-group-btn">
+                        <button id="searchText" class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
             <div class="well">
                 <div class="row">
                     <div class="col-lg-6">
@@ -91,6 +91,7 @@
 @section Scripts {
     <!-- View JavaScript -->
     <script src="~/Scripts/Post/List.js"></script>
+    <script src="~/Scripts/Search/Searchs.js"></script>
     <!-- Code Highlight -->
     <script src="~/Content/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
 }

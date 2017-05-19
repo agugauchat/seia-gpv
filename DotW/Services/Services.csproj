@@ -52,6 +52,7 @@
     <Compile Include="ComplaintServices\ComplaintService.cs" />
     <Compile Include="PostServices\PostService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchServices\SearchService.cs" />
     <Compile Include="UserServices\UserService.cs" />
     <Compile Include="VoteServices\VoteService.cs" />
   </ItemGroup>

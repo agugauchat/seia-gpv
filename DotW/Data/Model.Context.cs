@@ -12,6 +12,8 @@ namespace Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class DotWEntities : DbContext
     {
@@ -38,5 +40,15 @@ namespace Data
         public virtual DbSet<Comments> Comments { get; set; }
         public virtual DbSet<Posts> Posts { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<vw_Posts> vw_Posts { get; set; }
+    
+        public virtual int sp_PostsSearch(string text)
+        {
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_PostsSearch", textParameter);
+        }
     }
 }
