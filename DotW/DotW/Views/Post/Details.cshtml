@@ -24,7 +24,7 @@
 <!-- Title -->
 <h1>@Model.Title</h1>
 <!-- Author -->
-<p><span class="glyphicon glyphicon-time"></span> Publicado el @Model.EffectDate.ToString("dd/MM/yyyy") por <a href="#">@Model.WriterUserName</a></p>
+<p><span class="glyphicon glyphicon-time"></span> Publicado el @Model.EffectDate.ToString("dd/MM/yyyy") por <a href="@Url.Action("Details", "Profile", new { id = Model.IdWriter })">@Model.WriterUserName</a></p>
 <hr />
 <!-- Post Content -->
 <p class="lead">@Html.Raw(Model.Body)</p>
@@ -68,7 +68,7 @@
     {
     <!-- Comment -->
         <div class="media" id="@commentary.Id">
-            <a class="pull-left" href="#">
+            <a class="pull-left" href="#" onclick="return false;">
                 <img class="media-object" src="~/Content/Images/GenericUser.png" height="64" width="64">
             </a>
             <div class="media-body">
