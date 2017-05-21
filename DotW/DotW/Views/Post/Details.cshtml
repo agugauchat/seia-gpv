@@ -26,9 +26,6 @@
 <!-- Author -->
 <p><span class="glyphicon glyphicon-time"></span> Publicado el @Model.EffectDate.ToString("dd/MM/yyyy") por <a href="#">@Model.WriterUserName</a></p>
 <hr />
-<!-- Preview Image -->
-@*<img class="img-responsive" src="http://placehold.it/900x300" alt="">
-    <hr>*@
 <!-- Post Content -->
 <p class="lead">@Html.Raw(Model.Body)</p>
 @*<hr />*@
@@ -49,7 +46,6 @@
     <a href="@Url.Action("List", "Post" , new { tag=tag })" class="tag-link"><span class="tag label label-info">@tag</span></a>
 }
 <br />
-<!-- Blog Comments -->
 <!-- Comments Form -->
 @if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
      && !(bool)TempData["UserAccountSuspended"])
@@ -65,7 +61,6 @@
         </form>
     </div>
 }
-
 
 @if (Comments.Any())
 {

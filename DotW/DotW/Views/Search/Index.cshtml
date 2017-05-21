@@ -7,7 +7,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             @if (postsList.Any())
             {
                 <h4>Publicaciones que coinciden con su criterio de búsqueda.</h4>
@@ -50,23 +50,5 @@
                 <h4>No se han encontrado resultados dentro de los comentarios. Intente con una búsqueda diferente.</h4>
             }
         </div>
-        <div class="col-md-4">
-            <div class="well">
-                <h4>Buscar en el sitio</h4>
-                <div class="input-group">
-                    <input id="searchInput" type="text" class="form-control">
-                    <span class="input-group-btn">
-                        <button id="searchText" class="btn btn-default" type="button">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </span>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
-
-@section Scripts {
-    <!-- View JavaScript -->
-    <script src="~/Scripts/Search/Searchs.js"></script>
-}

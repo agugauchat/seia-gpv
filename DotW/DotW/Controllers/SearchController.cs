@@ -10,6 +10,7 @@ namespace DotW.Controllers
 {
     public class SearchController : BaseController
     {
+        [HttpPost]
         public ActionResult Index(string text)
         {
             var searchService = new SearchService();
