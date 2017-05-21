@@ -1,4 +1,5 @@
 ﻿using Contracts.SearchContracts.Request;
+using Entities.SearchEntities;
 using Services.SearchServices;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,15 @@ namespace DotW.Controllers
 {
     public class SearchController : BaseController
     {
+        public ActionResult Index()
+        {
+            ViewBag.PostsList = new List<PostsSearchResult>();
+            ViewBag.CommentsList = new List<CommentsSearchResult>();
+            ViewBag.Redirected = true;
+
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Index(string text)
         {
