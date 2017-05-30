@@ -14,13 +14,9 @@
 <p>Un comentario que tenga 3 o más denuncias es automáticamente eliminado del sitio.</p>
 <br />
 
-<h4><b>Votos en Publicaciones</b></h4>
-<p>Toda publicación cuya diferencia entre votos negativos y positivos sea mayor o igual a 5 es automáticamente eliminada del sitio.</p>
-<br />
-
 <h4><b>Suspensión de Usuarios</b></h4>
-<p>El sitio acumula la cantidad de publicaciones eliminadas (sea por denuncias o por votos) y la cantidad de comentarios eliminados (por denuncias) de cada usuario.</p>
-
+<p>El sitio acumula la cantidad de publicaciones eliminadas y la cantidad de comentarios eliminados de cada usuario.</p>
+<br />
 <h5><b>Suspensión por Publicaciones</b></h5>
 <p>Cuando el contador de publicaciones eliminadas alcanza un número tal que al dividirlo por 5 se obtiene una división entera, entonces el usuario será suspendido por 5 días. Dicho de otro modo, su cuenta estará en estado suspendida hasta la próxima fecha de activación, que será dentro de 5 días.</p>
 
@@ -47,8 +43,6 @@
     </li>
 </ul>
 <br />
-<div class="col-md-2">
-    <p>
-        @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
-    </p>
-</div>
+<p>
+    @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
+</p>

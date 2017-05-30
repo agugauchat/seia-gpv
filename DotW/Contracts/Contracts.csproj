@@ -132,7 +132,6 @@
     <Compile Include="VoteContracts\Response\GetVoteByUserAndPostIdResponse.cs" />
     <Compile Include="VoteContracts\Response\GetVotesCountByPostIdResponse.cs" />
     <Compile Include="VoteContracts\Response\SaveVoteResponse.cs" />
-    <Compile Include="VoteContracts\VotesDifferenceToDelete.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj">

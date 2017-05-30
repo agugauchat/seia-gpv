@@ -68,7 +68,7 @@
 
                         if (verifyResult.UserSuspended)
                         {
-                            var reason = "La cantidad de publicaciones dadas de baja por denuncias/votos ha alcanzando el número estipulado para suspender temporalmente su cuenta.";
+                            var reason = "La cantidad de publicaciones dadas de baja por denuncias ha alcanzando el número estipulado para suspender temporalmente su cuenta.";
                             SendAccountBlockedToWriter(post.IdWriter, verifyResult.ActivationDate, reason);
                         };
                     }
