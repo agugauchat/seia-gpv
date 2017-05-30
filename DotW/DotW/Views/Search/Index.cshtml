@@ -13,7 +13,7 @@
                 <h4>Publicaciones que coinciden con su criterio de búsqueda.</h4>
                 foreach (var post in postsList)
                 {
-                    <h4><a href="@Url.Action("Details", "Post", new { id = post.Id })" @*target="_blank"*@>@post.Title</a></h4>
+                    <h4><a href="@Url.Action("Details", "Post", new { id = post.Id })">@post.Title</a></h4>
                     <p><span class="glyphicon glyphicon-time"></span> Publicado el @post.EffectDate.ToString("dd/MM/yyyy") por <a href="@Url.Action("Details", "Profile", new { id = post.IdWriter })" target="_blank">@post.WriterUserName</a></p>
                     <p class="post-summary">@post.Summary</p>
                     <hr />
@@ -38,9 +38,9 @@
                         </a>
                         <div class="media-body">
                             <h4 class="media-heading">
-                                <a href="@Url.Action("Details", "Profile", new { id = commentary.IdUser })" @*target="_blank"*@>@commentary.WriterUserName</a>
+                                <a href="@Url.Action("Details", "Profile", new { id = commentary.IdUser })" target="_blank">@commentary.WriterUserName</a>
                             </h4>
-                            <a href="/Post/Details/@(commentary.IdPost)#@commentary.Id" @*target="_blank"*@>@commentary.Commentary</a>
+                            <a href="/Post/Details/@(commentary.IdPost)#@commentary.Id">@commentary.Commentary</a>
                         </div>
                     </div>
                 }

@@ -39,6 +39,8 @@
         $("#commentaryIdFormField").val(commentaryId);
 
         $("#commentaryComplaintModal").modal('show');
+
+        return false;
     })
 
     $('#commentaryComplaintForm').submit(function (e) {
@@ -254,7 +256,8 @@ function UpdatePostComplaintModalWithWaitMessage()
 
 function UpdatePostComplaintModalWithSuccess(response) {
     // Se quita todo el formulario y se muestra el mensaje de exito.
-    $("#postComplaintResultText").text(response.Message);
+    $("#postComplaintResultText").text('');
+    $("#postComplaintResultText").append(response.Message);
     $("#postComplaintResultText").addClass("text-success");
     $("#postComplaintCommentary").remove();
     $("#postComplaintSubmit").remove();
@@ -302,7 +305,8 @@ function UpdateCommentaryComplaintModalWithWaitMessage() {
 
 function UpdateCommentaryComplaintModalWithSuccess(response) {
     // Se quita todo el formulario y se muestra el mensaje de exito.
-    $("#commentaryComplaintResultText").text(response.Message);
+    $("#commentaryComplaintResultText").text('');
+    $("#commentaryComplaintResultText").append(response.Message);
     $("#commentaryComplaintResultText").addClass("text-success");
     $("#commentaryComplaintComment").hide();
     $("#commentaryComplaintSubmit").hide();

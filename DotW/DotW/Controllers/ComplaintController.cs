@@ -73,7 +73,7 @@
                         };
                     }
 
-                    return Json(new { success = true, Message = "Su denuncia ha sido registrada. Gracias por contribuir con nuestra comunidad :)" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, Message = "<div style='text-align:justify;'>Su denuncia ha sido registrada y será colocada junto a la de otros usuarios. Si se alcanza el límite establecido en nuestros <a href='/Home/TermsAndConditions' target='_blank'>Términos y Condiciones</a>, la publicación será dada de baja.<br><br>Gracias por contribuir con nuestra comunidad :)</div>" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
@@ -136,7 +136,7 @@
                         };
                     }
 
-                    return Json(new { success = true, Message = "Su denuncia ha sido registrada. Gracias por contribuir con nuestra comunidad :)" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, Message = "<div style='text-align:justify;'>Su denuncia ha sido registrada y será colocada junto a la de otros usuarios. Si se alcanza el límite establecido en nuestros <a href='/Home/TermsAndConditions' target='_blank'>Términos y Condiciones</a>, el comentario será dado de baja.<br><br>Gracias por contribuir con nuestra comunidad :)</div>" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
