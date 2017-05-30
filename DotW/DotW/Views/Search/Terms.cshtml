@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Criterios de búsqueda";
+}
+
+<h3>¿Cómo se realizan las búsquedas dentro de Devs of the Web?</h3>
+<br />
+<h4>Dentro de las publicaciones se busca en:</h4>
+<ul>
+    <li>Título.</li>
+    <li>Resumen.</li>
+    <li>Nombre de usuario del autor.</li>
+    <li>Cuerpo de la publicación.</li>
+</ul>
+<br />
+<h4>Dentro de los comentarios se busca en:</h4>
+<ul>
+    <li>Cuerpo del comentario.</li>
+</ul>
+<br />
+<br />
+
+<div class="col-md-2">
+    <p>
+        @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
+    </p>
+</div>

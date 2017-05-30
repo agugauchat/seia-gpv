@@ -3,60 +3,71 @@
     ViewBag.Title = "Resultados de Búsqueda";
     var postsList = ViewBag.PostsList as List<Entities.SearchEntities.PostsSearchResult>;
     var commentsList = ViewBag.CommentsList as List<Entities.SearchEntities.CommentsSearchResult>;
-    var redirected = ViewBag.Redirected as bool?;
 }
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-12">
-            @if (!redirected.HasValue || (redirected.HasValue && !redirected.Value))
+        <div class="col-lg-8">
+            @if (postsList.Any())
             {
-                if (postsList.Any())
+                <h4>Publicaciones que coinciden con su criterio de búsqueda.</h4>
+                foreach (var post in postsList)
                 {
-                    <h4>Publicaciones que coinciden con su criterio de búsqueda.</h4>
-                    foreach (var post in postsList)
-                    {
-                        <h4><a href="@Url.Action("Details", "Post", new { id = post.Id })" target="_blank">@post.Title</a></h4>
-                        <p><span class="glyphicon glyphicon-time"></span> Publicado el @post.EffectDate.ToString("dd/MM/yyyy") por <a href="@Url.Action("Details", "Profile", new { id = post.IdWriter })" target="_blank">@post.WriterUserName</a></p>
-                        <p class="post-summary">@post.Summary</p>
-                        <hr />
-                    }
-                }
-                else
-                {
-                    <h4>No se han encontrado resultados dentro de las publicaciones. Intente con una búsqueda diferente.</h4>
-                    <br />
-                }
-                if (commentsList.Any())
-                {
+                    <h4><a href="@Url.Action("Details", "Post", new { id = post.Id })" @*target="_blank"*@>@post.Title</a></h4>
+                    <p><span class="glyphicon glyphicon-time"></span> Publicado el @post.EffectDate.ToString("dd/MM/yyyy") por <a href="@Url.Action("Details", "Profile", new { id = post.IdWriter })" target="_blank">@post.WriterUserName</a></p>
+                    <p class="post-summary">@post.Summary</p>
                     <hr />
-                    <h4>Comentarios que coinciden con su criterio de búsqueda.</h4>
-                    <br />
-                    foreach (var commentary in commentsList)
-                    {
-                        <div class="media" id="@commentary.Id">
-                            <a class="pull-left" href="#" onclick="return false;">
-                                <img class="media-object" src="~/Content/Images/GenericUser.png" height="64" width="64">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading">
-                                    <a href="@Url.Action("Details", "Profile", new { id = commentary.IdUser })" target="_blank">@commentary.WriterUserName</a>
-                                </h4>
-                                <a href="/Post/Details/@(commentary.IdPost)#@commentary.Id" target="_blank">@commentary.Commentary</a>
-                            </div>
-                        </div>
-                    }
-                    <br />
-                }
-                else
-                {
-                    <h4>No se han encontrado resultados dentro de los comentarios. Intente con una búsqueda diferente.</h4>
                 }
             }
             else
             {
-                <h4>Introduzca un criterio de búsqueda en la barra superior.</h4>
+                <h4>No se han encontrado resultados <b>dentro de las publicaciones</b>. Intente con una búsqueda diferente.</h4>
+                <br />
+            }
+
+            @if (commentsList.Any())
+            {
+                <hr />
+                <h4>Comentarios que coinciden con su criterio de búsqueda.</h4>
+                <br />
+                foreach (var commentary in commentsList)
+                {
+                    <div class="media" id="@commentary.Id">
+                        <a class="pull-left" href="#" onclick="return false;">
+                            <img class="media-object" src="~/Content/Images/GenericUser.png" height="64" width="64">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <a href="@Url.Action("Details", "Profile", new { id = commentary.IdUser })" @*target="_blank"*@>@commentary.WriterUserName</a>
+                            </h4>
+                            <a href="/Post/Details/@(commentary.IdPost)#@commentary.Id" @*target="_blank"*@>@commentary.Commentary</a>
+                        </div>
+                    </div>
+                }
+                <br />
+            }
+            else
+            {
+                <h4>No se han encontrado resultados <b>dentro de los comentarios</b>. Intente con una búsqueda diferente.</h4>
             }
         </div>
+        <div class="col-md-4">
+            <div class="well">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Búsqueda</h4>
+                        <ul class="list-unstyled">
+                            <li>@Html.ActionLink("Términos de búsqueda", "Terms", "Search")</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+<br />
+<div class="col-md-2">
+    <p>
+        @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
+    </p>
 </div>

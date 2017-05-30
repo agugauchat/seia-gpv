@@ -73,13 +73,6 @@
 
 <div class="col-md-2">
     <p>
-        @if (Request.UrlReferrer.AbsolutePath.ToString() == "/Search")
-        {
-            @Html.ActionLink("Volver al inicio", "Index", "Home", null, new { @class = "btn btn-default" })
-        }
-        else
-        {
-            @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
-        }
+        @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
     </p>
 </div>

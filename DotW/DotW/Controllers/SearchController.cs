@@ -11,16 +11,6 @@ namespace DotW.Controllers
 {
     public class SearchController : BaseController
     {
-        public ActionResult Index()
-        {
-            ViewBag.PostsList = new List<PostsSearchResult>();
-            ViewBag.CommentsList = new List<CommentsSearchResult>();
-            ViewBag.Redirected = true;
-
-            return View();
-        }
-
-        [HttpPost]
         public ActionResult Index(string text)
         {
             var searchService = new SearchService();
@@ -29,6 +19,11 @@ namespace DotW.Controllers
 
             ViewBag.CommentsList = searchService.SearchInComments(new SearchInCommentsRequest { Text = text }).CommentsSearchResult;
 
+            return View();
+        }
+
+        public ActionResult Terms()
+        {
             return View();
         }
     }
