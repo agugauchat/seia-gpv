@@ -19,5 +19,6 @@
         public string Phone { get; set; }
         public string Description { get; set; }
         public bool ShowData { get; set; }
+        public DateTime? NullDate { get; set; }
     }
 }

@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Bloqueos y Suspensiones";
+    var posts = ViewBag.Posts as List<Entities.PostEntities.Post>;
+    var comments = ViewBag.Comments as List<Entities.CommentaryEntities.Commentary>;
+    var users = ViewBag.Users as List<Entities.UserEntities.User>;
+}
+
+<h3>Publicaciones baneadas</h3>
+<br />
+<table class="table">
+    <thead class="thead-inverse">
+        <tr>
+            <th>Título</th>
+            <th>Fecha alta</th>
+            <th>Fecha baja</th>
+            <th>Autor</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var post in posts)
+        {
+            <tr>
+                <td>@post.Title</td>
+                <td>@post.EffectDate.ToString("dd/MM/yyyy")</td>
+                <td>@post.NullDate.Value.ToString("dd/MM/yyyy")</td>
+                <td>@post.WriterUserName</td>
+                <td>
+                    @Html.ActionLink("Detalle y denuncias", "Details", "Post", new { id = post.Id }, new { @class = "btn btn-primary", target = "_blank"})
+                    @Html.ActionLink("Habilitar", "EnablePost", "Bans", new { id = post.Id }, new { @class = "btn btn-success" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<hr />
+<h3>Comentarios baneados</h3>
+<br />
+<table class="table">
+    <thead class="thead-inverse">
+        <tr>
+            <th>Comentario</th>
+            <th>Fecha alta</th>
+            <th>Fecha baja</th>
+            <th>Autor</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var comment in comments)
+        {
+            <tr>
+                <td style="max-width:450px">@comment.CommentaryText</td>
+                <td>@comment.EffectDate.ToString("dd/MM/yyyy")</td>
+                <td>@comment.NullDate.Value.ToString("dd/MM/yyyy")</td>
+                <td>@comment.WriterUserName</td>
+                <td>
+                    @Html.ActionLink("Detalle y denuncias", "CommentaryComplaints", "Bans", new { id = comment.Id }, new { @class = "btn btn-primary", target = "_blank" })
+                    @Html.ActionLink("Habilitar", "EnableCommentary", "Bans", new { id = comment.Id }, new { @class = "btn btn-success" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<hr />
+<h3>Usuarios baneados</h3>
+<br />
+<table class="table">
+    <thead class="thead-inverse">
+        <tr>
+            <th>Nombre de Usuario</th>
+            <th>Fecha alta</th>
+            <th>Fecha baja</th>
+            <th>Email</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in users)
+        {
+            <tr>
+                <td><a href="@Url.Action("Details", "Profile", new { id = user.Id })" target="_blank">@user.Name</a></td>
+                <td>@user.EffectDate.ToString("dd/MM/yyyy")</td>
+                <td>@user.NullDate.Value.ToString("dd/MM/yyyy")</td>
+                <td>@user.Email</td>
+                <td>
+                    @Html.ActionLink("Habilitar", "EnableUser", "Bans", new { id = user.Id }, new { @class = "btn btn-success" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

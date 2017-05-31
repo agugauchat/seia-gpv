@@ -318,6 +318,7 @@
         public ActionResult Details(int id)
         {
             var commentaryService = new CommentaryService();
+            var complaintService = new ComplaintService();
             var postService = new PostService();
             var userService = new UserService();
             var votesService = new VoteService();
@@ -331,8 +332,6 @@
 
             if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
             {
-                var complaintService = new ComplaintService();
-
                 // Se obtienen las denuncias/quejas realizadas por el usuario.
                 userComplaints = complaintService.SearchComplaintsByUserId(new SearchComplaintsByUserIdRequest { AspNetUserId = User.Identity.GetUserId() }).Complaints;
 
@@ -346,6 +345,11 @@
                 ViewBag.BadVotes = postVotes.BadVotes;
                 ViewBag.UserGoodVote = userVotes.Good ? "true" : "false";
                 ViewBag.UserBadVote = userVotes.Bad ? "true" : "false";
+            }
+
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                ViewBag.Complaints = complaintService.SearchComplaintsByPostId(new SearchComplaintsByPostIdRequest { PostId = post.Id }).Complaints;
             }
 
             ViewBag.UserComplaints = userComplaints;

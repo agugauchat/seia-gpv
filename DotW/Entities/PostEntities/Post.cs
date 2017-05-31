@@ -42,5 +42,7 @@
         public string PrincipalImageName { get; set; }
 
         public List<string> Tags { get; set; }
+
+        public DateTime? NullDate { get; set; }
     }
 }

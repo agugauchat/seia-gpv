@@ -40,6 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BanContracts\IBanService.cs" />
+    <Compile Include="BanContracts\Request\EnableCommentaryRequest.cs" />
+    <Compile Include="BanContracts\Request\EnablePostRequest.cs" />
+    <Compile Include="BanContracts\Request\EnableUserRequest.cs" />
+    <Compile Include="BanContracts\Request\SearchBannedCommentsRequest.cs" />
+    <Compile Include="BanContracts\Request\SearchBannedPostsRequest.cs" />
+    <Compile Include="BanContracts\Request\SearchBannedUsersRequest.cs" />
+    <Compile Include="BanContracts\Response\EnableCommentaryResponse.cs" />
+    <Compile Include="BanContracts\Response\EnablePostResponse.cs" />
+    <Compile Include="BanContracts\Response\EnableUserResponse.cs" />
+    <Compile Include="BanContracts\Response\SearchBannedCommentsResponse.cs" />
+    <Compile Include="BanContracts\Response\SearchBannedPostsResponse.cs" />
+    <Compile Include="BanContracts\Response\SearchBannedUsersResponse.cs" />
     <Compile Include="CommentaryContracts\ICommentaryService.cs" />
     <Compile Include="CommentaryContracts\Request\CreateCommentaryRequest.cs" />
     <Compile Include="CommentaryContracts\Request\DeleteCommentaryRequest.cs" />
@@ -64,7 +77,7 @@
     <Compile Include="CategoryContracts\Response\SearchCategoriesByIdUpperCategoryResponse.cs" />
     <Compile Include="CategoryContracts\Response\SearchCategoriesResponse.cs" />
     <Compile Include="CategoryContracts\Response\UpdateCategoryResponse.cs" />
-    <Compile Include="ComplaintContracts\AllowedComplaints.cs" />
+    <Compile Include="ComplaintContracts\DividersToDeleteByComplaint.cs" />
     <Compile Include="ComplaintContracts\IComplaintService.cs" />
     <Compile Include="ComplaintContracts\Request\CreateCommentaryComplaintRequest.cs" />
     <Compile Include="ComplaintContracts\Request\CreatePostComplaintRequest.cs" />

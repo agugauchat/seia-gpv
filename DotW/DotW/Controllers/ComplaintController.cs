@@ -53,9 +53,9 @@
 
                     var complaintResult = complaintService.CreatePostComplaint(new CreatePostComplaintRequest { PostId = model.PostId, UserId = user.Id, Commentary = model.Commentary });
 
-                    if (complaintResult.PostComplaintsCount >= (int)AllowedComplaints.MaxPostAndCommentaryComplaints)
+                    if ((complaintResult.PostComplaintsCount % (int)DividersToDeleteByComplaint.PostAndCommentaryDeletedDivider) == 0)
                     {
-                        // Se da de baja la publicación por haber alcanzado/superado las 3 denuncias.
+                        // Se da de baja la publicación.
                         var deletePostResult = postService.DeletePost(new DeletePostRequest { Id = complaintResult.PostId, IsComplaintOrVoteDifference = true });
 
                         var complaints = complaintService.SearchComplaintsByPostId(new SearchComplaintsByPostIdRequest { PostId = post.Id }).Complaints;
@@ -116,9 +116,9 @@
 
                     var complaintResult = complaintService.CreateCommentaryComplaint(new CreateCommentaryComplaintRequest { CommentaryId = model.CommentaryId, UserId = user.Id, Commentary = model.Commentary });
 
-                    if (complaintResult.CommentaryComplaintsCount >= (int)AllowedComplaints.MaxPostAndCommentaryComplaints)
+                    if ((complaintResult.CommentaryComplaintsCount % (int)DividersToDeleteByComplaint.PostAndCommentaryDeletedDivider) == 0)
                     {                       
-                        // Se da de baja el comentario por haber alcanzado/superado las 3 denuncias.
+                        // Se da de baja el comentario.
                         var deletePostResult = commentaryService.DeleteCommentary(new DeleteCommentaryRequest { Id = complaintResult.CommentaryId, IsComplaintOrVoteDifference = true });
 
                         var complaints = complaintService.SearchComplaintsByCommentaryId(new SearchComplaintsByCommentaryIdRequest { CommentaryId = commentary.Id }).Complaints;

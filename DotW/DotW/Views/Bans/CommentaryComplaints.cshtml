@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Denuncias del comentario";
+    var comment = ViewBag.Comment as Entities.CommentaryEntities.Commentary;
+    var complaints = ViewBag.CommentaryComplaints as List<Entities.ComplaintEntities.Complaint>;
+}
+
+<h3>Comentario</h3>
+<p>@comment.CommentaryText</p>
+<p>Publicado el @comment.EffectDate.ToString("dd/MM/yyyy") por <a href="@Url.Action("Details", "Profile", new { id = comment.IdUser })" target="_blank">@comment.WriterUserName</a>.</p>
+<br />
+@Html.ActionLink("Ver publicación donde se encontraba el comentario", "Details", "Post", new { id = comment.IdPost }, new { @class = "btn btn-primary", target = "_blank" })
+<br />
+<h3 class="text-danger"><b>Denuncias</b></h3>
+<br />
+<ul>
+    @foreach (var complaint in complaints)
+    {
+        <li><a href="@Url.Action("Details", "Profile", new { id = complaint.IdUser })" target="_blank">@complaint.UserName</a>: @complaint.Description</li>
+    }
+</ul>
+<br />
+<p>
+    @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
+    @Html.ActionLink("Habilitar", "EnableCommentary", "Bans", new { id = comment.Id }, new { @class = "btn btn-success" })
+</p>

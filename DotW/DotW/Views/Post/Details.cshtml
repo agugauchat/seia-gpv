@@ -4,6 +4,7 @@
     ViewBag.Title = Model.Title;
     var Comments = (List<Entities.CommentaryEntities.Commentary>)ViewBag.Comments;
     var userComplaints = (List<Entities.ComplaintEntities.Complaint>)ViewBag.UserComplaints;
+    var postComplaints = (List<Entities.ComplaintEntities.Complaint>)ViewBag.Complaints;
     List<string> currentRoles = ViewBag.RolesOfCurrentUser as List<string>;
     var goodVotesCount = ViewBag.GoodVotes;
     var badVotesCount = ViewBag.BadVotes;
@@ -21,109 +22,133 @@
     <link href="~/Content/ckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css" rel="stylesheet" />
 }
 
-<!-- Title -->
-<h1>@Model.Title</h1>
-<!-- Author -->
-<p><span class="glyphicon glyphicon-time"></span> Publicado el @Model.EffectDate.ToString("dd/MM/yyyy") por <a href="@Url.Action("Details", "Profile", new { id = Model.IdWriter })">@Model.WriterUserName</a></p>
-<hr />
-<!-- Post Content -->
-<p class="lead">@Html.Raw(Model.Body)</p>
-@*<hr />*@
-<br />
+@if (!Model.NullDate.HasValue || (Request.IsAuthenticated && currentRoles.Contains("Admin")))
+{
 
-@if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
-     && !(bool)TempData["UserAccountSuspended"])
-{
-    <div class="form-group">
-        <input id="postId" type="hidden" value="@Model.Id" />
-        <a href="#" id="likeBtn" pressed="@userGoodVote" class="btn btn-default fa fa-thumbs-o-up" style="border-radius: 10%;">&nbsp;@goodVotesCount</a>
-        <a href="#" id="dislikeBtn" pressed="@userBadVote" class="btn btn-default fa fa-thumbs-o-down" style="border-radius: 10%;">&nbsp;@badVotesCount</a>
-    </div>
-}
-
-@foreach (var tag in Model.Tags)
-{
-    <a href="@Url.Action("List", "Post" , new { tag=tag })" class="tag-link"><span class="tag label label-info">@tag</span></a>
-}
-<br />
-<!-- Comments Form -->
-@if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
-     && !(bool)TempData["UserAccountSuspended"])
-{
+    <!-- Title -->
+    <h1>@Model.Title</h1>
+    <!-- Author -->
+    <p><span class="glyphicon glyphicon-time"></span> Publicado el @Model.EffectDate.ToString("dd/MM/yyyy") por <a href="@Url.Action("Details", "Profile", new { id = Model.IdWriter })">@Model.WriterUserName</a></p>
     <hr />
-    <div class="well">
-        <h4>Deja tu comentario:</h4>
-        <form role="form">
-            <div class="form-group">
-                <textarea class="form-control" rows="3" maxlength="250" id="textComment"></textarea>
-            </div>
-            <button id="btnComment" class="btn btn-primary">Comentar</button>
-        </form>
-    </div>
-}
+    <!-- Post Content -->
+    <p class="lead">@Html.Raw(Model.Body)</p>
+    @*<hr />*@
+    <br />
 
-@if (Comments.Any())
-{
-    foreach (var commentary in Comments)
-    {
-    <!-- Comment -->
-        <div class="media" id="@commentary.Id">
-            <a class="pull-left" href="#" onclick="return false;">
-                <img class="media-object" src="~/Content/Images/GenericUser.png" height="64" width="64">
-            </a>
-            <div class="media-body">
-                <h4 class="media-heading">
-                    @commentary.WriterUserName
-                    <small>@commentary.EffectDate.ToString("dd/MM/yyyy")</small>
-
-                    @if ((User.Identity.IsAuthenticated) && (User.Identity.Name == commentary.WriterUserName)
-                         && !(bool)TempData["UserAccountSuspended"])
-                    {
-                        <span>&nbsp;</span>
-                        <small><a class="deleteCommentary text-danger" href="#" id="@commentary.Id">Eliminar comentario</a></small>
-                    }
-                    else
-                    {
-                        if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdComment == commentary.Id)
-                             && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
+    if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
                              && !(bool)TempData["UserAccountSuspended"])
-                        {
-                            anyCommentaryComplaintPosibility = true;
-                            <span>&nbsp;</span>
-                            <small><a id="denunciateCommentary" class="text-danger" href="#" commentary-id="@commentary.Id">Denunciar comentario</a></small>
-                        }
-                    }
-                </h4>
-                @commentary.CommentaryText
-            </div>
+    {
+        <div class="form-group">
+            <input id="postId" type="hidden" value="@Model.Id" />
+            <a href="#" id="likeBtn" pressed="@userGoodVote" class="btn btn-default fa fa-thumbs-o-up" style="border-radius: 10%;">&nbsp;@goodVotesCount</a>
+            <a href="#" id="dislikeBtn" pressed="@userBadVote" class="btn btn-default fa fa-thumbs-o-down" style="border-radius: 10%;">&nbsp;@badVotesCount</a>
         </div>
     }
+
+    foreach (var tag in Model.Tags)
+    {
+        <a href="@Url.Action("List", "Post" , new { tag=tag })" class="tag-link"><span class="tag label label-info">@tag</span></a>
+    }
+    <br />
+    <!-- Comments Form -->
+    if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
+                             && !(bool)TempData["UserAccountSuspended"])
+    {
+        <hr />
+        <div class="well">
+            <h4>Deja tu comentario:</h4>
+            <form role="form">
+                <div class="form-group">
+                    <textarea class="form-control" rows="3" maxlength="250" id="textComment"></textarea>
+                </div>
+                <button id="btnComment" class="btn btn-primary">Comentar</button>
+            </form>
+        </div>
+    }
+
+    if (Comments.Any())
+    {
+        foreach (var commentary in Comments)
+        {
+            <!-- Comment -->
+            <div class="media" id="@commentary.Id">
+                <a class="pull-left" href="#" onclick="return false;">
+                    <img class="media-object" src="~/Content/Images/GenericUser.png" height="64" width="64">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        @commentary.WriterUserName
+                        <small>@commentary.EffectDate.ToString("dd/MM/yyyy")</small>
+
+                        @if ((User.Identity.IsAuthenticated) && (User.Identity.Name == commentary.WriterUserName)
+                         && !(bool)TempData["UserAccountSuspended"])
+                        {
+                            <span>&nbsp;</span>
+                            <small><a class="deleteCommentary text-danger" href="#" id="@commentary.Id">Eliminar comentario</a></small>
+                        }
+                        else
+                        {
+                            if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdComment == commentary.Id)
+                                 && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
+                                 && !(bool)TempData["UserAccountSuspended"])
+                            {
+                                anyCommentaryComplaintPosibility = true;
+                                <span>&nbsp;</span>
+                                <small><a id="denunciateCommentary" class="text-danger" href="#" commentary-id="@commentary.Id">Denunciar comentario</a></small>
+                            }
+                        }
+                    </h4>
+                    @commentary.CommentaryText
+                </div>
+            </div>
+        }
+    }
+
+    <div id="newComment" class="media"></div>
+    <hr>
+    if (postComplaints != null && postComplaints.Any())
+    {
+        <h3 class="text-danger"><b>Denuncias</b></h3>
+        <br />
+        <ul>
+            @foreach (var complaint in postComplaints)
+            {
+                <li><a href="@Url.Action("Details", "Profile", new { id = complaint.IdUser })" target="_blank">@complaint.UserName</a>: @complaint.Description</li>
+            }
+        </ul>
+        <br />
+    }
+
+    <div class="col-md-2">
+        <p>
+            @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
+        </p>
+    </div>
+
+    @*Verifica que el usuario esté logueado, que no sea el escritor de la publicación y que no haya denunciado anteriormente esta misma publicación.*@
+    if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdPost == Model.Id)
+                    && (User.Identity.Name != Model.WriterUserName)
+                    && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
+                    && !(bool)TempData["UserAccountSuspended"])
+    {
+        <div class="col-md-offset-8 col-md-2">
+            <a id="denunciatePost" href="#" class="btn btn-danger">Denunciar Publicación</a>
+        </div>
+        { Html.RenderPartial("_PostComplaint", new DotW.Models.PostComplaintViewModel { PostId = Model.Id }); }
+    }
+
+    if (anyCommentaryComplaintPosibility)
+    {
+        { Html.RenderPartial("_CommentaryComplaint", new DotW.Models.CommentaryComplaintViewModel()); }
+    }
 }
-
-<div id="newComment" class="media"></div>
-<hr>
-
-<div class="col-md-2">
+else
+{
+    <h3>La publicación a la que usted intenta acceder se encuentra dada de baja.</h3>
+    <br />
     <p>
         @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
     </p>
-</div>
-
-@*Verifica que el usuario esté logueado, que no sea el escritor de la publicación y que no haya denunciado anteriormente esta misma publicación.*@
-@if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdPost == Model.Id)
-     && (User.Identity.Name != Model.WriterUserName)
-     && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
-     && !(bool)TempData["UserAccountSuspended"])
-{
-    <div class="col-md-offset-8 col-md-2">
-        <a id="denunciatePost" href="#" class="btn btn-danger">Denunciar Publicación</a>
-    </div>
-    { Html.RenderPartial("_PostComplaint", new DotW.Models.PostComplaintViewModel { PostId = Model.Id }); }
-}
-
-@if (anyCommentaryComplaintPosibility)
-{
-    { Html.RenderPartial("_CommentaryComplaint", new DotW.Models.CommentaryComplaintViewModel()); }
 }
 
 @section Scripts {
@@ -149,7 +174,7 @@
                 success: function (data) {
                     $("#newComment").html($("#newComment").html() + data.success);
                     $('#textComment').val("");
-                    
+
                     DeleteCommentaryAjax();
                 }
             });

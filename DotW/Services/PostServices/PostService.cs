@@ -191,6 +191,7 @@
                         Summary = x.Summary,
                         Body = x.Body,
                         EffectDate = x.EffectDate,
+                        NullDate = x.NullDate,
                         IdWriter = x.IdWriter,
                         WriterUserName = x.Users.Name,
                         IdCategory = x.IdCategory,
