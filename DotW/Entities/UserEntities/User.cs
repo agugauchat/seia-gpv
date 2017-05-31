@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -15,9 +16,13 @@
         public int IdState { get; set; }
         public DateTime? ActivationDate { get; set; }
         public string Email { get; set; }
+        [Display(Name = "Nombre")]
         public string FullName { get; set; }
+        [Display(Name = "Teléfono")]
         public string Phone { get; set; }
+        [Display(Name = "Descripción")]
         public string Description { get; set; }
+        [Display(Name = "¿Mostrar información personal?")]
         public bool ShowData { get; set; }
     }
 }

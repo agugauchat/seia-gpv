@@ -101,6 +101,11 @@
 }
 
 <div id="newComment" class="media"></div>
+
+@if (!Request.IsAuthenticated)
+{
+    <h4>¡@Html.ActionLink("Regístrate", "Login", new { controller = "Account", returnUrl = HttpContext.Current.Request.RawUrl }) para poder realizar comentarios sobre esta publicación y dejarnos tu voto!</h4>
+}
 <hr>
 
 <div class="col-md-2">
