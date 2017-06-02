@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BanServices\BanService.cs" />
     <Compile Include="CommentaryServices\CommentaryService.cs" />
     <Compile Include="CategoryServices\CategoryService.cs" />
     <Compile Include="ComplaintServices\ComplaintService.cs" />

@@ -1,4 +1,4 @@
-﻿namespace Contracts.ComplaintContracts
+﻿namespace Contracts.BanContracts.Request
 {
     using System;
     using System.Collections.Generic;
@@ -6,8 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public enum AllowedComplaints
+    public class SearchBannedUsersRequest
     {
-        MaxPostAndCommentaryComplaints = 3
     }
 }

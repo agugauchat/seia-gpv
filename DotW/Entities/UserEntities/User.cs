@@ -24,5 +24,6 @@
         public string Description { get; set; }
         [Display(Name = "¿Mostrar información personal?")]
         public bool ShowData { get; set; }
+        public DateTime? NullDate { get; set; }
     }
 }

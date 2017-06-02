@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BansController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommentaryController.cs" />
     <Compile Include="Controllers\ComplaintController.cs" />
@@ -687,6 +688,8 @@
     <Content Include="Views\Home\TermsAndConditions.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Search\Terms.cshtml" />
+    <Content Include="Views\Bans\Index.cshtml" />
+    <Content Include="Views\Bans\CommentaryComplaints.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

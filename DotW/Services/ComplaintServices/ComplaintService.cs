@@ -102,7 +102,8 @@
                     Description = x.Description,
                     IdComment = x.IdComment,
                     IdPost = x.IdPost,
-                    IdUser = x.IdUser
+                    IdUser = x.IdUser,
+                    UserName = x.Users.Name
                 }).ToList();
 
                 return new SearchComplaintsByPostIdResponse { Complaints = result };
@@ -121,7 +122,8 @@
                     Description = x.Description,
                     IdComment = x.IdComment,
                     IdPost = x.IdPost,
-                    IdUser = x.IdUser
+                    IdUser = x.IdUser,
+                    UserName = x.Users.Name
                 }).ToList();
 
                 return new SearchComplaintsByCommentaryIdResponse { Complaints = result };
