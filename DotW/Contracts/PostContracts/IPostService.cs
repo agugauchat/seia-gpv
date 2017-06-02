@@ -20,6 +20,8 @@
 
         SearchPostsResponse SearchPosts(SearchPostsRequest request);
 
+        SearchPostsForHomeRankingsResponse SearchPostsForHomeRankings(SearchPostsForHomeRankingsRequest request);
+
         GetPostByIdResponse GetPostById(GetPostByIdRequest request);
 
         UpdatePostResponse UpdatePost(UpdatePostRequest request);

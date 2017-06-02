@@ -1,5 +1,7 @@
 ﻿@{
     ViewBag.Title = "Inicio";
+    List<Entities.PostEntities.Post> recentsPosts = ViewBag.RecentsPosts as List<Entities.PostEntities.Post>;
+    List<Entities.PostEntities.Post> mostVotedPosts = ViewBag.MostVotedPosts as List<Entities.PostEntities.Post>;
 }
 
 <div class="jumbotron" id="jumbotron">
@@ -14,13 +16,16 @@
     <div class="col-md-5 col-md-offset-1">
         <div class="panel panel-custom">
             <div class="panel-heading" id="custom-header-1">
-                <h3 class="panel-title">Top de publicaciónes más votadas</h3>
+                <h3 class="panel-title">Top de publicaciones más votadas</h3>
             </div>
             <div class="panel-body">
                 <ul>
-                    <li>
-                        <a href="#">Link1</a>
-                    </li>
+                    @foreach (var post in mostVotedPosts)
+                    {
+                        <li>
+                            <a href="@Url.Action("Details", "Post", new { id = post.Id })">@post.Title</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -32,9 +37,12 @@
             </div>
             <div class="panel-body">
                 <ul>
-                    <li>
-                        <a href="#">Link1</a>
-                    </li>
+                    @foreach (var post in recentsPosts)
+                    {
+                        <li>
+                            <a href="@Url.Action("Details", "Post", new { id = post.Id })">@post.Title</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
