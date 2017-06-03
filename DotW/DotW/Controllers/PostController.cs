@@ -184,6 +184,7 @@
 
             var postService = new PostService();
             var categoryService = new CategoryService();
+            var complaintService = new ComplaintService();
 
             var result = postService.GetPostById(new GetPostByIdRequest { Id = id }).Post;
 
@@ -207,6 +208,8 @@
                 Value = x.Id.ToString()
             });
 
+            ViewBag.Complaints = complaintService.SearchComplaintsByPostId(new SearchComplaintsByPostIdRequest { PostId = model.Id }).Complaints;
+
             return View(model);
         }
 
@@ -223,9 +226,16 @@
 
             var postService = new PostService();
             var categoryService = new CategoryService();
+            var complaintService = new ComplaintService();
             string finalFileName = string.Empty;
 
-            if (model.File != null && !model.DeleteImage)
+            var postComplaints = complaintService.SearchComplaintsByPostId(new SearchComplaintsByPostIdRequest { PostId = model.Id }).Complaints;
+
+            if (postComplaints.Any())
+            {
+                ModelState.AddModelError("", "Su publicación posee denuncias asociadas y no puede ser editada.");
+            }
+            else if (model.File != null && !model.DeleteImage)
             {
                 if ((new AllowedExtensions()).ImageExtensions.Contains(Path.GetExtension(model.File.FileName).Remove(0, 1).ToLower()))
                 {
@@ -270,6 +280,8 @@
                 Text = x.Title,
                 Value = x.Id.ToString()
             });
+
+            ViewBag.Complaints = complaintService.SearchComplaintsByPostId(new SearchComplaintsByPostIdRequest { PostId = model.Id }).Complaints;
 
             return View(model);
         }

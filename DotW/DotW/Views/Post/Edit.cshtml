@@ -3,6 +3,7 @@
 @model DotW.Models.EditPostViewModel
 @{
     ViewBag.Title = "Editar Publicación";
+    var complaints = ViewBag.Complaints as List<Entities.ComplaintEntities.Complaint>;
 }
 
 @section Styles {
@@ -10,85 +11,96 @@
     <link href="~/Content/tagsinput/src/bootstrap-tagsinput.css" rel="stylesheet" />
 }
 
-<h2>Editar la publicación</h2>
-
-@using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@if (complaints.Any())
 {
-    @Html.AntiForgeryToken()
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
-    <div class="form-group">
-        @Html.LabelFor(model => model.Title, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group" id="imageInputContainer">
-        @Html.LabelFor(model => model.ImageName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10 input-group">
-            <label class="input-group-btn">
-                <span class="btn btn-primary">
-                    Examinar… <input id="imageInput" type="file" name="File" accept="image/*" />
-                </span>
-            </label>
-            <input id="imageNameField" type="text" class="form-control" readonly="">
-        </div>
-    </div>
-    if (!string.IsNullOrEmpty(Model.PrincipalImageName))
-    {
-        @Html.HiddenFor(model => model.PrincipalImageName);
-        <div class="form-group" id="imagePreview">
-            @Html.LabelFor(model => model.PrincipalImageName, new { @class = "col-md-2 control-label"})
-            <div class="col-md-10">
-                <a class="btn btn-info" href="@Url.Content((ConfigurationManager.AppSettings["PathPostPrincipalImages"]) + Model.PrincipalImageName)" target="_blank">Ver Imagen</a>
-            </div>
-        </div>
-    }
-    <div class="form-group" id="deleteImageContainer">
-        @Html.LabelFor(model => model.DeleteImage, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.CheckBoxFor(model => model.DeleteImage, new { @id = "deleteImage"})
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Summary, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(model => model.Summary, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Body, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(model => model.Body, new { @id = "postEditor", @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-2 control-label">Tags</label>
-        <div class="col-md-10">
-            <input type="text" id="postTags" value="@string.Join(",", Model.Tags)" data-role="tagsinput" />
-            @foreach (var tag in Model.Tags)
-            {
-                <input id="@tag" name="Tags" type="hidden" value="@tag" />;
-            }
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IdCategory, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.IdCategory, (IEnumerable<SelectListItem>)ViewBag.Categories, "Seleccione una categoría", new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.IsDraft, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.CheckBoxFor(model => model.IsDraft)
-        </div>
-    </div>
+    <h3>Su publicación posee denuncias asociadas y no puede ser editada.</h3>
+    <br />
     <p>
         @Html.ActionLink("Volver a la lista", "Index", "Post", null, new { @class = "btn btn-default" })
-        <input type="submit" class="btn btn-success" value="Guardar" />
     </p>
+}
+else
+{
+    <h2>Editar la publicación</h2>
+
+    using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group" id="imageInputContainer">
+            @Html.LabelFor(model => model.ImageName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10 input-group">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                        Examinar… <input id="imageInput" type="file" name="File" accept="image/*" />
+                    </span>
+                </label>
+                <input id="imageNameField" type="text" class="form-control" readonly="">
+            </div>
+        </div>
+        if (!string.IsNullOrEmpty(Model.PrincipalImageName))
+        {
+            @Html.HiddenFor(model => model.PrincipalImageName);
+            <div class="form-group" id="imagePreview">
+                @Html.LabelFor(model => model.PrincipalImageName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    <a class="btn btn-info" href="@Url.Content((ConfigurationManager.AppSettings["PathPostPrincipalImages"]) + Model.PrincipalImageName)" target="_blank">Ver Imagen</a>
+                </div>
+            </div>
+        }
+        <div class="form-group" id="deleteImageContainer">
+            @Html.LabelFor(model => model.DeleteImage, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.DeleteImage, new { @id = "deleteImage" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Summary, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Summary, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Body, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Body, new { @id = "postEditor", @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Tags</label>
+            <div class="col-md-10">
+                <input type="text" id="postTags" value="@string.Join(",", Model.Tags)" data-role="tagsinput" />
+                @foreach (var tag in Model.Tags)
+                {
+                    <input id="@tag" name="Tags" type="hidden" value="@tag" />;
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdCategory, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.IdCategory, (IEnumerable<SelectListItem>)ViewBag.Categories, "Seleccione una categoría", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsDraft, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.IsDraft)
+            </div>
+        </div>
+        <p>
+            @Html.ActionLink("Volver a la lista", "Index", "Post", null, new { @class = "btn btn-default" })
+            <input type="submit" class="btn btn-success" value="Guardar" />
+        </p>
+    }
 }
 
 @section Scripts {
