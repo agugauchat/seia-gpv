@@ -25,7 +25,7 @@
 
             if (user != null)
             {
-                var posts = postService.SearchPostsByUserId(new SearchPostsByUserIdRequest() { UserId = id }).Posts;
+                var posts = postService.SearchPostsByUserId(new SearchPostsByUserIdRequest() { UserId = id }).Posts.Where(x => !x.IsDraft).ToList();
 
                 ViewBag.Posts = posts;
 

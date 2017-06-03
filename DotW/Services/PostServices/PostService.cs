@@ -55,7 +55,7 @@
             {
                 var result = new List<Post>();
                 result = db.Posts.Where(x => x.Tags.Any(t => t.Tag == request.Tag)
-                                             && !x.NullDate.HasValue)
+                                             && !x.NullDate.HasValue && !x.IsDraft)
                     .Select(x => new Post
                     {
                         Id = x.Id,
@@ -131,7 +131,7 @@
             {
                 var result = new List<Post>();
                 result = db.Posts.Where(x => x.IdCategory == request.IdCategory
-                                             && !x.NullDate.HasValue)
+                                             && !x.NullDate.HasValue && !x.IsDraft)
                     .Select(x => new Post
                     {
                         Id = x.Id,
@@ -156,7 +156,7 @@
         {
             using (var db = new DotWEntities())
             {
-                var result = db.Posts.Where(x => !x.NullDate.HasValue)
+                var result = db.Posts.Where(x => !x.NullDate.HasValue && !x.IsDraft)
                         .Select(x => new Post
                         {
                             Id = x.Id,
@@ -181,7 +181,7 @@
         {
             using (var db = new DotWEntities())
             {
-                var result = db.Posts.Where(x => !x.NullDate.HasValue)
+                var result = db.Posts.Where(x => !x.NullDate.HasValue && !x.IsDraft)
                         .Select(x => new Post
                         {
                             Id = x.Id,
