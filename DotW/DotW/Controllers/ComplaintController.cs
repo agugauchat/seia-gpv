@@ -58,7 +58,7 @@
                         // Se da de baja la publicación.
                         var deletePostResult = postService.DeletePost(new DeletePostRequest { Id = complaintResult.PostId, IsComplaintOrVoteDifference = true });
 
-                        var complaints = complaintService.SearchComplaintsByPostId(new SearchComplaintsByPostIdRequest { PostId = post.Id }).Complaints;
+                        var complaints = complaintService.SearchComplaintsByPostId(new SearchComplaintsByPostIdRequest { PostId = post.Id }).Complaints.OrderByDescending(x => x.Id).Take(3).ToList();
 
                         // Se notifica la baja del post via correo electrónico al escritor.
                         SendPostDeletedEmailToWriter(post, complaints);
@@ -121,7 +121,7 @@
                         // Se da de baja el comentario.
                         var deletePostResult = commentaryService.DeleteCommentary(new DeleteCommentaryRequest { Id = complaintResult.CommentaryId, IsComplaintOrVoteDifference = true });
 
-                        var complaints = complaintService.SearchComplaintsByCommentaryId(new SearchComplaintsByCommentaryIdRequest { CommentaryId = commentary.Id }).Complaints;
+                        var complaints = complaintService.SearchComplaintsByCommentaryId(new SearchComplaintsByCommentaryIdRequest { CommentaryId = commentary.Id }).Complaints.OrderByDescending(x => x.Id).Take(3).ToList();
 
                         // Se notifica la baja del comentario via correo electrónico al escritor.
                         SendCommentaryDeletedEmailToWriter(commentary, complaints);
@@ -173,9 +173,9 @@
 
                 body = body.Replace("{UserName}", writerUser.Name);
                 body = body.Replace("{PostTitle}", post.Title);
-                body = body.Replace("{FirstComplaint}", complaints[0].Description);
-                body = body.Replace("{SecondComplaint}", complaints[1].Description);
-                body = body.Replace("{ThirdComplaint}", complaints[2].Description);
+                body = body.Replace("{FirstComplaint}", string.IsNullOrEmpty(complaints[0].Description) ? "Denuncia sin comentario." : complaints[0].Description);
+                body = body.Replace("{SecondComplaint}", string.IsNullOrEmpty(complaints[1].Description) ? "Denuncia sin comentario." : complaints[1].Description);
+                body = body.Replace("{ThirdComplaint}", string.IsNullOrEmpty(complaints[2].Description) ? "Denuncia sin comentario." : complaints[2].Description);
 
                 m.Body = body;
 
@@ -214,9 +214,9 @@
                 body = body.Replace("{UserName}", writerUser.Name);
                 body = body.Replace("{Commentary}", commentary.CommentaryText);
                 body = body.Replace("{PostTitle}", post.Title);
-                body = body.Replace("{FirstComplaint}", complaints[0].Description);
-                body = body.Replace("{SecondComplaint}", complaints[1].Description);
-                body = body.Replace("{ThirdComplaint}", complaints[2].Description);
+                body = body.Replace("{FirstComplaint}", string.IsNullOrEmpty(complaints[0].Description) ? "Denuncia sin comentario." : complaints[0].Description);
+                body = body.Replace("{SecondComplaint}", string.IsNullOrEmpty(complaints[1].Description) ? "Denuncia sin comentario." : complaints[1].Description);
+                body = body.Replace("{ThirdComplaint}", string.IsNullOrEmpty(complaints[2].Description) ? "Denuncia sin comentario." : complaints[2].Description);
 
                 m.Body = body;
 
