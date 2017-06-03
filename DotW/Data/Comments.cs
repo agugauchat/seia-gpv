@@ -18,6 +18,7 @@ namespace Data
         public Comments()
         {
             this.Complaints = new HashSet<Complaints>();
+            this.Comments1 = new HashSet<Comments>();
         }
     
         public int Id { get; set; }
@@ -27,10 +28,14 @@ namespace Data
         public System.DateTime EffectDate { get; set; }
         public Nullable<System.DateTime> NullDate { get; set; }
         public bool DeletedByComplaints { get; set; }
+        public Nullable<int> IdUpperComment { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Complaints> Complaints { get; set; }
         public virtual Posts Posts { get; set; }
         public virtual Users Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comments> Comments1 { get; set; }
+        public virtual Comments Comments2 { get; set; }
     }
 }

@@ -88,6 +88,7 @@
           <Property Name="EffectDate" Type="datetime" Nullable="false" />
           <Property Name="NullDate" Type="datetime" />
           <Property Name="DeletedByComplaints" Type="bit" Nullable="false" />
+          <Property Name="IdUpperComment" Type="int" />
         </EntityType>
         <EntityType Name="Complaints">
           <Key>
@@ -211,6 +212,18 @@ warning 6002: The table/view 'DotW.dbo.vw_Posts' does not have a primary key def
             </Principal>
             <Dependent Role="Categories1">
               <PropertyRef Name="IdUpperCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_Comments">
+          <End Role="Comments" Type="Self.Comments" Multiplicity="0..1" />
+          <End Role="Comments1" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments1">
+              <PropertyRef Name="IdUpperComment" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -464,6 +477,10 @@ warning 6002: The table/view 'DotW.dbo.vw_Posts' does not have a primary key def
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
           </AssociationSet>
+          <AssociationSet Name="FK_Comments_Comments" Association="Self.FK_Comments_Comments">
+            <End Role="Comments" EntitySet="Comments" />
+            <End Role="Comments1" EntitySet="Comments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Comments_Post" Association="Self.FK_Comments_Post">
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Comments" EntitySet="Comments" />
@@ -701,6 +718,10 @@ warning 6002: The table/view 'DotW.dbo.vw_Posts' does not have a primary key def
           <Parameter Name="text" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="vw_Comments" EntityType="DotWModel.vw_Comments" />
+          <AssociationSet Name="FK_Comments_Comments" Association="DotWModel.FK_Comments_Comments">
+            <End Role="Comments" EntitySet="Comments" />
+            <End Role="Comments1" EntitySet="Comments" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Complaints">
           <Key>
@@ -794,6 +815,9 @@ warning 6002: The table/view 'DotW.dbo.vw_Posts' does not have a primary key def
           <NavigationProperty Name="Complaints" Relationship="DotWModel.FK_Complaints_Comment" FromRole="Comments" ToRole="Complaints" />
           <NavigationProperty Name="Posts" Relationship="DotWModel.FK_Comments_Post" FromRole="Comments" ToRole="Posts" />
           <NavigationProperty Name="Users" Relationship="DotWModel.FK_Comments_User" FromRole="Comments" ToRole="Users" />
+          <Property Name="IdUpperComment" Type="Int32" />
+          <NavigationProperty Name="Comments1" Relationship="DotWModel.FK_Comments_Comments" FromRole="Comments" ToRole="Comments1" />
+          <NavigationProperty Name="Comments2" Relationship="DotWModel.FK_Comments_Comments" FromRole="Comments1" ToRole="Comments" />
         </EntityType>
         <Association Name="FK_Complaints_Comment">
           <End Type="DotWModel.Comments" Role="Comments" Multiplicity="0..1" />
@@ -1025,6 +1049,18 @@ warning 6002: The table/view 'DotW.dbo.vw_Posts' does not have a primary key def
           <Property Name="IdUser" Type="Int32" Nullable="false" />
           <Property Name="WriterUserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <Association Name="FK_Comments_Comments">
+          <End Type="DotWModel.Comments" Role="Comments" Multiplicity="0..1" />
+          <End Type="DotWModel.Comments" Role="Comments1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments1">
+              <PropertyRef Name="IdUpperComment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1148,6 +1184,7 @@ warning 6002: The table/view 'DotW.dbo.vw_Posts' does not have a primary key def
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="DotWModel.Comments">
               <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="IdUpperComment" ColumnName="IdUpperComment" />
                 <ScalarProperty Name="DeletedByComplaints" ColumnName="DeletedByComplaints" />
                 <ScalarProperty Name="NullDate" ColumnName="NullDate" />
                 <ScalarProperty Name="EffectDate" ColumnName="EffectDate" />

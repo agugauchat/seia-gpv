@@ -96,6 +96,7 @@
     <Compile Include="PostContracts\Request\SearchPostsByCategoryIdRequest.cs" />
     <Compile Include="PostContracts\Request\SearchPostsByTagRequest.cs" />
     <Compile Include="PostContracts\Request\SearchPostsByUserIdRequest.cs" />
+    <Compile Include="PostContracts\Request\SearchPostsForHomeRankingsRequest.cs" />
     <Compile Include="PostContracts\Request\SearchPostsRequest.cs" />
     <Compile Include="PostContracts\Request\UpdatePostRequest.cs" />
     <Compile Include="PostContracts\Response\CreatePostResponse.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="PostContracts\Response\SearchPostsByCategoryIdResponse.cs" />
     <Compile Include="PostContracts\Response\SearchPostsByTagResponse.cs" />
     <Compile Include="PostContracts\Response\SearchPostsByUserIdResponse.cs" />
+    <Compile Include="PostContracts\Response\SearchPostsForHomeRankingsResponse.cs" />
     <Compile Include="PostContracts\Response\SearchPostsResponse.cs" />
     <Compile Include="PostContracts\Response\UpdatePostResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

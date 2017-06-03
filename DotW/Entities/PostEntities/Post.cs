@@ -44,5 +44,8 @@
         public List<string> Tags { get; set; }
 
         public DateTime? NullDate { get; set; }
+
+        [Display(Name = "Votos positivos")]
+        public int? GoodVotes { get; set; }
     }
 }

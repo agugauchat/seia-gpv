@@ -177,6 +177,22 @@
             }
         }
 
+        public SearchPostsForHomeRankingsResponse SearchPostsForHomeRankings(SearchPostsForHomeRankingsRequest request)
+        {
+            using (var db = new DotWEntities())
+            {
+                var result = db.Posts.Where(x => !x.NullDate.HasValue)
+                        .Select(x => new Post
+                        {
+                            Id = x.Id,
+                            Title = x.Title,
+                            EffectDate = x.EffectDate,
+                        }).ToList();
+
+                return new SearchPostsForHomeRankingsResponse { Posts = result };
+            }
+        }
+
         public GetPostByIdResponse GetPostById(GetPostByIdRequest request)
         {
             using (var db = new DotWEntities())

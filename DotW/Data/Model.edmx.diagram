@@ -36,6 +36,7 @@
         <AssociationConnector Association="DotWModel.FK_Votes_User" />
         <EntityTypeShape EntityType="DotWModel.vw_Posts" Width="2.75" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="DotWModel.vw_Comments" Width="1.875" PointX="7.375" PointY="0.75" />
+        <AssociationConnector Association="DotWModel.FK_Comments_Comments" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

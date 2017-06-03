@@ -1,9 +1,67 @@
 ﻿@{
     ViewBag.Title = "Inicio";
+    List<Entities.PostEntities.Post> recentsPosts = ViewBag.RecentsPosts as List<Entities.PostEntities.Post>;
+    List<Entities.PostEntities.Post> mostVotedPosts = ViewBag.MostVotedPosts as List<Entities.PostEntities.Post>;
 }
 
-<div class="jumbotron">
+<div class="jumbotron" id="jumbotron">
     <h1>Devs of the Web</h1>
-    <p class="lead">Bienvenido a Devs of the Web, una comunidad de desarrolladores web que te permitirá leer y escribir publicaciones referidas a temáticas asociadas al desarrollo web.
-    Estas publicaciones están categorizadas bajo diferentes tópicos, que te permitirán, de una manera fácil, filtrar el contenido para dejar sólo el que sea de tu interés.</p>
+    <p>
+        Bienvenido a Devs of the Web, una comunidad de desarrolladores web que te permitirá leer y escribir publicaciones referidas a temáticas asociadas al desarrollo web.
+        Estas publicaciones están categorizadas bajo diferentes tópicos, que te permitirán, de una manera fácil, filtrar el contenido para dejar sólo el que sea de tu interés.
+    </p>
 </div>
+
+<div class="row">
+    <div class="col-md-5 col-md-offset-1">
+        <div class="panel panel-custom">
+            <div class="panel-heading" id="custom-header-1">
+                <h3 class="panel-title">Top de publicaciones más votadas</h3>
+            </div>
+            <div class="panel-body">
+                <ul>
+                    @foreach (var post in mostVotedPosts)
+                    {
+                        <li>
+                            <a href="@Url.Action("Details", "Post", new { id = post.Id })">@post.Title</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="panel panel-custom">
+            <div class="panel-heading" id="custom-header-2">
+                <h3 class="panel-title">Publicaciones más recientes</h3>
+            </div>
+            <div class="panel-body">
+                <ul>
+                    @foreach (var post in recentsPosts)
+                    {
+                        <li>
+                            <a href="@Url.Action("Details", "Post", new { id = post.Id })">@post.Title</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    #jumbotron {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    #custom-header-1, #custom-header-2 {
+        background-color: #42494f;
+        border-color: #42494f;
+        color: white;
+    }
+
+    .panel-custom {
+        border-color: #42494f;
+    }
+</style>
