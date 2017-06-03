@@ -233,7 +233,7 @@
                     post.Summary = request.Summary;
                     post.Body = request.Body;
                     post.IdCategory = request.IdCategory;
-                    post.IsDraft = request.IsDraft;
+                    post.IsDraft = post.IsDraft ? request.IsDraft : post.IsDraft;
                     post.PrincipalImageName = request.PrincipalImageName;
 
                     db.SaveChanges();
