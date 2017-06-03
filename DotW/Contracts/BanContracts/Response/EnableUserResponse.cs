@@ -8,5 +8,7 @@
 
     public class EnableUserResponse
     {
+        public string UserName { get; set; }
+        public string Email { get; set; }
     }
 }

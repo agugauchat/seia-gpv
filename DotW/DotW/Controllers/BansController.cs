@@ -6,6 +6,8 @@ using Services.CommentaryServices;
 using Services.ComplaintServices;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -50,6 +52,8 @@ namespace DotW.Controllers
 
             var result = banService.EnableUser(new EnableUserRequest { UserId = id });
 
+            SendAccountEnabledToUser(result.UserName, result.Email);
+
             return RedirectToAction("Index");
         }
 
@@ -63,5 +67,36 @@ namespace DotW.Controllers
 
             return View();
         }
+
+        #region Private Methods
+
+        private void SendAccountEnabledToUser(string userName, string email)
+        {
+            System.Net.Mail.MailMessage m = new System.Net.Mail.MailMessage(
+                        new System.Net.Mail.MailAddress("no-reply@devsoftheweb.com", "Devs of the Web"),
+                        new System.Net.Mail.MailAddress(email));
+
+            m.Subject = "Cuenta habilitada nuevamente.";
+
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/EmailTemplate/AccountEnabled.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+
+            body = body.Replace("{UserName}", userName);
+
+            m.Body = body;
+
+            m.IsBodyHtml = true;
+            System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com");
+            smtp.Port = 587;
+            smtp.EnableSsl = true;
+            string emailPassword = ConfigurationManager.AppSettings["EmailPassword"];
+            smtp.Credentials = new System.Net.NetworkCredential("devsoftheweb@gmail.com", emailPassword);
+            smtp.Send(m);
+        }
+
+        #endregion
     }
 }

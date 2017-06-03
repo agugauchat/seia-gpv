@@ -66,7 +66,7 @@
                 var response = new SearchBannedUsersResponse { Users = new List<User>() };
 
                 response.Users.AddRange(db.Users
-                    .Where(x => x.NullDate.HasValue && x.ActivationDate.HasValue
+                    .Where(x => x.ActivationDate.HasValue
                                 && (x.UserStates.State == UserAccountStates.Suspended.ToString()
                                     || x.UserStates.State == UserAccountStates.Blocked.ToString()))
                     .Select(x => new User
@@ -148,7 +148,7 @@
                     db.SaveChanges();
                 }
 
-                return new EnableUserResponse();
+                return new EnableUserResponse { UserName = user.Name, Email = user.AspNetUsers.Email};
             }
         }
     }

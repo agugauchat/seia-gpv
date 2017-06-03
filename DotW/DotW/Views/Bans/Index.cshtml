@@ -71,7 +71,7 @@
         <tr>
             <th>Nombre de Usuario</th>
             <th>Fecha alta</th>
-            <th>Fecha baja</th>
+            <th>Fecha reactivación</th>
             <th>Email</th>
             <th>Acciones</th>
         </tr>
@@ -82,7 +82,7 @@
             <tr>
                 <td><a href="@Url.Action("Details", "Profile", new { id = user.Id })" target="_blank">@user.Name</a></td>
                 <td>@user.EffectDate.ToString("dd/MM/yyyy")</td>
-                <td>@user.NullDate.Value.ToString("dd/MM/yyyy")</td>
+                <td>@user.ActivationDate.Value.ToString("dd/MM/yyyy HH:mm")</td>
                 <td>@user.Email</td>
                 <td>
                     @Html.ActionLink("Habilitar", "EnableUser", "Bans", new { id = user.Id }, new { @class = "btn btn-success" })

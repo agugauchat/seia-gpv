@@ -624,6 +624,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Search\Searchs.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\EmailTemplate\AccountEnabled.html" />
     <Content Include="Views\EmailTemplate\AccountBlocked.html" />
     <Content Include="Views\EmailTemplate\CommentaryDeleted.html" />
     <Content Include="Views\EmailTemplate\PostDeletedByComplaints.html" />
