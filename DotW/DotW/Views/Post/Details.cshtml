@@ -1,149 +1,149 @@
 ﻿@model Entities.PostEntities.Post
 
 @{
-	ViewBag.Title = "Publicación";
-	var Comments = (List<Entities.CommentaryEntities.Commentary>)ViewBag.Comments;
-	var Replies = (List<Entities.CommentaryEntities.Commentary>)ViewBag.Replies;
-	var userComplaints = (List<Entities.ComplaintEntities.Complaint>)ViewBag.UserComplaints;
-	var postComplaints = (List<Entities.ComplaintEntities.Complaint>)ViewBag.Complaints;
-	List<string> currentRoles = ViewBag.RolesOfCurrentUser as List<string>;
-	var goodVotesCount = ViewBag.GoodVotes;
-	var badVotesCount = ViewBag.BadVotes;
-	var userGoodVote = ViewBag.UserGoodVote;
-	var userBadVote = ViewBag.UserBadVote;
-	var anyCommentaryComplaintPosibility = false;
+    ViewBag.Title = "Publicación";
+    var Comments = (List<Entities.CommentaryEntities.Commentary>)ViewBag.Comments;
+    var Replies = (List<Entities.CommentaryEntities.Commentary>)ViewBag.Replies;
+    var userComplaints = (List<Entities.ComplaintEntities.Complaint>)ViewBag.UserComplaints;
+    var postComplaints = (List<Entities.ComplaintEntities.Complaint>)ViewBag.Complaints;
+    List<string> currentRoles = ViewBag.RolesOfCurrentUser as List<string>;
+    var goodVotesCount = ViewBag.GoodVotes;
+    var badVotesCount = ViewBag.BadVotes;
+    var userGoodVote = ViewBag.UserGoodVote;
+    var userBadVote = ViewBag.UserBadVote;
+    var anyCommentaryComplaintPosibility = false;
 }
 
 @section Styles {
-	<link href="~/Content/ViewsStyles/Post/Details.css" rel="stylesheet" />
-	<script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
-	<link href="~/Content/ckeditor/ckeditor_style.css" rel="stylesheet" />
-	<!-- Custom CSS -->
-	<link href="~/Content/blog-post.css" rel="stylesheet">
-	<!-- Code Highlight -->
-	<link href="~/Content/ckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css" rel="stylesheet" />
+    <link href="~/Content/ViewsStyles/Post/Details.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
+    <link href="~/Content/ckeditor/ckeditor_style.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="~/Content/blog-post.css" rel="stylesheet">
+    <!-- Code Highlight -->
+    <link href="~/Content/ckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css" rel="stylesheet" />
 }
 
 @if (!Model.IsDraft && (!Model.NullDate.HasValue || (Request.IsAuthenticated && currentRoles.Contains("Admin"))))
 {
 
-	<!-- Title -->
-	<h1>@Model.Title</h1>
-	<!-- Author -->
-	<p><span class="glyphicon glyphicon-time"></span> Publicado el @Model.EffectDate.ToString("dd/MM/yyyy") por <a href="@Url.Action("Details", "Profile", new { id = Model.IdWriter })">@Model.WriterUserName</a></p>
-	<hr />
-	<!-- Post Content -->
-	<p class="lead">@Html.Raw(Model.Body)</p>
-	@*<hr />*@
-	<br />
+    <!-- Title -->
+    <h1>@Model.Title</h1>
+    <!-- Author -->
+    <p><span class="glyphicon glyphicon-time"></span> Publicado el @Model.EffectDate.ToString("dd/MM/yyyy") por <a href="@Url.Action("Details", "Profile", new { id = Model.IdWriter })">@Model.WriterUserName</a></p>
+    <hr />
+    <!-- Post Content -->
+    <p class="lead">@Html.Raw(Model.Body)</p>
+    @*<hr />*@
+    <br />
 
-	if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
-	 && !(bool)TempData["UserAccountSuspended"])
-	{
-		<div class="form-group">
-			<input id="postId" type="hidden" value="@Model.Id" />
-			<a href="#" id="likeBtn" pressed="@userGoodVote" class="btn btn-default fa fa-thumbs-o-up" style="border-radius: 10%;">&nbsp;@goodVotesCount</a>
-			<a href="#" id="dislikeBtn" pressed="@userBadVote" class="btn btn-default fa fa-thumbs-o-down" style="border-radius: 10%;">&nbsp;@badVotesCount</a>
-		</div>
-	}
+    if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
+     && !(bool)TempData["UserAccountSuspended"])
+    {
+        <div class="form-group">
+            <input id="postId" type="hidden" value="@Model.Id" />
+            <a href="#" id="likeBtn" pressed="@userGoodVote" class="btn btn-default fa fa-thumbs-o-up" style="border-radius: 10%;">&nbsp;@goodVotesCount</a>
+            <a href="#" id="dislikeBtn" pressed="@userBadVote" class="btn btn-default fa fa-thumbs-o-down" style="border-radius: 10%;">&nbsp;@badVotesCount</a>
+        </div>
+    }
 
-	foreach (var tag in Model.Tags)
-	{
-		<a href="@Url.Action("List", "Post" , new { tag=tag })" class="tag-link"><span class="tag label label-info">@tag</span></a>
-	}
-	<br />
-	<!-- Comments Form -->
-	if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
-	 && !(bool)TempData["UserAccountSuspended"])
-	{
-		<hr />
-		<div class="well">
-			<h4>Deja tu comentario:</h4>
-			<form role="form">
-				<div id="divReplyFor"style="display: none;">
+    foreach (var tag in Model.Tags)
+    {
+        <a href="@Url.Action("List", "Post" , new { tag=tag })" class="tag-link"><span class="tag label label-info">@tag</span></a>
+    }
+    <br />
+    <!-- Comments Form -->
+    if (Request.IsAuthenticated && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
+     && !(bool)TempData["UserAccountSuspended"])
+    {
+        <hr />
+        <div class="well">
+            <h4>Deja tu comentario:</h4>
+            <form role="form">
+                <div id="divReplyFor"style="display: none;">
                     <p>
                         En respuesta a <i id="replyTo"></i> 
                         <small><a id="cancelReply" class="text-danger" href="#">Cancelar respuesta</a></small>
                     </p>
-				</div>
-				<input type="hidden" id="replyFor">
-				<div class="form-group">
-					<textarea class="form-control" rows="3" maxlength="250" id="textComment"></textarea>
-				</div>
-				<button id="btnComment" class="btn btn-primary">Comentar</button>
-			</form>
-		</div>
-	}
+                </div>
+                <input type="hidden" id="replyFor">
+                <div class="form-group">
+                    <textarea class="form-control" rows="3" maxlength="250" id="textComment"></textarea>
+                </div>
+                <button id="btnComment" class="btn btn-primary">Comentar</button>
+            </form>
+        </div>
+    }
 
-	if (Comments.Any())
-	{
-		<div class="container">
-			<div class="row">
-				<div class="col-md-offset-1">
-					<section class="comment-list">
-						<!-- Comment -->
-						@foreach (var commentary in Comments)
+    if (Comments.Any())
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-1">
+                    <section class="comment-list">
+                        <!-- Comment -->
+                        @foreach (var commentary in Comments)
                         {
-							<article class="row" id="@commentary.Id">
-								<div class="col-md-10 col-sm-10">
-									<div class="panel panel-default arrow left">
-										<div class="panel-body">
-											<header class="text-left">
+                            <article class="row" id="@commentary.Id">
+                                <div class="col-md-10 col-sm-10">
+                                    <div class="panel panel-default arrow left">
+                                        <div class="panel-body">
+                                            <header class="text-left">
                                                 <div class="comment-user">
                                                     <i class="fa fa-user"></i> <a href="@Url.Action("Details", "Profile", new { id = commentary.IdUser })">@commentary.WriterUserName</a>  
                                                     <time class="comment-date"><i class="fa fa-clock-o"></i> @commentary.EffectDate.ToString("dd/MM/yyyy")</time>
                                                 </div>
-											</header>
-											<div class="comment-post">
-												<p style="margin-bottom: 5px;">
-													@commentary.CommentaryText
-												    @if ((User.Identity.IsAuthenticated) && (User.Identity.Name == commentary.WriterUserName) && !(bool)TempData["UserAccountSuspended"])
+                                            </header>
+                                            <div class="comment-post">
+                                                <p style="margin-bottom: 5px;">
+                                                    @commentary.CommentaryText
+                                                    @if ((User.Identity.IsAuthenticated) && (User.Identity.Name == commentary.WriterUserName) && !(bool)TempData["UserAccountSuspended"])
                                                     {
-													    <span>&nbsp;</span>
-													    <small><a class="deleteCommentary text-danger" href="#" id="@commentary.Id">Eliminar comentario</a></small>
+                                                        <span>&nbsp;</span>
+                                                        <small><a class="deleteCommentary text-danger" href="#" id="@commentary.Id">Eliminar comentario</a></small>
                                                     }
                                                     else
                                                     {
                                                         if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdComment == commentary.Id) && currentRoles.Contains("User") && !currentRoles.Contains("Admin") && !(bool)TempData["UserAccountSuspended"])
                                                         {
                                                             anyCommentaryComplaintPosibility = true;
-														    <span>&nbsp;</span>
-														    <small><a id="denunciateCommentary" class="text-danger" href="#" commentary-id="@commentary.Id">Denunciar comentario</a></small>
+                                                            <span>&nbsp;</span>
+                                                            <small><a id="denunciateCommentary" class="text-danger" href="#" commentary-id="@commentary.Id">Denunciar comentario</a></small>
                                                         }
                                                     }
-												</p>
-											</div>
-											@if ((User.Identity.IsAuthenticated) && !(bool)TempData["UserAccountSuspended"])
+                                                </p>
+                                            </div>
+                                            @if ((User.Identity.IsAuthenticated) && !(bool)TempData["UserAccountSuspended"])
                                             {
-												<p class="text-right">
-													<a id="replyCommentary" href="#" class="btn btn-default btn-sm" replyTo="@commentary.WriterUserName" commentary-id="@commentary.Id">
-														<i class="fa fa-reply"></i> Responder
-													</a>
-												</p>
+                                                <p class="text-right">
+                                                    <a id="replyCommentary" href="#" class="btn btn-default btn-sm" replyTo="@commentary.WriterUserName" commentary-id="@commentary.Id">
+                                                        <i class="fa fa-reply"></i> Responder
+                                                    </a>
+                                                </p>
                                             }
-										</div>
-									</div>
-								</div>
-							</article>
-							<!-- Replies -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <!-- Replies -->
                             foreach (var reply in Replies)
                             {
                                 if (reply.IdUpperComment == commentary.Id)
                                 {
-									<article class="row" id="@reply.Id">
-										<div class="col-md-9 col-sm-9 col-md-offset-1 col-sm-offset-0 hidden-xs">
-											<div class="panel panel-default arrow left">
-												<div class="panel-heading right">En respuesta a <i>@commentary.WriterUserName</i></div>
-												<div class="panel-body">
-													<header class="text-left">
+                                    <article class="row" id="@reply.Id">
+                                        <div class="col-md-9 col-sm-9 col-md-offset-1 col-sm-offset-1">
+                                            <div class="panel panel-default arrow left">
+                                                <div class="panel-heading right">En respuesta a <i>@commentary.WriterUserName</i></div>
+                                                <div class="panel-body">
+                                                    <header class="text-left">
                                                         <div class="comment-user">
                                                             <i class="fa fa-user"></i> <a href="@Url.Action("Details", "Profile", new { id = reply.IdUser })">@reply.WriterUserName</a>  
                                                             <time class="comment-date"><i class="fa fa-clock-o"></i> @reply.EffectDate.ToString("dd/MM/yyyy")</time>
                                                         </div>
-													</header>
-													<div class="comment-post">
-														<p>
-															@reply.CommentaryText
+                                                    </header>
+                                                    <div class="comment-post">
+                                                        <p>
+                                                            @reply.CommentaryText
                                                             @if ((User.Identity.IsAuthenticated) && (User.Identity.Name == reply.WriterUserName) && !(bool)TempData["UserAccountSuspended"])
                                                             {
                                                                 <span>&nbsp;</span>
@@ -158,142 +158,142 @@
                                                                     <small><a id="denunciateCommentary" class="text-danger" href="#" commentary-id="@reply.Id">Denunciar comentario</a></small>
                                                                 }
                                                             }
-														</p>
-													</div>
-												</div>
-											</div>
-										</div>
-									</article>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
                                 }
                             }
                             <div id="newComment@{@commentary.Id}" class="media"></div>
                         }
                         <div id="newComment0" class="media"></div>
-					</section>
-				</div>
-			</div>
-		</div>
-	}
+                    </section>
+                </div>
+            </div>
+        </div>
+    }
 
 
 
-	if (!Request.IsAuthenticated)
-	{
-		<h4>¡@Html.ActionLink("Regístrate", "Login", new { controller = "Account", returnUrl = HttpContext.Current.Request.RawUrl }) para poder realizar comentarios sobre esta publicación y dejarnos tu voto!</h4>
-	}
-	<hr>
-	if (postComplaints != null && postComplaints.Any())
-	{
-		<h3 class="text-danger"><b>Denuncias</b></h3>
-		<br />
-		<ul>
-			@foreach (var complaint in postComplaints)
-			{
-				<li><a href="@Url.Action("Details", "Profile", new { id = complaint.IdUser })" target="_blank">@complaint.UserName</a>: @complaint.Description</li>
-			}
-		</ul>
-		<br />
-	}
+    if (!Request.IsAuthenticated)
+    {
+        <h4>¡@Html.ActionLink("Regístrate", "Login", new { controller = "Account", returnUrl = HttpContext.Current.Request.RawUrl }) para poder realizar comentarios sobre esta publicación y dejarnos tu voto!</h4>
+    }
+    <hr>
+    if (postComplaints != null && postComplaints.Any())
+    {
+        <h3 class="text-danger"><b>Denuncias</b></h3>
+        <br />
+        <ul>
+            @foreach (var complaint in postComplaints)
+            {
+                <li><a href="@Url.Action("Details", "Profile", new { id = complaint.IdUser })" target="_blank">@complaint.UserName</a>: @complaint.Description</li>
+            }
+        </ul>
+        <br />
+    }
 
-	<div class="col-md-2">
-		<p>
-			@Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
-		</p>
-	</div>
+    <div class="col-md-2">
+        <p>
+            @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
+        </p>
+    </div>
 
-	@*Verifica que el usuario esté logueado, que no sea el escritor de la publicación y que no haya denunciado anteriormente esta misma publicación.*@
-	if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdPost == Model.Id)
-	 && (User.Identity.Name != Model.WriterUserName)
-	 && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
-	 && !(bool)TempData["UserAccountSuspended"])
-	{
-		<div class="col-md-offset-8 col-md-2">
-			<a id="denunciatePost" href="#" class="btn btn-danger">Denunciar Publicación</a>
-		</div>
-			{ Html.RenderPartial("_PostComplaint", new DotW.Models.PostComplaintViewModel { PostId = Model.Id }); }
-		}
+    @*Verifica que el usuario esté logueado, que no sea el escritor de la publicación y que no haya denunciado anteriormente esta misma publicación.*@
+    if (User.Identity.IsAuthenticated && !userComplaints.Any(x => x.IdPost == Model.Id)
+     && (User.Identity.Name != Model.WriterUserName)
+     && currentRoles.Contains("User") && !currentRoles.Contains("Admin")
+     && !(bool)TempData["UserAccountSuspended"])
+    {
+        <div class="col-md-offset-8 col-md-2">
+            <a id="denunciatePost" href="#" class="btn btn-danger">Denunciar Publicación</a>
+        </div>
+            { Html.RenderPartial("_PostComplaint", new DotW.Models.PostComplaintViewModel { PostId = Model.Id }); }
+        }
 
-		if (anyCommentaryComplaintPosibility)
-		{
-			{ Html.RenderPartial("_CommentaryComplaint", new DotW.Models.CommentaryComplaintViewModel()); }
-		}
-	}
-	else
-	{
-		<h3>La publicación a la que usted intenta acceder se encuentra dada de baja o simplemente no existe.</h3>
-		<br />
-		<p>
-			@Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
-		</p>
-	}
+        if (anyCommentaryComplaintPosibility)
+        {
+            { Html.RenderPartial("_CommentaryComplaint", new DotW.Models.CommentaryComplaintViewModel()); }
+        }
+    }
+    else
+    {
+        <h3>La publicación a la que usted intenta acceder se encuentra dada de baja o simplemente no existe.</h3>
+        <br />
+        <p>
+            @Html.ActionLink("Volver", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
+        </p>
+    }
 
 @section Scripts {
-	<!-- View JavaScript -->
-	<script src="~/Scripts/Post/Details.js"></script>
-	<!-- Code Highlight -->
-	<script src="~/Content/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
-	<!-- Ajax for post -->
-	<script>
-		var idPost = parseInt('@Model.Id');
-		$('#btnComment').click(function (e) {
-			e.preventDefault();
-			var textComment = $('#textComment').val();
-			var idUpperComment = (parseInt($("#replyFor").val())) ? parseInt($("#replyFor").val()) : 0;
+    <!-- View JavaScript -->
+    <script src="~/Scripts/Post/Details.js"></script>
+    <!-- Code Highlight -->
+    <script src="~/Content/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+    <!-- Ajax for post -->
+    <script>
+        var idPost = parseInt('@Model.Id');
+        $('#btnComment').click(function (e) {
+            e.preventDefault();
+            var textComment = $('#textComment').val();
+            var idUpperComment = (parseInt($("#replyFor").val())) ? parseInt($("#replyFor").val()) : 0;
 
-			$.ajax({
-				type: "POST",
-				url: "/Commentary/AddComment",
-				content: "application/json; charset=utf-8",
-				dataType: "json",
-				data: {
-					text: textComment,
-					post: idPost,
-					idUpperComment: idUpperComment
-				},
-				success: function (data) {
-					$('#textComment').val("");
-					$("[id = cancelReply]").click();
-					$("#newComment"+idUpperComment).html($("#newComment"+idUpperComment).html() + data.success);
-					document.getElementById("newComment"+idUpperComment).scrollIntoView()
+            $.ajax({
+                type: "POST",
+                url: "/Commentary/AddComment",
+                content: "application/json; charset=utf-8",
+                dataType: "json",
+                data: {
+                    text: textComment,
+                    post: idPost,
+                    idUpperComment: idUpperComment
+                },
+                success: function (data) {
+                    $('#textComment').val("");
+                    $("[id = cancelReply]").click();
+                    $("#newComment"+idUpperComment).html($("#newComment"+idUpperComment).html() + data.success);
+                    document.getElementById("newComment"+idUpperComment).scrollIntoView()
                     UpdateMetodsInAjax();
-				}
-			});
-		});
+                }
+            });
+        });
 
 
-		function UpdateMetodsInAjax() {
-			$(".deleteCommentary").click(function (e) {
-				e.preventDefault();
-				var idComment = parseInt(this.id);
-				$.ajax({
-					type: "POST",
-					url: "/Commentary/DeleteComment",
-					content: "application/json; charset=utf-8",
-					dataType: "json",
-					data: {
-						idCommentary: idComment
-					},
-					success: function (data) {
-						$("#" + idComment).hide();
-					}
-				});
-			});
+        function UpdateMetodsInAjax() {
+            $(".deleteCommentary").click(function (e) {
+                e.preventDefault();
+                var idComment = parseInt(this.id);
+                $.ajax({
+                    type: "POST",
+                    url: "/Commentary/DeleteComment",
+                    content: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: {
+                        idCommentary: idComment
+                    },
+                    success: function (data) {
+                        $("#" + idComment).hide();
+                    }
+                });
+            });
 
-		    // Botón 'Responder'
-			$("[id = replyCommentary]").on("click", function (e) {
-			    e.preventDefault();
+            // Botón 'Responder'
+            $("[id = replyCommentary]").on("click", function (e) {
+                e.preventDefault();
 
-			    var commentaryId = $(this).attr("commentary-id");
-			    var replyTo = $(this).attr("replyTo");
+                var commentaryId = $(this).attr("commentary-id");
+                var replyTo = $(this).attr("replyTo");
 
-			    $("#replyFor").val(commentaryId);
-			    $("#replyTo").text(replyTo);
-			    $("#divReplyFor").show();
-			    $("#btnComment").text("Responder");
-			    $("#textComment").focus();
-			})
-		}
+                $("#replyFor").val(commentaryId);
+                $("#replyTo").text(replyTo);
+                $("#divReplyFor").show();
+                $("#btnComment").text("Responder");
+                $("#textComment").focus();
+            })
+        }
 
-		UpdateMetodsInAjax();
-	</script>
+        UpdateMetodsInAjax();
+    </script>
 }
