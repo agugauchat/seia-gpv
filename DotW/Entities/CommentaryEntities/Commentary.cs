@@ -27,5 +27,7 @@
 
         [Display(Name = "Fecha de baja")]
         public DateTime? NullDate { get; set; }
+
+        public int? IdUpperComment { get; set; }
     }
 }

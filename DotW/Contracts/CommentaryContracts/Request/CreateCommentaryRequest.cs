@@ -15,5 +15,7 @@
         public string CommentaryText { get; set; }
 
         public DateTime EffectDate { get; set; }
+
+        public int? IdUpperComment { get; set; }
     }
 }

@@ -534,6 +534,7 @@
     <Content Include="Content\tagsinput\src\bootstrap-tagsinput.css" />
     <Content Include="Content\tagsinput\src\bootstrap-tagsinput.js" />
     <Content Include="Content\ViewsStyles\Category\List.css" />
+    <Content Include="Content\ViewsStyles\Post\Details.css" />
     <Content Include="Content\ViewsStyles\Post\UploadImagePartial.css" />
     <Content Include="Content\ViewsStyles\Home\TermsAndConditions.css" />
     <Content Include="favicon.ico" />

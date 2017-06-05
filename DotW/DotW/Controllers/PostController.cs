@@ -337,8 +337,10 @@
 
             var post = postService.GetPostById(new GetPostByIdRequest() { Id = id }).Post;
 
-            // Se obtienen los comentarios del post.
-            ViewBag.Comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments.Where(x => !x.NullDate.HasValue).ToList();
+            // Se obtienen los comentarios del post y se los separa en comentarios padre y respuestas.
+            var allComments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments.Where(x => !x.NullDate.HasValue).ToList();
+            ViewBag.Comments = allComments.Where(x=> !x.IdUpperComment.HasValue).ToList();
+            ViewBag.Replies = allComments.Where(x => x.IdUpperComment.HasValue).ToList();
 
             List<Complaint> userComplaints = new List<Complaint>();
 

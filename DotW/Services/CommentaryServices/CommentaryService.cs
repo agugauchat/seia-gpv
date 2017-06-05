@@ -23,6 +23,7 @@
                     EffectDate = DateTime.Now,
                     IdPost = request.IdPost,
                     IdUser = request.IdUser,
+                    IdUpperComment = request.IdUpperComment,
                     DeletedByComplaints = false
                 };
 
@@ -47,7 +48,8 @@
                             IdPost = x.IdPost,
                             IdUser = x.IdUser,
                             WriterUserName = x.Users.Name,
-                            EffectDate = x.EffectDate
+                            EffectDate = x.EffectDate,
+                            IdUpperComment = x.IdUpperComment
                         }).ToList();
 
                 return new SearchCommentsByIdPostResponse { Comments = result };
@@ -69,6 +71,7 @@
                         IdUser = x.IdUser,
                         WriterUserName = x.Users.Name,
                         EffectDate = x.EffectDate,
+                        IdUpperComment = x.IdUpperComment
                     }).FirstOrDefault(x => x.Id == request.Id);
 
                 return response;

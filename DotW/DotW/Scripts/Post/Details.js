@@ -2,6 +2,18 @@
     // Inicializa el componente para el resaltado de sintaxis de codigo.
     hljs.initHighlightingOnLoad();
 
+    // Botón 'Cancelar respuesta'
+    $("[id = cancelReply]").on("click", function (e) {
+        e.preventDefault();
+        
+        $("#divReplyFor").hide();
+        $("#replyFor").val("");
+        $("#replyTo").text("");
+        $("#btnComment").text("Comentar");
+        $("#textComment").focus();
+    })
+
+
     // Botón 'Denunciar Publicación'
     $("#denunciatePost").on("click", function () {
         $("#postComplaintModal").modal('show');

@@ -16,13 +16,14 @@
     {
         [Authorize(Roles = "User")]
         [HttpPost]
-        public JsonResult AddComment(string text, int post)
+        public JsonResult AddComment(string text, int post, int? idUpperComment)
         {
             if ((text.Length > 0) && (text.Length < 251))
             {
                 var commentaryService = new CommentaryService();
                 var userService = new UserService();
                 var commentaryId = 0;
+                var idUser = userService.GetUserByAccountId(new GetUserByAccountIdRequest() { AccountId = User.Identity.GetUserId() }).User.Id;
 
                 if (ModelState.IsValid)
                 {
@@ -30,17 +31,28 @@
                     {
                         CommentaryText = text,
                         IdPost = post,
-                        IdUser = userService.GetUserByAccountId(new GetUserByAccountIdRequest() { AccountId = User.Identity.GetUserId() }).User.Id
+                        IdUser = idUser,
+                        IdUpperComment = (idUpperComment == 0) ? null : idUpperComment
                     };
 
                     var result = commentaryService.CreateCommentary(request);
                     commentaryId = result.CommentaryId;
                 }
 
-                var imgPath = Url.Content("~/Content/Images/GenericUser.png");
+                var htmlComment = "";
                 var userName = User.Identity.GetUserName();
                 var date = DateTime.Now.ToString("dd/MM/yyyy");
-                var htmlComment = "<div class=\"media\" id=\"" + commentaryId + "\"><a class=\"pull-left\" href=\"#\"  onclick=\"return false; \"><img class=\"media-object\" src=\"" + imgPath + "\" height=\"64\" width=\"64\"></a><div class=\"media-body\"><h4 class=\"media-heading\">"+ userName +"<small> "+date+ "</small><span>&nbsp;&nbsp;&nbsp;</span><small><a class=\"deleteCommentary text-danger\" href=\"#\" id=\"" + commentaryId + "\">Eliminar comentario</a></small></h4>" + text + "</div></div>";
+
+                if (idUpperComment == 0)
+                {
+                    //Es una respuesta.
+                    htmlComment = "<article class=\"row\" id=\"" + commentaryId + "\"><div class=\"col-md-10 col-sm-10\"><div class=\"panel panel-default arrow left\"><div class=\"panel-body\"><header class=\"text-left\"><div class=\"comment-user\"><i class=\"fa fa-user\"></i> <a href=\"/Profile/Details/" + idUser + "\">" + userName + "</a>   <time class=\"comment-date\"><i class=\"fa fa-clock-o\"></i> " + date + "</time></div></header><div class=\"comment-post\"><p style=\"margin-bottom: 5px;\">" + text + "<span>&nbsp;</span><small><a class=\"deleteCommentary text-danger\" href=\"#\" id=\"" + commentaryId + "\">Eliminar comentario</a></small></p></div><p class=\"text-right\"><a id=\"replyCommentary\" href=\"#\" class=\"btn btn-default btn-sm\" replyTo=\"" + userName + "\" commentary-id=\"" + commentaryId + "\"><i class=\"fa fa-reply\"></i> Responder</a></p></div></div></div></article><div id=\"newComment" + commentaryId + "\" class=\"media\"></div>";
+                }
+                else
+                {
+                    //Es un comentario nuevo.
+                    htmlComment = "<article class=\"row\" id=\"" + commentaryId + "\">	<div class=\"col-md-9 col-sm-9 col-md-offset-1 col-sm-offset-0 hidden-xs\"><div class=\"panel panel-default arrow left\"><div class=\"panel-heading right\">En respuesta a <i>" + userName + "</i></div><div class=\"panel-body\"><header class=\"text-left\"><div class=\"comment-user\"><i class=\"fa fa-user\"></i> <a href=\"/Profile/Details/" + idUser + "\">" + userName + "</a>   <time class=\"comment-date\"><i class=\"fa fa-clock-o\"></i> " + date + "</time></div></header><div class=\"comment-post\"><p>" + text + "<span>&nbsp;</span><small><a class=\"deleteCommentary text-danger\" href=\"#\" id=\"" + commentaryId + "\">Eliminar comentario</a></small></p></div></div></div></div></article>";
+                }
 
                 return Json(new { success = htmlComment });
             }
