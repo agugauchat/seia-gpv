@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.DotW", "DotW\Web.DotW.csproj", "{64CD3E13-9CFD-4361-86A6-D27485ABC10E}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{3D3360C6-31D0-4A9A-9D6A-3A75B7935016}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{8544066D-AC42-42D8-9E85-3EE74BA9F46E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.DotW.API", "Web.DotW.API\Web.DotW.API.csproj", "{5A4FED3C-C3DA-44DA-BF13-B340B44CAFF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{8544066D-AC42-42D8-9E85-3EE74BA9F46E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8544066D-AC42-42D8-9E85-3EE74BA9F46E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8544066D-AC42-42D8-9E85-3EE74BA9F46E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A4FED3C-C3DA-44DA-BF13-B340B44CAFF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A4FED3C-C3DA-44DA-BF13-B340B44CAFF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A4FED3C-C3DA-44DA-BF13-B340B44CAFF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A4FED3C-C3DA-44DA-BF13-B340B44CAFF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
