@@ -20,19 +20,18 @@ namespace Web.DotW.API.Controllers
 {
     public class CategoriesController : BaseApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: api/Category
+        // GET: api/Categories
         [AllowAnonymous]
         public IHttpActionResult GetCategories()
         {
             var categoryService = new CategoryService();
             var categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
 
+            // TODO Agu -> Preguntar como devolverlo.
             return Ok(categories);
         }
 
-        // GET: api/Category/5
+        // GET: api/Categories/5
         [AllowAnonymous]
         [ResponseType(typeof(Category))]
         public IHttpActionResult GetCategory(int id)
@@ -48,7 +47,7 @@ namespace Web.DotW.API.Controllers
             return Ok(category);
         }
 
-        // PUT: api/Category/5
+        // PUT: api/Categories/5
         [ResponseType(typeof(void))]
         [Authorize(Roles = "Admin")]
         public IHttpActionResult PutCategory(EditCategoryModel model)
@@ -99,7 +98,7 @@ namespace Web.DotW.API.Controllers
             }
         }
 
-        // POST: api/Category
+        // POST: api/Categories
         [Authorize(Roles = "Admin")]
         [ResponseType(typeof(Category))]
         public IHttpActionResult PostCategory(CreateCategoryModel model)
@@ -141,9 +140,9 @@ namespace Web.DotW.API.Controllers
             return BadRequest(ModelState);
         }
 
-        // DELETE: api/Category/5
+        // DELETE: api/Categories/5
         [Authorize(Roles = "Admin")]
-        [ResponseType(typeof(Category))]
+        [ResponseType(typeof(void))]
         public IHttpActionResult DeleteCategory(int id)
         {
             var categoryService = new CategoryService();
