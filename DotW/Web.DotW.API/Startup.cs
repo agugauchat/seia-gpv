@@ -45,11 +45,10 @@
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,
-                //TokenEndpointPath = new PathString("/oauth/token"),
                 TokenEndpointPath = new PathString("/login/getToken"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 Provider = new CustomOAuthProvider(),
-                AccessTokenFormat = new CustomJwtFormat("http://localhost:47778")
+                AccessTokenFormat = new CustomJwtFormat("http://devsofthew.azurewebsites.net/")
             };
 
             // Generación de OAuth 2.0 Bearer Access Token
@@ -58,8 +57,7 @@
 
         private void ConfigureOAuthTokenConsumption(IAppBuilder app)
         {
-
-            var issuer = "http://localhost:47778";
+            var issuer = "http://devsofthew.azurewebsites.net/";
             string audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
             byte[] audienceSecret = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["as:AudienceSecret"]);
 
@@ -81,7 +79,7 @@
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
+                routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 

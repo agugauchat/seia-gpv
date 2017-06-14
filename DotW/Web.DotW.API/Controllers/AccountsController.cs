@@ -34,55 +34,58 @@
         }
 
         [AllowAnonymous]
-        [Route("register")]
-        public async Task<IHttpActionResult> Register(RegisterModel registeUserModel)
+        public IHttpActionResult RegisterUser(RegisterModel registeUserModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
-            var user = new ApplicationUser()
-            {
-                UserName = registeUserModel.UserName,
-                Email = registeUserModel.Email,
-            };
+            //var user = new ApplicationUser()
+            //{
+            //    UserName = registeUserModel.UserName,
+            //    Email = registeUserModel.Email,
+            //};
 
-            IdentityResult addUserResult = await this.AppUserManager.CreateAsync(user, registeUserModel.Password);
+            //IdentityResult addUserResult = await this.AppUserManager.CreateAsync(user, registeUserModel.Password);
 
-            if (!addUserResult.Succeeded)
-            {
-                return GetErrorResult(addUserResult);
-            }
-            else
-            {
-                var userService = new UserService();
+            //if (!addUserResult.Succeeded)
+            //{
+            //    return GetErrorResult(addUserResult);
+            //}
+            //else
+            //{
+            //    var userService = new UserService();
 
-                var request = new CreateUserRequest
-                {
-                    User = new User
-                    {
-                        Name = user.UserName,
-                        AspNetUserId = user.Id,
-                        Email = user.Email
-                    }
-                };
+            //    var request = new CreateUserRequest
+            //    {
+            //        User = new User
+            //        {
+            //            Name = user.UserName,
+            //            AspNetUserId = user.Id,
+            //            Email = user.Email
+            //        }
+            //    };
 
-                var response = userService.CreateUser(request);
+            //    var response = userService.CreateUser(request);
 
-                AppUserManager.AddToRole(user.Id, "User");
-            }
+            //    AppUserManager.AddToRole(user.Id, "User");
+            //}
 
-            // TODO > Agregar email de confirmación y quitar "userService.CreateUser" de esta acción.
+            //// TODO > Agregar email de confirmación y quitar "userService.CreateUser" de esta acción.
 
-            Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
+            //Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
 
-            return Created(locationHeader, TheModelFactory.Create(user));
+            var x = User.Identity.IsAuthenticated;
+            var y = User.Identity.GetUserId();
+
+            //return Created(locationHeader, TheModelFactory.Create(user));
+
+            return Ok("funcionó");
         }
 
-        [Authorize]
-        [Route("prueba")]
-        public async Task<IHttpActionResult> Prueba(Prueba2 model)
+        [Authorize(Roles ="Admin")]
+        public async Task<IHttpActionResult> Put(Prueba2 model)
         {
             var x = model;
 

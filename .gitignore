@@ -241,3 +241,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /DotW/DotW/Content/Images/Posts/Principals
+*.pubxml

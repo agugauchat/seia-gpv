@@ -1,28 +1,17 @@
 ﻿namespace Web.DotW.API.Controllers
 {
-    using DotW.API.Infrastructure;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Http;
-    using System.Net.Http;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.Owin;
-    using System.Threading.Tasks;
-    using DotW.API.Models;
-    using System.Security.Claims;
-    using Services.UserServices;
-    using Contracts.UserContracts.Request;
-    using Entities.UserEntities;
-    using Services.CategoryServices;
     using Contracts.CategoryContracts.Request;
+    using DotW.API.Models;
+    using Services.CategoryServices;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Http;
 
     public class CategoryController : BaseApiController
     {
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<IHttpActionResult> List()
+        [Authorize]
+        public IHttpActionResult Get()
         {
             var categoryService = new CategoryService();
 
@@ -30,8 +19,7 @@
         }
 
         [AllowAnonymous]
-        [HttpGet]
-        public IHttpActionResult Details(int id)
+        public IHttpActionResult Get(int id)
         {
             try
             {
@@ -51,6 +39,19 @@
                 return NotFound();
             }
         }
+
+        [AllowAnonymous]
+        public IHttpActionResult Put(int id)
+        {
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        public IHttpActionResult Post(int id)
+        {
+            return Ok();
+        }
+
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
