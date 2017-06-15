@@ -22,6 +22,7 @@ namespace Web.DotW.API.Controllers
     {
         // GET: api/Categories
         [AllowAnonymous]
+        [ResponseType(typeof(List<GetCategoryModel>))]
         public IHttpActionResult GetCategories()
         {
             var categoryService = new CategoryService();
@@ -64,7 +65,7 @@ namespace Web.DotW.API.Controllers
 
         // GET: api/Categories/5
         [AllowAnonymous]
-        [ResponseType(typeof(Category))]
+        [ResponseType(typeof(GetCategoryModel))]
         public IHttpActionResult GetCategory(int id)
         {
             var categoryService = new CategoryService();
@@ -156,7 +157,7 @@ namespace Web.DotW.API.Controllers
 
         // POST: api/Categories
         [Authorize(Roles = "Admin")]
-        [ResponseType(typeof(Category))]
+        [ResponseType(typeof(void))]
         public IHttpActionResult PostCategory(CreateCategoryModel model)
         {
             if (ModelState.IsValid)
