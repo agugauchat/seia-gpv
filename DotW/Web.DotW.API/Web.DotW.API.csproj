@@ -154,6 +154,8 @@
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Helpers\ImageHelpers.cs" />
     <Compile Include="Infrastructure\ApplicationDbContext.cs" />
     <Compile Include="Infrastructure\ApplicationRoleManager.cs" />
     <Compile Include="Infrastructure\ApplicationUser.cs" />
@@ -161,6 +163,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\CategoryModels.cs" />
     <Compile Include="Models\ModelFactory.cs" />
+    <Compile Include="Models\PostModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CustomJwtFormat.cs" />
     <Compile Include="Providers\CustomOAuthProvider.cs" />

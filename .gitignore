@@ -242,3 +242,4 @@ ModelManifest.xml
 .fake/
 /DotW/DotW/Content/Images/Posts/Principals
 *.pubxml
+/DotW/Web.DotW.API/Content/Images/Posts/Principals
