@@ -161,6 +161,7 @@
     <Compile Include="Infrastructure\ApplicationUser.cs" />
     <Compile Include="Infrastructure\ApplicationUserManager.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\CommentModels.cs" />
     <Compile Include="Models\CategoryModels.cs" />
     <Compile Include="Models\ModelFactory.cs" />
     <Compile Include="Models\PostModels.cs" />

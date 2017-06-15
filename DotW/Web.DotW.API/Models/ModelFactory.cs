@@ -8,6 +8,7 @@
     using System.Web;
     using System.Web.Http.Routing;
     using Web.DotW.API.Infrastructure;
+    using Entities.CommentaryEntities;
 
     public class ModelFactory
     {
@@ -41,6 +42,35 @@
                 Url = _UrlHelper.Link("GetRoleById", new { id = appRole.Id }),
                 Id = appRole.Id,
                 Name = appRole.Name
+            };
+        }
+
+        internal CommentaryModel CreateCommentaryModel(Commentary commentary)
+        {
+            return new CommentaryModel()
+            {
+                Id = commentary.Id,
+                Date = commentary.EffectDate,
+                IdWriter = commentary.IdUser,
+                WriterUsername = commentary.WriterUserName,
+                Text = commentary.CommentaryText,
+                // TODO Agu -> Cambiar por la url del detalle de usuario
+                //WriterUrl = _UrlHelper.Link("GetRoleById", new { id = commentary.IdUser })
+            };
+
+        }
+
+        internal AnswerModel CreateAnswerModel(Commentary answer)
+        {
+            return new AnswerModel()
+            {
+                Id = answer.Id,
+                Date = answer.EffectDate,
+                IdWriter = answer.IdUser,
+                WriterUsername = answer.WriterUserName,
+                Text = answer.CommentaryText,
+                // TODO Agu -> Cambiar por la url del detalle de usuario
+                //WriterUrl = _UrlHelper.Link("GetRoleById", new { id = answer.IdUser })
             };
         }
     }
