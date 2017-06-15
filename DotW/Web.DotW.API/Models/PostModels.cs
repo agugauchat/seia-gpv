@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Web;
 
     public class EditPostModel
     {
@@ -12,13 +11,7 @@
         [Display(Name = "Título")]
         public string Title { get; set; }
 
-        public HttpPostedFileBase File { get; set; }
-
-        [Display(Name = "Imagen principal")]
-        public string ImageName { get; set; }
-
-        [Display(Name = "Imagen cargada")]
-        public string PrincipalImageName { get; set; }
+        public string base64File { get; set; }
 
         [Required(ErrorMessage = "El campo Resumen es requerido.")]
         [MaxLength(500, ErrorMessage = "El Resumen debe tener como máximo una longitud de 500 caracteres.")]
@@ -54,12 +47,7 @@
         [Display(Name = "Título")]
         public string Title { get; set; }
 
-        public HttpPostedFileBase File { get; set; }
-
-        public string base64 { get; set; }
-
-        [Display(Name = "Imagen principal")]
-        public string ImageName { get; set; }
+        public string base64File { get; set; }
 
         [Required(ErrorMessage = "El campo Escritor es requerido.")]
         [Display(Name = "Escritor")]
