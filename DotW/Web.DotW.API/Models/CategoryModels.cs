@@ -6,6 +6,15 @@
     using System.Linq;
     using System.Web;
 
+    public class CategoryModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Summary { get; set; }
+        public int? IdUpperCategory { get; set; }
+    }
+
     public class CreateCategoryModel
     {
         [Required(ErrorMessage = "El campo Título es requerido.")]
@@ -44,5 +53,18 @@
 
         [Display(Name = "Categoría Superior")]
         public int? IdUpperCategory { get; set; }
+    }
+
+    public class GetCategoryModel
+    {
+        public int Id { get; set; }
+
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        public string Summary { get; set; }
+
+        public CategoryModel UpperCategory { get; set; }
     }
 }
