@@ -3,13 +3,16 @@
     using Contracts.ComplaintContracts.Request;
     using Contracts.PostContracts.Request;
     using Contracts.UserContracts.Request;
+    using Contracts.VoteContracts.Request;
     using Entities.General;
     using Entities.PostEntities;
     using Microsoft.AspNet.Identity;
     using Services.ComplaintServices;
     using Services.PostServices;
     using Services.UserServices;
+    using Services.VoteServices;
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Drawing;
     using System.IO;
@@ -29,6 +32,8 @@
             var postService = new PostService();
             var posts = postService.SearchPosts(new SearchPostsRequest()).Posts;
 
+            var result = new List<GetPostModel>();            
+
             return Ok(posts);
         }
 
@@ -38,6 +43,7 @@
         public IHttpActionResult GetPost(int id)
         {
             var postService = new PostService();
+            var votesService = new VoteService();
             var post = postService.GetPostById(new GetPostByIdRequest() { Id = id }).Post;
 
             if (post == null)
@@ -45,7 +51,14 @@
                 return NotFound();
             }
 
-            return Ok(post);
+            var result = TheModelFactory.CreateGetPostModel(post);
+
+            var postVotes = votesService.GetVotesCountByPostId(new GetVotesCountByPostIdRequest { PostId = post.Id });
+
+            result.GoodVotes = postVotes.GoodVotes;
+            result.BadVotes = postVotes.BadVotes;
+
+            return Ok(result);
         }
 
         // PUT: api/Posts/5

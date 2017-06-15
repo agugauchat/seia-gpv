@@ -66,6 +66,7 @@ namespace Web.DotW.API.Controllers
         // GET: api/Categories/5
         [AllowAnonymous]
         [ResponseType(typeof(GetCategoryModel))]
+        [Route("api/Categories/{id}", Name = "GetCategoryById")]
         public IHttpActionResult GetCategory(int id)
         {
             var categoryService = new CategoryService();
