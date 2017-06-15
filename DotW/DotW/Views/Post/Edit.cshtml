@@ -52,7 +52,14 @@ else
             <div class="form-group" id="imagePreview">
                 @Html.LabelFor(model => model.PrincipalImageName, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
-                    <a class="btn btn-info" href="@Url.Content((ConfigurationManager.AppSettings["PathPostPrincipalImages"]) + Model.PrincipalImageName)" target="_blank">Ver Imagen</a>
+                    @if (Model.PrincipalImageName.Contains("api/"))
+                    {
+                        <a class="btn btn-info" href="@Url.Content((ConfigurationManager.AppSettings["UrlImagesAPI"]) + Model.PrincipalImageName.Split('/')[1])" target="_blank">Ver Imagen</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-info" href="@Url.Content((ConfigurationManager.AppSettings["PathPostPrincipalImages"]) + Model.PrincipalImageName)" target="_blank">Ver Imagen</a>
+                    }
                 </div>
             </div>
         }
