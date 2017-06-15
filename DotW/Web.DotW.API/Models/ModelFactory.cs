@@ -76,7 +76,7 @@
 
         internal GetPostModel CreateGetPostModel(Post post)
         {
-            return new GetPostModel
+            var result = new GetPostModel
             {
                 Id = post.Id,
                 Title = post.Title,
@@ -86,13 +86,20 @@
                 EffectDate = post.EffectDate,
                 CategoryId = post.IdCategory,
                 CategoryUrl = _UrlHelper.Link("GetCategoryById", new { id = post.IdCategory }),
-                ImageUrl = post.PrincipalImageName.Contains("api/") ?
-                            ConfigurationManager.AppSettings["UrlImagesAPI"] + post.PrincipalImageName.Split('/')[1]
-                            :
-                            ConfigurationManager.AppSettings["UrlImagesWeb"] + post.PrincipalImageName,
                 WritterId = post.IdWriter,
                 // TODO npellegrinet > Agregar perfil.
             };
+
+            if (!string.IsNullOrEmpty(post.PrincipalImageName) && post.PrincipalImageName.Contains("api/"))
+            {
+                result.ImageUrl = ConfigurationManager.AppSettings["UrlImagesAPI"] + post.PrincipalImageName.Split('/')[1];
+            }
+            else if (!string.IsNullOrEmpty(post.PrincipalImageName) && !post.PrincipalImageName.Contains("api/"))
+            {
+                result.ImageUrl = ConfigurationManager.AppSettings["UrlImagesWeb"] + post.PrincipalImageName;
+            }
+
+            return result;
         }
     }
 

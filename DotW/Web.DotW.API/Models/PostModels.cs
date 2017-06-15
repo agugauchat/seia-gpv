@@ -106,5 +106,7 @@
         public int GoodVotes { get; set; }
 
         public int BadVotes { get; set; }
+
+        public GetCommentsModel Comments { get; set; }
     }
 }

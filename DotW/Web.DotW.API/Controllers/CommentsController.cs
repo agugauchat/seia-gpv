@@ -17,46 +17,6 @@ namespace Web.DotW.API.Controllers
 {
     public class CommentsController : BaseApiController
     {
-        // GET: api/Comments/5
-        [AllowAnonymous]
-        [ResponseType(typeof(GetCommentsModel))]
-        public IHttpActionResult GetCommentary(int id)
-        {
-            var commentaryService = new CommentaryService();
-            var comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments;
-
-            if (!comments.Any())
-            {
-                return NotFound();
-            }
-
-            var result = new GetCommentsModel();
-            result.Comments = new List<CommentaryModel>();
-
-            foreach (var commentary in comments)
-            {
-                if (!commentary.IdUpperComment.HasValue)
-                {
-                    var commentaryToAdd = TheModelFactory.CreateCommentaryModel(commentary);
-                    commentaryToAdd.Answers = new List<AnswerModel>();
-                    foreach (var answer in comments)
-                    {
-                        if (answer.IdUpperComment.HasValue)
-                        {
-                            if (answer.IdUpperComment == commentary.Id)
-                            {
-                                var answerToAdd = TheModelFactory.CreateAnswerModel(answer);
-                                commentaryToAdd.Answers.Add(answerToAdd);
-                            }
-                        }
-                    }
-                    result.Comments.Add(commentaryToAdd);
-                }
-            }
-
-            return Ok(result);
-        }
-
         //// POST: api/Comments
         //[Authorize(Roles = "Admin")]
         //[ResponseType(typeof(Commentary))]
