@@ -27,8 +27,39 @@ namespace Web.DotW.API.Controllers
             var categoryService = new CategoryService();
             var categories = categoryService.SearchCategories(new SearchCategoriesRequest()).Categories;
 
-            // TODO Agu -> Preguntar como devolverlo.
-            return Ok(categories);
+            var result = new List<GetCategoryModel>();
+
+            foreach (var category in categories)
+            {
+                var partialResult = new GetCategoryModel()
+                {
+                    Id = category.Id,
+                    Title = category.Title,
+                    Summary = category.Summary,
+                    Description = category.Description,
+                };
+
+                if (category.IdUpperCategory.HasValue)
+                {
+                    var upperCategory = categoryService.GetCategoryById(new GetCategoryByIdRequest() { Id = category.IdUpperCategory.Value }).Category;
+
+                    if (upperCategory != null)
+                    {
+                        partialResult.UpperCategory = new CategoryModel()
+                        {
+                            Id = upperCategory.Id,
+                            Title = upperCategory.Title,
+                            Summary = upperCategory.Summary,
+                            Description = upperCategory.Description,
+                            IdUpperCategory = upperCategory.IdUpperCategory
+                        };
+                    }
+                }
+
+                result.Add(partialResult);
+            }
+
+            return Ok(result);
         }
 
         // GET: api/Categories/5
@@ -44,7 +75,32 @@ namespace Web.DotW.API.Controllers
                 return NotFound();
             }
 
-            return Ok(category);
+            var result = new GetCategoryModel()
+            {
+                Id = category.Id,
+                Title = category.Title,
+                Summary = category.Summary,
+                Description = category.Description,
+            };
+
+            if (category.IdUpperCategory.HasValue)
+            {
+                var upperCategory = categoryService.GetCategoryById(new GetCategoryByIdRequest() { Id = category.IdUpperCategory.Value }).Category;
+
+                if (upperCategory != null)
+                {
+                    result.UpperCategory = new CategoryModel()
+                    {
+                        Id = upperCategory.Id,
+                        Title = upperCategory.Title,
+                        Summary = upperCategory.Summary,
+                        Description = upperCategory.Description,
+                        IdUpperCategory = upperCategory.IdUpperCategory
+                    };
+                }
+            }
+
+            return Ok(result);
         }
 
         // PUT: api/Categories/5
