@@ -28,7 +28,14 @@
                     <!-- Preview Image -->
                     if (!string.IsNullOrEmpty(post.PrincipalImageName))
                     {
-                        <a href="@Url.Action("Details", "Post", new { id = post.Id })"><img class="img-responsive" src="@Url.Content((ConfigurationManager.AppSettings["PathPostPrincipalImages"]) + post.PrincipalImageName)" alt=""></a>
+                        if (post.PrincipalImageName.Contains("api/"))
+                        {
+                            <a href="@Url.Action("Details", "Post", new { id = post.Id })"><img class="img-responsive" src="@Url.Content((ConfigurationManager.AppSettings["UrlImagesAPI"]) + post.PrincipalImageName.Split('/')[1])" alt=""></a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Details", "Post", new { id = post.Id })"><img class="img-responsive" src="@Url.Content((ConfigurationManager.AppSettings["PathPostPrincipalImages"]) + post.PrincipalImageName)" alt=""></a>
+                        }
                     }
                     <br />
                     <p class="post-summary">@post.Summary</p>

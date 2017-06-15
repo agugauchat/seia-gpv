@@ -1,8 +1,8 @@
 ﻿namespace Web.DotW.API.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Web;
 
     public class EditPostModel
     {
@@ -12,13 +12,7 @@
         [Display(Name = "Título")]
         public string Title { get; set; }
 
-        public HttpPostedFileBase File { get; set; }
-
-        [Display(Name = "Imagen principal")]
-        public string ImageName { get; set; }
-
-        [Display(Name = "Imagen cargada")]
-        public string PrincipalImageName { get; set; }
+        public string base64File { get; set; }
 
         [Required(ErrorMessage = "El campo Resumen es requerido.")]
         [MaxLength(500, ErrorMessage = "El Resumen debe tener como máximo una longitud de 500 caracteres.")]
@@ -54,12 +48,7 @@
         [Display(Name = "Título")]
         public string Title { get; set; }
 
-        public HttpPostedFileBase File { get; set; }
-
-        public string base64 { get; set; }
-
-        [Display(Name = "Imagen principal")]
-        public string ImageName { get; set; }
+        public string base64File { get; set; }
 
         [Required(ErrorMessage = "El campo Escritor es requerido.")]
         [Display(Name = "Escritor")]
@@ -88,5 +77,34 @@
         {
             Tags = new List<string>();
         }
+    }
+
+    public class GetPostModel
+    {
+        public int Id { get; set; }
+
+        public string Title { get; set; }
+
+        public string Summary { get; set; }
+
+        public string Body { get; set; }
+
+        public string ImageUrl { get; set; }
+
+        public string CategoryUrl { get; set; }
+
+        public int CategoryId { get; set; }
+
+        public string WritterUrl { get; set; }
+
+        public int WritterId { get; set; }
+
+        public List<string> Tags { get; set; }
+
+        public DateTime EffectDate { get; set; }
+
+        public int GoodVotes { get; set; }
+
+        public int BadVotes { get; set; }
     }
 }
