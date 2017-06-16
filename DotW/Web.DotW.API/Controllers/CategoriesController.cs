@@ -22,6 +22,7 @@ namespace Web.DotW.API.Controllers
     {
         // GET: api/Categories
         [AllowAnonymous]
+        [Route("api/Categories/", Name = "GetCategories")]
         [ResponseType(typeof(List<GetCategoryModel>))]
         public IHttpActionResult GetCategories()
         {
@@ -108,6 +109,7 @@ namespace Web.DotW.API.Controllers
         // PUT: api/Categories/5
         [ResponseType(typeof(void))]
         [Authorize(Roles = "Admin")]
+        [Route("api/Categories/", Name = "PutCategory")]
         public IHttpActionResult PutCategory(EditCategoryModel model)
         {
             if (ModelState.IsValid)
@@ -159,6 +161,7 @@ namespace Web.DotW.API.Controllers
         // POST: api/Categories
         [Authorize(Roles = "Admin")]
         [ResponseType(typeof(void))]
+        [Route("api/Categories/", Name = "PostCategory")]
         public IHttpActionResult PostCategory(CreateCategoryModel model)
         {
             if (ModelState.IsValid)
@@ -200,6 +203,7 @@ namespace Web.DotW.API.Controllers
 
         // DELETE: api/Categories/5
         [Authorize(Roles = "Admin")]
+        [Route("api/Categories/{id}", Name = "DeleteCategory")]
         [ResponseType(typeof(void))]
         public IHttpActionResult DeleteCategory(int id)
         {

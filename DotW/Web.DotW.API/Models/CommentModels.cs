@@ -29,21 +29,15 @@
 
     public class CreateCommentaryModel
     {
-        [Required(ErrorMessage = "El campo Título es requerido.")]
-        [Display(Name = "Título")]
-        public string Title { get; set; }
-
-        [Required(ErrorMessage = "El campo Descripción es requerido.")]
-        [Display(Name = "Descripción")]
-        public string Description { get; set; }
+        [Required(ErrorMessage = "El campo IdPost es requerido.")]
+        public int IdPost { get; set; }
 
         [Required(ErrorMessage = "El campo Resumen es requerido.")]
-        [MaxLength(500, ErrorMessage = "El Resumen debe tener como máximo una longitud de 500 caracteres.")]
-        [Display(Name = "Resumen")]
-        public string Summary { get; set; }
+        [MinLength(1, ErrorMessage = "El Resumen debe tener como mínimo una longitud de 1 carácter.")]
+        [MaxLength(250, ErrorMessage = "El Resumen debe tener como máximo una longitud de 250 caracteres.")]
+        public string TextComment { get; set; }
 
-        [Display(Name = "Categoría Superior")]
-        public int? IdUpperCategory { get; set; }
+        public int? IdUpperComment { get; set; }
     }
 
     public class GetCommentsModel

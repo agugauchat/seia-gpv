@@ -152,6 +152,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\SearchsController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Infrastructure\ApplicationUser.cs" />
     <Compile Include="Infrastructure\ApplicationUserManager.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\SearchModels.cs" />
     <Compile Include="Models\CommentModels.cs" />
     <Compile Include="Models\CategoryModels.cs" />
     <Compile Include="Models\ModelFactory.cs" />
