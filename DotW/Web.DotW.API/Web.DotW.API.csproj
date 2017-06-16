@@ -145,6 +145,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Templates\EmailTemplate\AccountBlocked.html" />
+    <Content Include="Templates\EmailTemplate\CommentaryDeleted.html" />
+    <Content Include="Templates\EmailTemplate\PostDeletedByComplaints.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

@@ -91,9 +91,9 @@
 
         public string ImageUrl { get; set; }
 
-        public string CategoryUrl { get; set; }
+        public CategoryModel Category { get; set; }
 
-        public int CategoryId { get; set; }
+        public string CategoryUrl { get; set; }
 
         public string WritterUrl { get; set; }
 
@@ -108,5 +108,18 @@
         public int BadVotes { get; set; }
 
         public GetCommentsModel Comments { get; set; }
+    }
+
+    public class VotePostModel
+    {
+        public bool Good { get; set; }
+
+        public bool Bad { get; set; }
+    }
+
+    public class PostComplaintModel
+    {
+        [Display(Name = "Comentario")]
+        public string Commentary { get; set; }
     }
 }
