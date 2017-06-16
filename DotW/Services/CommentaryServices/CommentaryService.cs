@@ -71,7 +71,8 @@
                         IdUser = x.IdUser,
                         WriterUserName = x.Users.Name,
                         EffectDate = x.EffectDate,
-                        IdUpperComment = x.IdUpperComment
+                        IdUpperComment = x.IdUpperComment,
+                        NullDate = x.NullDate
                     }).FirstOrDefault(x => x.Id == request.Id);
 
                 return response;

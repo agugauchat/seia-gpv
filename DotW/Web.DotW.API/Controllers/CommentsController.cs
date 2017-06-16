@@ -12,6 +12,9 @@ using Web.DotW.API.Infrastructure;
 using Contracts.CommentaryContracts.Request;
 using Web.DotW.API.Models;
 using Services.CommentaryServices;
+using Services.UserServices;
+using Contracts.UserContracts.Request;
+using Microsoft.AspNet.Identity;
 
 namespace Web.DotW.API.Controllers
 {
@@ -58,7 +61,7 @@ namespace Web.DotW.API.Controllers
         }
 
         //// POST: api/Comments
-        //[Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "User")]
         //[ResponseType(typeof(Commentary))]
         //public IHttpActionResult PostCommentary(CreateCommentaryModel model)
         //{
@@ -99,33 +102,41 @@ namespace Web.DotW.API.Controllers
         //    return BadRequest(ModelState);
         //}
 
-        //// DELETE: api/Comments/5
-        //[Authorize(Roles = "Admin")]
-        //[ResponseType(typeof(void))]
-        //public IHttpActionResult DeleteCommentary(int id)
-        //{
-        //    var CommentaryService = new CommentaryService();
-        //    var postService = new PostService();
-        //    var Commentary = CommentaryService.GetCommentaryById(new GetCommentaryByIdRequest() { Id = id }).Commentary;
+        // DELETE: api/Comments/5
+        [Authorize(Roles = "User")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult DeleteCommentary(int id)
+        {
+            var userService = new UserService();
+            var commentaryService = new CommentaryService();
+            var commentary = commentaryService.GetCommentaryById(new GetCommentaryByIdRequest() { Id = id }).Commentary;
+            var currentUserId = userService.GetUserByAccountId(new GetUserByAccountIdRequest() { AccountId = User.Identity.GetUserId() }).User.Id;
 
-        //    if (Commentary == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (commentary == null)
+            {
+                return NotFound();
+            }
 
-        //    var lowerComments = CommentaryService.SearchCommentsByIdUpperCommentary(new SearchCommentsByIdUpperCommentaryRequest() { IdUpperCommentary = id }).Comments;
-        //    var relatedPosts = postService.SearchPostsByCommentaryId(new SearchPostsByCommentaryIdRequest() { IdCommentary = id }).Posts;
+            if (commentary.NullDate.HasValue)
+            {
+                return NotFound();
+            }
 
-        //    // Si existen categorías hijas o publicaciones asociadas, la categoría no se puede eliminar.
-        //    if ((lowerComments.Any()) || (relatedPosts.Any()))
-        //    {
-        //        return BadRequest("Can't delete this Commentary, is in use.");
-        //    }
+            if (currentUserId != commentary.IdUser)
+            {
+                return Unauthorized();
+            }
 
-        //    // La categoría existe y no fue eliminada, entonces la elimino.
-        //    var result = CommentaryService.DeleteCommentary(new DeleteCommentaryRequest() { Id = id });
+            try
+            {
+                var result = commentaryService.DeleteCommentary(new DeleteCommentaryRequest() { Id = id });
 
-        //    return Ok();
-        //}
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
