@@ -113,6 +113,7 @@
         // PUT: api/Posts/5
         [Authorize(Roles = "User")]
         [ResponseType(typeof(void))]
+        [Route("api/Posts/", Name = "PutPost")]
         public IHttpActionResult PutPost(EditPostModel model)
         {
             try
@@ -205,6 +206,7 @@
         // POST: api/Posts
         [Authorize(Roles = "User")]
         [ResponseType(typeof(Post))]
+        [Route("api/Posts/", Name = "PostPost")]
         public IHttpActionResult PostPost(CreatePostModel model)
         {
             try
@@ -301,6 +303,7 @@
         // DELETE: api/Posts/5
         [Authorize(Roles = "User")]
         [ResponseType(typeof(void))]
+        [Route("api/Posts/{id}", Name = "DeletePost")]
         public IHttpActionResult DeletePost(int id)
         {
             try
