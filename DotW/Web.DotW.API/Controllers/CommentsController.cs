@@ -39,7 +39,7 @@ namespace Web.DotW.API.Controllers
 
                     // Controla que exista la publicación asociada.
                     var post = postService.GetPostById(new GetPostByIdRequest() { Id = model.IdPost }).Post;
-                    if (post != null)
+                    if (post == null)
                     {
                         return BadRequest("Invalid post");
                     }
@@ -52,7 +52,7 @@ namespace Web.DotW.API.Controllers
                     {
                         // Controla que exista el comentario padre.
                         var upperCommentary = commentaryService.GetCommentaryById(new GetCommentaryByIdRequest() { Id = model.IdUpperComment.Value }).Commentary;
-                        if (upperCommentary != null)
+                        if (upperCommentary == null)
                         {
                             return BadRequest("Invalid upper commentary");
                         }

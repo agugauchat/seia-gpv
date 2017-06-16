@@ -32,9 +32,9 @@
         [Required(ErrorMessage = "El campo IdPost es requerido.")]
         public int IdPost { get; set; }
 
-        [Required(ErrorMessage = "El campo Resumen es requerido.")]
-        [MinLength(1, ErrorMessage = "El Resumen debe tener como mínimo una longitud de 1 carácter.")]
-        [MaxLength(250, ErrorMessage = "El Resumen debe tener como máximo una longitud de 250 caracteres.")]
+        [Required(ErrorMessage = "El campo TextComment es requerido.")]
+        [MinLength(1, ErrorMessage = "El comentario debe tener como mínimo una longitud de 1 carácter.")]
+        [MaxLength(250, ErrorMessage = "El comentario debe tener como máximo una longitud de 250 caracteres.")]
         public string TextComment { get; set; }
 
         public int? IdUpperComment { get; set; }
