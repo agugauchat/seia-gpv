@@ -43,45 +43,9 @@
 
                 foreach (var post in posts)
                 {
-                    var postResult = TheModelFactory.CreateGetPostModel(post);
+                    var postResult = GenerateGetPostModel(post);
 
-                    var postVotes = votesService.GetVotesCountByPostId(new GetVotesCountByPostIdRequest { PostId = post.Id });
-
-                    postResult.GoodVotes = postVotes.GoodVotes;
-                    postResult.BadVotes = postVotes.BadVotes;
-
-                    var comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = post.Id }).Comments;
-
-                    if (comments.Any())
-                    {
-                        var commentsResult = new GetCommentsModel();
-                        commentsResult.Comments = new List<CommentaryModel>();
-
-                        foreach (var commentary in comments)
-                        {
-                            if (!commentary.IdUpperComment.HasValue)
-                            {
-                                var commentaryToAdd = TheModelFactory.CreateCommentaryModel(commentary);
-                                commentaryToAdd.Answers = new List<AnswerModel>();
-                                foreach (var answer in comments)
-                                {
-                                    if (answer.IdUpperComment.HasValue)
-                                    {
-                                        if (answer.IdUpperComment == commentary.Id)
-                                        {
-                                            var answerToAdd = TheModelFactory.CreateAnswerModel(answer);
-                                            commentaryToAdd.Answers.Add(answerToAdd);
-                                        }
-                                    }
-                                }
-                                commentsResult.Comments.Add(commentaryToAdd);
-                            }
-                        }
-
-                        postResult.Comments = commentsResult;
-
-                        result.Add(postResult);
-                    }
+                    result.Add(postResult);
                 }
 
                 return Ok(result);
@@ -111,46 +75,7 @@
                     return NotFound();
                 }
 
-                var result = TheModelFactory.CreateGetPostModel(post);
-
-                var postVotes = votesService.GetVotesCountByPostId(new GetVotesCountByPostIdRequest { PostId = post.Id });
-
-                result.GoodVotes = postVotes.GoodVotes;
-                result.BadVotes = postVotes.BadVotes;
-
-
-                var comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments;
-
-                if (!comments.Any())
-                {
-                    return NotFound();
-                }
-
-                var commentsResult = new GetCommentsModel();
-                commentsResult.Comments = new List<CommentaryModel>();
-
-                foreach (var commentary in comments)
-                {
-                    if (!commentary.IdUpperComment.HasValue)
-                    {
-                        var commentaryToAdd = TheModelFactory.CreateCommentaryModel(commentary);
-                        commentaryToAdd.Answers = new List<AnswerModel>();
-                        foreach (var answer in comments)
-                        {
-                            if (answer.IdUpperComment.HasValue)
-                            {
-                                if (answer.IdUpperComment == commentary.Id)
-                                {
-                                    var answerToAdd = TheModelFactory.CreateAnswerModel(answer);
-                                    commentaryToAdd.Answers.Add(answerToAdd);
-                                }
-                            }
-                        }
-                        commentsResult.Comments.Add(commentaryToAdd);
-                    }
-                }
-
-                result.Comments = commentsResult;
+                var result = GenerateGetPostModel(post);
 
                 return Ok(result);
             }
@@ -165,39 +90,24 @@
         [Route("api/Posts/{id}/Comments", Name = "GetCommentsByPostId")]
         public IHttpActionResult GetCommentary(int id)
         {
-            var commentaryService = new CommentaryService();
-            var comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments;
-
-            if (!comments.Any())
+            try
             {
-                return NotFound();
-            }
+                var commentaryService = new CommentaryService();
+                var comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = id }).Comments;
 
-            var result = new GetCommentsModel();
-            result.Comments = new List<CommentaryModel>();
-
-            foreach (var commentary in comments)
-            {
-                if (!commentary.IdUpperComment.HasValue)
+                if (!comments.Any())
                 {
-                    var commentaryToAdd = TheModelFactory.CreateCommentaryModel(commentary);
-                    commentaryToAdd.Answers = new List<AnswerModel>();
-                    foreach (var answer in comments)
-                    {
-                        if (answer.IdUpperComment.HasValue)
-                        {
-                            if (answer.IdUpperComment == commentary.Id)
-                            {
-                                var answerToAdd = TheModelFactory.CreateAnswerModel(answer);
-                                commentaryToAdd.Answers.Add(answerToAdd);
-                            }
-                        }
-                    }
-                    result.Comments.Add(commentaryToAdd);
+                    return NotFound();
                 }
-            }
 
-            return Ok(result);
+                var result = GenerateGetCommentsModel(id);
+
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         // PUT: api/Posts/5
@@ -223,7 +133,7 @@
 
                 if (postComplaints.Any())
                 {
-                    return BadRequest("User account suspended");
+                    return BadRequest("Post with complaints");
                 }
 
                 if (ModelState.IsValid)
@@ -233,6 +143,13 @@
                     if (post == null)
                     {
                         return NotFound();
+                    }
+
+                    var user = userService.GetUserByAccountId(new GetUserByAccountIdRequest { AccountId = User.Identity.GetUserId() }).User;
+
+                    if (post.IdWriter != user.Id)
+                    {
+                        return BadRequest();
                     }
 
                     if (!string.IsNullOrEmpty(model.base64File) && !string.IsNullOrWhiteSpace(model.base64File) && !model.DeleteImage)
@@ -386,25 +303,90 @@
         [ResponseType(typeof(void))]
         public IHttpActionResult DeletePost(int id)
         {
-            var userService = new UserService();
-            var userAccountSuspended = userService.VerifyIfIsSuspendedAndUpdateUser(new VerifyIfIsSuspendedAndUpdateUserRequest { AspNetUserId = User.Identity.GetUserId() }).UserSuspended;
-
-            if (userAccountSuspended)
+            try
             {
-                return BadRequest("User account suspended");
+                var userService = new UserService();
+                var userAccountSuspended = userService.VerifyIfIsSuspendedAndUpdateUser(new VerifyIfIsSuspendedAndUpdateUserRequest { AspNetUserId = User.Identity.GetUserId() }).UserSuspended;
+
+                if (userAccountSuspended)
+                {
+                    return BadRequest("User account suspended");
+                }
+
+                var postService = new PostService();
+                var post = postService.GetPostById(new GetPostByIdRequest() { Id = id }).Post;
+
+                if (post == null)
+                {
+                    return NotFound();
+                }
+
+                var user = userService.GetUserByAccountId(new GetUserByAccountIdRequest { AccountId = User.Identity.GetUserId() }).User;
+
+                if (post.IdWriter != user.Id)
+                {
+                    return BadRequest();
+                }
+
+                var result = postService.DeletePost(new DeletePostRequest { Id = id, IsComplaintOrVoteDifference = false });
+
+                return Ok();
             }
-
-            var postService = new PostService();
-            var post = postService.GetPostById(new GetPostByIdRequest() { Id = id }).Post;
-
-            if (post == null)
+            catch (Exception)
             {
-                return NotFound();
+                return BadRequest();
             }
-
-            var result = postService.DeletePost(new DeletePostRequest { Id = id, IsComplaintOrVoteDifference = false });
-
-            return Ok();
         }
+
+        #region Private Methods
+
+        private GetPostModel GenerateGetPostModel(Post post)
+        {
+            var votesService = new VoteService();
+
+            var result = TheModelFactory.CreateGetPostModel(post);
+            var postVotes = votesService.GetVotesCountByPostId(new GetVotesCountByPostIdRequest { PostId = post.Id });
+
+            result.GoodVotes = postVotes.GoodVotes;
+            result.BadVotes = postVotes.BadVotes;
+
+            result.Comments = GenerateGetCommentsModel(post.Id);
+
+            return result;
+        }
+
+        private GetCommentsModel GenerateGetCommentsModel(int postId)
+        {
+            var commentaryService = new CommentaryService();
+            var comments = commentaryService.SearchCommentsByIdPost(new SearchCommentsByIdPostRequest() { IdPost = postId }).Comments;
+
+            var commentsResult = new GetCommentsModel();
+            commentsResult.Comments = new List<CommentaryModel>();
+
+            foreach (var commentary in comments)
+            {
+                if (!commentary.IdUpperComment.HasValue)
+                {
+                    var commentaryToAdd = TheModelFactory.CreateCommentaryModel(commentary);
+                    commentaryToAdd.Answers = new List<AnswerModel>();
+                    foreach (var answer in comments)
+                    {
+                        if (answer.IdUpperComment.HasValue)
+                        {
+                            if (answer.IdUpperComment == commentary.Id)
+                            {
+                                var answerToAdd = TheModelFactory.CreateAnswerModel(answer);
+                                commentaryToAdd.Answers.Add(answerToAdd);
+                            }
+                        }
+                    }
+                    commentsResult.Comments.Add(commentaryToAdd);
+                }
+            }
+
+            return commentsResult;
+        }
+
+        #endregion
     }
 }
