@@ -11,6 +11,7 @@
     using System.Web.Http.Routing;
     using Web.DotW.API.Infrastructure;
     using Entities.CommentaryEntities;
+    using Entities.CategoryEntities;
 
     public class ModelFactory
     {
@@ -74,7 +75,7 @@
             };
         }
 
-        internal GetPostModel CreateGetPostModel(Post post)
+        internal GetPostModel CreateGetPostModel(Post post, Category category)
         {
             var result = new GetPostModel
             {
@@ -84,10 +85,17 @@
                 Body = post.Body,
                 Tags = post.Tags,
                 EffectDate = post.EffectDate,
-                CategoryId = post.IdCategory,
+                Category = new CategoryModel
+                {
+                    Id = category.Id,
+                    Title = category.Title,
+                    Summary = category.Summary,
+                    Description = category.Description,
+                    IdUpperCategory = category.IdUpperCategory
+                },
                 CategoryUrl = _UrlHelper.Link("GetCategoryById", new { id = post.IdCategory }),
                 WritterId = post.IdWriter,
-                // TODO npellegrinet > Agregar perfil.
+                // TODO npellegrinet > Agregar perfil WritterUrl.
             };
 
             if (!string.IsNullOrEmpty(post.PrincipalImageName) && post.PrincipalImageName.Contains("api/"))
