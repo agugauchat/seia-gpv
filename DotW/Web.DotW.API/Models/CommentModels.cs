@@ -44,4 +44,10 @@
     {
         public List<CommentaryModel> Comments { get; set; }
     }
+
+    public class CommentaryComplaintModel
+    {
+        [Display(Name = "Comentario")]
+        public string Commentary { get; set; }
+    }
 }

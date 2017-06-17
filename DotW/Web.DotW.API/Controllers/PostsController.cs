@@ -135,6 +135,38 @@
         }
 
         [AllowAnonymous]
+        [HttpGet]
+        [Route("api/categories/{id}/posts", Name = "GetPostsByCategory")]
+        public IHttpActionResult GetPostsByTag(int id)
+        {
+            try
+            {
+                var postService = new PostService();
+
+                var posts = postService.SearchPostsByCategoryId(new SearchPostsByCategoryIdRequest { IdCategory = id }).Posts.OrderByDescending(x => x.EffectDate).ToList();
+                var result = new List<GetPostModel>();
+
+                if (posts.Any())
+                {
+                    foreach (var post in posts)
+                    {
+                        var postResult = GenerateGetPostModel(post);
+
+                        result.Add(postResult);
+                    }
+
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [AllowAnonymous]
         [ResponseType(typeof(GetCommentsModel))]
         [Route("api/posts/{id}/comments", Name = "GetCommentsByPostId")]
         public IHttpActionResult GetCommentary(int id)
@@ -452,6 +484,11 @@
         {
             try
             {
+                if (model == null)
+                {
+                    return BadRequest();
+                }
+
                 var userService = new UserService();
                 var complaintService = new ComplaintService();
                 var postService = new PostService();
