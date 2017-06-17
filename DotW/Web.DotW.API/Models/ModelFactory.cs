@@ -13,6 +13,7 @@
     using Entities.CommentaryEntities;
     using Entities.CategoryEntities;
     using Entities.SearchEntities;
+    using Entities.UserEntities;
 
     public class ModelFactory
     {
@@ -47,6 +48,31 @@
             };
         }
 
+        internal UserModel CreateUserModel(User user)
+        {
+            return new UserModel()
+            {
+                Id = user.Id,
+                UserName = user.Name,
+                Email = (user.ShowData) ? user.Email : null,
+                FullName = (user.ShowData) ? user.FullName : null,
+                Phone = (user.ShowData) ? user.Phone : null,
+                Description = (user.ShowData) ? user.Description : null
+            };
+        }
+
+        internal PostsForUserDetail CreatePostsForUserDetail(Post post)
+        {
+            return new PostsForUserDetail()
+            {
+                Id = post.Id,
+                Date = post.EffectDate,
+                Summary = post.Summary,
+                Title = post.Title,
+                PostUrl = _UrlHelper.Link("GetPostById", new { id = post.Id })
+            };
+        }
+
         internal CommentaryModel CreateCommentaryModel(Commentary commentary)
         {
             return new CommentaryModel()
@@ -56,8 +82,7 @@
                 IdWriter = commentary.IdUser,
                 WriterUsername = commentary.WriterUserName,
                 Text = commentary.CommentaryText,
-                // TODO Agu -> Cambiar por la url del detalle de usuario
-                //WriterUrl = _UrlHelper.Link("GetRoleById", new { id = commentary.IdUser })
+                WriterUrl = _UrlHelper.Link("GetUser", new { id = commentary.IdUser })
             };
 
         }
@@ -71,9 +96,8 @@
                 Commentary = commentary.Commentary,
                 IdWriter = commentary.IdUser,
                 WriterUserName = commentary.WriterUserName,
-                PostUrl = _UrlHelper.Link("GetPostById", new { id = commentary.IdPost })
-                // TODO Agu -> Cambiar por la url del detalle de usuario
-                //WriterUrl = _UrlHelper.Link("GetRoleById", new { id = commentary.IdUser })
+                PostUrl = _UrlHelper.Link("GetPostById", new { id = commentary.IdPost }),
+                WriterUrl = _UrlHelper.Link("GetUser", new { id = commentary.IdUser })
             };
         }
 
@@ -87,9 +111,8 @@
                 WriterUserName = post.WriterUserName,
                 Summary = post.Summary,
                 Title = post.Title,
-                PostUrl = _UrlHelper.Link("GetPostById", new { id = post.Id })
-                // TODO Agu -> Cambiar por la url del detalle de usuario
-                //WriterUrl = _UrlHelper.Link("GetRoleById", new { id = answer.IdUser })
+                PostUrl = _UrlHelper.Link("GetPostById", new { id = post.Id }),
+                WriterUrl = _UrlHelper.Link("GetUser", new { id = post.IdWriter })
             };
         }
 
@@ -102,8 +125,7 @@
                 IdWriter = answer.IdUser,
                 WriterUsername = answer.WriterUserName,
                 Text = answer.CommentaryText,
-                // TODO Agu -> Cambiar por la url del detalle de usuario
-                //WriterUrl = _UrlHelper.Link("GetRoleById", new { id = answer.IdUser })
+                WriterUrl = _UrlHelper.Link("GetUser", new { id = answer.IdUser })
             };
         }
 
@@ -127,7 +149,7 @@
                 },
                 CategoryUrl = _UrlHelper.Link("GetCategoryById", new { id = post.IdCategory }),
                 WritterId = post.IdWriter,
-                // TODO npellegrinet > Agregar perfil WritterUrl.
+                WriterUrl = _UrlHelper.Link("GetUser", new { id = post.IdWriter })
             };
 
             if (!string.IsNullOrEmpty(post.PrincipalImageName) && post.PrincipalImageName.Contains("api/"))

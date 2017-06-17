@@ -49,7 +49,6 @@ namespace Web.DotW.API.Controllers
                 result.CommentsSearchResult.Add(commentaryToAdd);
             }
 
-            // TODO Agu -> Armar las listas de objetos a devolver.
             return Ok(result);
         }
     }

@@ -95,7 +95,7 @@
 
         public string CategoryUrl { get; set; }
 
-        public string WritterUrl { get; set; }
+        public string WriterUrl { get; set; }
 
         public int WritterId { get; set; }
 
