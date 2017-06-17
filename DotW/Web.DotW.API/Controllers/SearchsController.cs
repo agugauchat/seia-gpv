@@ -30,12 +30,27 @@ namespace Web.DotW.API.Controllers
         {
             var searchService = new SearchService();
 
-            var PostsList = searchService.SearchInPosts(new SearchInPostsRequest { Text = id }).PostsSearchResult;
+            var result = new SearchModel();
+            result.PostsSearchResult = new List<GetPostsSearchResult>();
+            result.CommentsSearchResult = new List<GetCommentsSearchResult>();
 
-            var CommentsList = searchService.SearchInComments(new SearchInCommentsRequest { Text = id }).CommentsSearchResult;
+            var postsSearchResult = searchService.SearchInPosts(new SearchInPostsRequest { Text = id }).PostsSearchResult;
+            var commentsSearchResult = searchService.SearchInComments(new SearchInCommentsRequest { Text = id }).CommentsSearchResult;
+
+            foreach (var post in postsSearchResult)
+            {
+                var postToAdd = TheModelFactory.CreateGetPostsSearchResult(post);
+                result.PostsSearchResult.Add(postToAdd);
+            }
+
+            foreach (var commentary in commentsSearchResult)
+            {
+                var commentaryToAdd = TheModelFactory.CreateGetCommentsSearchResult(commentary);
+                result.CommentsSearchResult.Add(commentaryToAdd);
+            }
 
             // TODO Agu -> Armar las listas de objetos a devolver.
-            return Ok();
+            return Ok(result);
         }
     }
 }

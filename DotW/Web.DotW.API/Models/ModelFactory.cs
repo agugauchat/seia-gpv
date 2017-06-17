@@ -12,6 +12,7 @@
     using Web.DotW.API.Infrastructure;
     using Entities.CommentaryEntities;
     using Entities.CategoryEntities;
+    using Entities.SearchEntities;
 
     public class ModelFactory
     {
@@ -59,6 +60,37 @@
                 //WriterUrl = _UrlHelper.Link("GetRoleById", new { id = commentary.IdUser })
             };
 
+        }
+
+        internal GetCommentsSearchResult CreateGetCommentsSearchResult(CommentsSearchResult commentary)
+        {
+            return new GetCommentsSearchResult()
+            {
+                Id = commentary.Id,
+                IdPost = commentary.IdPost,
+                Commentary = commentary.Commentary,
+                IdWriter = commentary.IdUser,
+                WriterUserName = commentary.WriterUserName,
+                PostUrl = _UrlHelper.Link("GetPostById", new { id = commentary.IdPost })
+                // TODO Agu -> Cambiar por la url del detalle de usuario
+                //WriterUrl = _UrlHelper.Link("GetRoleById", new { id = commentary.IdUser })
+            };
+        }
+
+        internal GetPostsSearchResult CreateGetPostsSearchResult(PostsSearchResult post)
+        {
+            return new GetPostsSearchResult()
+            {
+                Id = post.Id,
+                Date = post.EffectDate,
+                IdWriter = post.IdWriter,
+                WriterUserName = post.WriterUserName,
+                Summary = post.Summary,
+                Title = post.Title,
+                PostUrl = _UrlHelper.Link("GetPostById", new { id = post.Id })
+                // TODO Agu -> Cambiar por la url del detalle de usuario
+                //WriterUrl = _UrlHelper.Link("GetRoleById", new { id = answer.IdUser })
+            };
         }
 
         internal AnswerModel CreateAnswerModel(Commentary answer)
