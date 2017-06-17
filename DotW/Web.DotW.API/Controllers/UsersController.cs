@@ -24,7 +24,7 @@ namespace Web.DotW.API.Controllers
     public class UsersController : BaseApiController
     {
         // GET: api/Users/{text}
-        //[Authorize]
+        [Authorize]
         [ResponseType(typeof(UserModel))]
         [Route("api/Users/{id}", Name = "GetUser")]
         public IHttpActionResult GetUser(int id)
