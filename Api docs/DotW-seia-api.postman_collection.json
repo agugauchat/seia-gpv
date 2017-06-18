@@ -1,0 +1,568 @@
+{
+	"variables": [],
+	"info": {
+		"name": "DotW-seia-api",
+		"_postman_id": "aaeddf79-fc9b-f4d8-1ce6-041f74c5cefa",
+		"description": "Api generada para la cátedra Ingeniería Web.\n\nGauchat, Augusto.\nPellegrinet, Nicolás.\nVolken, Gastón.\n\nIMPORTANTE: reemplazar la palabra TOKEN en los headers que aparezca por el token correspondiente.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Buscador",
+			"description": "",
+			"item": [
+				{
+					"name": "Buscar contenido",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/searchs/editor",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categorias",
+			"description": "",
+			"item": [
+				{
+					"name": "Categoría por Id",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/categories/3",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Commentary\": \"Quedó cortado el comentario.\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Listado de Categorías",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/categories",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Commentary\": \"Quedó cortado el comentario.\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Categoría",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/categories",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer TOKEN",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Id\": 13,\n\t\"Title\": \"Prueba Categoría\",\n\t\"Summary\": \"Prueba\",\n\t\"Description\": \"Prueba\",\n\t\"IdUpperCategory\": 1\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Nueva Categoría",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/categories",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer TOKEN",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Title\": \"Prueba Categoría2\",\n\t\"Summary\": \"Prueba\",\n\t\"Description\": \"Prueba\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Categoría",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/categories/14",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer TOKEN",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comentarios",
+			"description": "",
+			"item": [
+				{
+					"name": "Nuevo Comentario",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/comments",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer TOKEN",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"IdPost\": 5,\n\t\"TextComment\": \"Comentario respuesta.\",\n\t\"IdUpperComment\": 13\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Comentario",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/comments/43",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer TOKEN",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Denunciar Comentario",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/comments/39/complaint",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer TOKEN",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Commentary\": \"Quedó cortado el comentario.\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Comentarios de un Post",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/posts/4/comments",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Commentary\": \"Quedó cortado el comentario.\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Posts",
+			"description": "",
+			"item": [
+				{
+					"name": "Listado de Posts",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/posts",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Post por Id",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/posts/8",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Posts filtrados por Categoría.",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/categories/1/posts",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Nuevo Post",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/posts",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer TOKEN",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Title\": \"¿Qué es C#?\",\n\t\"Summary\": \"Explicación básica y origen del lenguaje.\",\n\t\"IdCategory\": 8,\n\t\"IsDraft\": false,\n\t\"Tags\": [ \"net\", \"lenguaje\"],\n\t\"Body\": \"<p><strong>C#&nbsp;</strong>(pronunciado&nbsp;<em>si sharp</em>&nbsp;en ingl&eacute;s) es un &quot;lenguaje de programaci&oacute;n&quot;&nbsp;orientado a objetos&nbsp;desarrollado y estandarizado por&nbsp;Microsoft&nbsp;como parte de su plataforma&nbsp;.NET, que despu&eacute;s fue aprobado como un est&aacute;ndar por la&nbsp;ECMA&nbsp;(ECMA-334) e&nbsp;ISO(ISO/IEC 23270). C# es uno de los lenguajes de programaci&oacute;n dise&ntilde;ados para la&nbsp;infraestructura de lenguaje com&uacute;n.</p><p>Su sintaxis b&aacute;sica deriva de&nbsp;C/C++&nbsp;y utiliza el modelo de objetos de la plataforma .NET, similar al de&nbsp;Java, aunque incluye mejoras derivadas de otros lenguajes.</p><p>El nombre C Sharp fue inspirado por la&nbsp;notaci&oacute;n musical, donde &#39;#&#39; (sostenido, en ingl&eacute;s&nbsp;<em>sharp</em>) indica que la nota (<em>C</em>&nbsp;es la nota do en ingl&eacute;s) es un&nbsp;semitono&nbsp;m&aacute;s alta, sugiriendo que C# es superior a C/C++. Adem&aacute;s, el signo &#39;#&#39; se compone de cuatro signos &#39;+&#39; pegados.</p>\",\n\t\"base64File\": \"data:image/png;base64,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nGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxplOUMK7NYzrDFzJMzbB6z5AybRaOcYY0MkTNsCDTLmdUMjJEzawzQ0CxnVHMDfzJSzqiR/NkUOZOm8Bf1c+UMmlvP+/rOlTNnbl8+UD9Fzpgp9XzYyGY5Q5pHso6GMc1yRjSPaaANQxpnzVtclvs7Vl48b1bjEP7q/wErKk/OhXuTlgAAAABJRU5ErkJggg==\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Post",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/posts",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer TOKEN",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Id\": 10,\n\t\"Title\": \"¿Qué es C#?\",\n\t\"Summary\": \"Explicación básica y origen del lenguaje.\",\n\t\"IdCategory\": 8,\n\t\"IsDraft\": false,\n\t\"Tags\": [ \"net\", \"lenguaje\"],\n\t\"Body\": \"<p>C#&nbsp;(pronunciado&nbsp;<em>si sharp</em>&nbsp;en ingl&eacute;s) es un &quot;lenguaje de programaci&oacute;n&quot;&nbsp;orientado a objetos&nbsp;desarrollado y estandarizado por&nbsp;Microsoft&nbsp;como parte de su plataforma&nbsp;.NET, que despu&eacute;s fue aprobado como un est&aacute;ndar por la&nbsp;ECMA&nbsp;(ECMA-334) e&nbsp;ISO(ISO/IEC 23270). C# es uno de los lenguajes de programaci&oacute;n dise&ntilde;ados para la&nbsp;infraestructura de lenguaje com&uacute;n.</p><p>Su sintaxis b&aacute;sica deriva de&nbsp;C/C++&nbsp;y utiliza el modelo de objetos de la plataforma .NET, similar al de&nbsp;Java, aunque incluye mejoras derivadas de otros lenguajes.</p><p>El nombre C Sharp fue inspirado por la&nbsp;notaci&oacute;n musical, donde &#39;#&#39; (sostenido, en ingl&eacute;s&nbsp;<em>sharp</em>) indica que la nota (<em>C</em>&nbsp;es la nota do en ingl&eacute;s) es un&nbsp;semitono&nbsp;m&aacute;s alta, sugiriendo que C# es superior a C/C++. Adem&aacute;s, el signo &#39;#&#39; se compone de cuatro signos &#39;+&#39; pegados.</p>\",\n\t\"base64File\": \"data:image/png;base64,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nGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxpyJmGnGnImYacaciZhpxplOUMK7NYzrDFzJMzbB6z5AybRaOcYY0MkTNsCDTLmdUMjJEzawzQ0CxnVHMDfzJSzqiR/NkUOZOm8Bf1c+UMmlvP+/rOlTNnbl8+UD9Fzpgp9XzYyGY5Q5pHso6GMc1yRjSPaaANQxpnzVtclvs7Vl48b1bjEP7q/wErKk/OhXuTlgAAAABJRU5ErkJggg==\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Post",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/posts/10",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer TOKEN",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Votar Post",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/posts/7/vote",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer TOKEN",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Good\": true,\n\t\"Bad\": false\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Denunciar un Post",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/posts/7/complaint",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer TOKEN",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Commentary\": \"\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"description": "",
+			"item": [
+				{
+					"name": "Usuario por Id",
+					"request": {
+						"url": "http://devsofthew.azurewebsites.net/api/users/5",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer TOKEN",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Token",
+			"request": {
+				"url": "http://devsofthew.azurewebsites.net/login/getToken",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Username",
+							"value": "npelle",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Password",
+							"value": "",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": "Token"
+			},
+			"response": []
+		},
+		{
+			"name": "Token admin",
+			"request": {
+				"url": "http://devsofthew.azurewebsites.net/login/getToken",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Username",
+							"value": "admin",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Password",
+							"value": "dev12345678",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": "Token"
+			},
+			"response": []
+		}
+	]
+}
